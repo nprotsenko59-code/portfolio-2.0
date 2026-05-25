@@ -13,22 +13,6 @@ html {
   font-family: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Chromatic aberration on hover for the hero headline.
-   Pure CSS — cyan/magenta channel split via text-shadow, smooth fade in/out. */
-.hero-headline {
-  transition: text-shadow 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-.hero-headline:hover {
-  text-shadow:
-    -4px 0 0 rgba(255, 0, 110, 0.85),
-    4px 0 0 rgba(0, 200, 255, 0.85);
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-headline {
-    transition: none;
-  }
-}
-
 /* Dion Pieters-style hover underline: 1px line, scaleX 0→1 from center,
    symmetric 0.45s cubic-bezier(.215,.61,.355,1) on enter and leave. */
 .hover-text__line {
@@ -61,9 +45,25 @@ html {
   will-change: transform;
 }
 
+/* Per-character mask for the hero headline.
+   clip-path (not overflow:hidden) so the :hover chromatic-aberration text-shadow
+   can still extend horizontally past each character box. */
+.hero-headline .char-mask {
+  display: inline-block;
+  vertical-align: top;
+  clip-path: inset(0 -200px);
+}
+.hero-headline .char-mask .char {
+  display: inline-block;
+  will-change: transform;
+}
+
 /* Reduced motion: snap everything to final state, disable smooth scroll */
 @media (prefers-reduced-motion: reduce) {
   .reveal-line > .line-inner {
+    transform: none !important;
+  }
+  .hero-headline .char-mask .char {
     transform: none !important;
   }
   html.lenis, html.lenis body {
