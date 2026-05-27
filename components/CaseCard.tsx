@@ -1,67 +1,47 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import clsx from "clsx";
-import { gsap } from "@/lib/gsap";
 import type { Case } from "@/lib/cases";
 
-const spanClasses: Record<Case["span"], string> = {
-  "tall-left": "col-start-1 row-start-1 row-span-2",
-  "wide-top": "col-start-2 row-start-1",
-  "tall-right": "col-start-2 row-start-2 row-span-2",
-  "small-bottom": "col-start-1 row-start-3",
-  "wide-bottom": "col-span-2 row-start-3",
-};
-
-export default function CaseCard({ data, index }: { data: Case; index: number }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    const inner = innerRef.current;
-    if (!card || !inner) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const onEnter = () => {
-      gsap.to(card, { scale: 1.012, duration: 0.6, ease: "expo.out" });
-      gsap.to(inner, { scale: 1.05, duration: 0.8, ease: "expo.out" });
-    };
-    const onLeave = () => {
-      gsap.to(card, { scale: 1, duration: 0.6, ease: "expo.out" });
-      gsap.to(inner, { scale: 1, duration: 0.8, ease: "expo.out" });
-    };
-    card.addEventListener("pointerenter", onEnter);
-    card.addEventListener("pointerleave", onLeave);
-    return () => {
-      card.removeEventListener("pointerenter", onEnter);
-      card.removeEventListener("pointerleave", onLeave);
-    };
-  }, []);
-
+export default function CaseCard({ data }: { data: Case; index: number }) {
   return (
-    <div
-      ref={cardRef}
-      data-cursor
-      data-cursor-label="View"
+    <article
       data-case-card
-      style={{ transformOrigin: "center" }}
-      className={clsx(
-        "relative overflow-hidden rounded-2xl bg-neutral-200/80",
-        "will-change-transform",
-        spanClasses[data.span]
-      )}
+      className="flex h-full flex-col bg-white pt-6 md:pt-8"
       aria-label={data.title}
     >
-      <div
-        ref={innerRef}
-        className="absolute inset-0 will-change-transform"
-        style={{
-          background:
-            "linear-gradient(135deg, rgb(228 228 231) 0%, rgb(212 212 216) 100%)",
-        }}
-      />
-      <span className="sr-only">{data.title} (placeholder — case {index + 1})</span>
-    </div>
+      <div className="h-px w-full bg-black/10" />
+      <div className="grid flex-1 grid-cols-1 gap-8 pt-8 md:grid-cols-2 md:gap-12">
+        <div className="flex flex-col">
+          <h3 className="text-[clamp(36px,4vw,56px)] font-black uppercase leading-none tracking-[-0.03em]">
+            {data.title}
+          </h3>
+          <p className="mt-3 text-sm text-neutral-500">{data.dates}</p>
+          <p className="mt-8 max-w-md text-[15px] leading-[1.5] text-neutral-700">
+            {data.description}
+          </p>
+          {data.website ? (
+            <div className="mt-auto pt-10">
+              <a
+                href={data.website}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor
+                data-cursor-label="Open"
+                className="inline-flex items-center rounded-full bg-neutral-100 px-5 py-2.5 text-sm font-medium text-black transition-colors hover:bg-neutral-200"
+              >
+                Website
+              </a>
+            </div>
+          ) : null}
+        </div>
+
+        <div
+          className="relative min-h-[280px] overflow-hidden rounded-2xl md:min-h-0"
+          style={{ backgroundColor: data.accent }}
+          data-cursor
+          data-cursor-label="View"
+        />
+      </div>
+    </article>
   );
 }
