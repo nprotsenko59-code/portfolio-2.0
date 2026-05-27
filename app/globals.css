@@ -45,17 +45,19 @@ html {
   will-change: transform;
 }
 
-/* Per-character mask for the hero headline.
-   clip-path (not overflow:hidden) so the :hover chromatic-aberration text-shadow
-   can still extend horizontally past each character box. */
-.hero-headline .char-mask {
+/* Typing caret for hero headline. Sits between the current word and the period. */
+.hero-caret {
   display: inline-block;
-  vertical-align: top;
-  clip-path: inset(0 -200px);
+  width: 0.06em;
+  height: 0.78em;
+  margin: 0 0.04em -0.06em;
+  background: currentColor;
+  vertical-align: baseline;
+  animation: hero-caret-blink 1s steps(1) infinite;
 }
-.hero-headline .char-mask .char {
-  display: inline-block;
-  will-change: transform;
+@keyframes hero-caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 /* Reduced motion: snap everything to final state, disable smooth scroll */
@@ -63,8 +65,9 @@ html {
   .reveal-line > .line-inner {
     transform: none !important;
   }
-  .hero-headline .char-mask .char {
-    transform: none !important;
+  .hero-caret {
+    animation: none;
+    opacity: 0;
   }
   html.lenis, html.lenis body {
     scroll-behavior: auto !important;

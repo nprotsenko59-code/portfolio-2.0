@@ -1,37 +1,60 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import SplitType from "split-type";
 import HoverText from "./HoverText";
-import RevealText from "./RevealText";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+const WORDS = [
+  "experiences",
+  "products",
+  "systems",
+  "clarity",
+  "interactions",
+  "trust",
+  "moments",
+  "outcomes",
+];
+
+const TYPE_MS = 120;
+const DELETE_MS = 70;
+const HOLD_MS = 2200;
+const NEXT_MS = 520;
+const EASE_AMPLITUDE = 0.85;
+
+// U-shaped easing: slower at the start and end of a word, faster in the middle.
+const easedDelay = (base: number, step: number, total: number) => {
+  if (total <= 1) return base;
+  const p = step / total;
+  const curve = 1 - 4 * p * (1 - p);
+  return base * (1 + EASE_AMPLITUDE * curve);
+};
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const composeRef = useRef<HTMLDivElement>(null);
-  const portraitScrollRef = useRef<HTMLDivElement>(null);
-  const portraitRef = useRef<HTMLDivElement>(null);
   const headlineScrollRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
+  const chipRef = useRef<HTMLDivElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
+
+  const [typed, setTyped] = useState(WORDS[0]);
+  const [typingStarted, setTypingStarted] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
     const compose = composeRef.current;
-    const portraitScroll = portraitScrollRef.current;
-    const portrait = portraitRef.current;
     const headlineScroll = headlineScrollRef.current;
     const headline = headlineRef.current;
+    const chip = chipRef.current;
     const meta = metaRef.current;
-    if (!section || !compose || !portraitScroll || !portrait || !headlineScroll || !headline || !meta) {
+    if (!section || !compose || !headlineScroll || !headline || !chip || !meta) {
       return;
     }
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-    let split: SplitType | undefined;
     let scrollTrigger: ScrollTrigger | undefined;
     const cleanup: Array<() => void> = [];
     let cancelled = false;
@@ -42,35 +65,26 @@ export default function Hero() {
       }
       if (cancelled) return;
 
-      split = new SplitType(headline, { types: "words,chars", tagName: "span" });
-      const chars = (split.chars ?? []) as HTMLElement[];
-      chars.forEach((c) => {
-        const wrap = document.createElement("span");
-        wrap.className = "char-mask";
-        c.parentNode?.insertBefore(wrap, c);
-        wrap.appendChild(c);
-      });
-
       const metaItems = meta.querySelectorAll<HTMLElement>("[data-meta-item]");
 
-      if (reduced) return;
+      if (reduced) {
+        setTypingStarted(true);
+        return;
+      }
 
-      gsap.set(chars, { yPercent: 115 });
-      gsap.set(portrait, {
-        clipPath: "inset(0 0 100% 0)",
-        scale: 1.15,
-        transformOrigin: "center",
-      });
-      gsap.set(metaItems, { y: 30, opacity: 0 });
+      gsap.set(headline, { y: 40, opacity: 0 });
+      gsap.set(chip, { y: -20, opacity: 0, scale: 0.85, rotate: -6 });
+      gsap.set(metaItems, { y: 24, opacity: 0 });
       gsap.set(headlineScroll, { perspective: 1000 });
 
       const tl = gsap.timeline({
         onComplete: () => {
           if (cancelled) return;
+          setTypingStarted(true);
           const scrubTl = gsap
             .timeline()
-            .to(headline, { scale: 1.25, opacity: 0, ease: "none" }, 0)
-            .to(portraitScroll, { scale: 1.4, y: 40, ease: "none" }, 0)
+            .to(headline, { scale: 1.18, opacity: 0, ease: "none" }, 0)
+            .to(chip, { y: -60, opacity: 0, ease: "none" }, 0)
             .to(metaItems, { opacity: 0, y: -20, ease: "none", duration: 0.3 }, 0);
 
           scrollTrigger = ScrollTrigger.create({
@@ -82,27 +96,23 @@ export default function Hero() {
           });
         },
       });
+      tl.to(headline, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out" }, 0);
       tl.to(
-        portrait,
-        { clipPath: "inset(0 0 0% 0)", scale: 1, duration: 1.1, ease: "expo.out" },
-        0,
-      );
-      tl.to(
-        chars,
-        { yPercent: 0, duration: 1.0, stagger: 0.03, ease: "expo.out" },
-        0.05,
+        chip,
+        { y: 0, opacity: 1, scale: 1, rotate: -3, duration: 0.9, ease: "expo.out" },
+        0.25,
       );
       tl.to(
         metaItems,
         { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "expo.out" },
-        0.6,
+        0.5,
       );
 
       if (!coarsePointer) {
         const setHeadRotY = gsap.quickTo(headline, "rotationY", { duration: 0.6, ease: "power3.out" });
         const setHeadRotX = gsap.quickTo(headline, "rotationX", { duration: 0.6, ease: "power3.out" });
-        const setPortX = gsap.quickTo(portrait, "x", { duration: 0.6, ease: "power3.out" });
-        const setPortY = gsap.quickTo(portrait, "y", { duration: 0.6, ease: "power3.out" });
+        const setChipX = gsap.quickTo(chip, "x", { duration: 0.6, ease: "power3.out" });
+        const setChipY = gsap.quickTo(chip, "y", { duration: 0.6, ease: "power3.out" });
 
         const onMove = (e: MouseEvent) => {
           const rect = compose.getBoundingClientRect();
@@ -112,14 +122,14 @@ export default function Hero() {
           const ny = Math.max(-1, Math.min(1, (e.clientY - cy) / (rect.height / 2)));
           setHeadRotY(nx * 3);
           setHeadRotX(-ny * 3);
-          setPortX(nx * 10);
-          setPortY(ny * 10);
+          setChipX(nx * 14);
+          setChipY(ny * 8);
         };
         const onLeave = () => {
           setHeadRotY(0);
           setHeadRotX(0);
-          setPortX(0);
-          setPortY(0);
+          setChipX(0);
+          setChipY(0);
         };
 
         compose.addEventListener("mousemove", onMove);
@@ -136,53 +146,88 @@ export default function Hero() {
     return () => {
       cancelled = true;
       scrollTrigger?.kill();
-      split?.revert();
       cleanup.forEach((fn) => fn());
     };
   }, []);
+
+  useEffect(() => {
+    if (!typingStarted) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    let wordIndex = 0;
+    let chars = WORDS[0].length;
+    let deleting = true;
+    let timeout: ReturnType<typeof setTimeout>;
+
+    const tick = () => {
+      const word = WORDS[wordIndex];
+      if (deleting) {
+        chars -= 1;
+        setTyped(word.slice(0, chars));
+        if (chars === 0) {
+          deleting = false;
+          wordIndex = (wordIndex + 1) % WORDS.length;
+          timeout = setTimeout(tick, NEXT_MS);
+          return;
+        }
+        timeout = setTimeout(tick, easedDelay(DELETE_MS, chars, word.length));
+      } else {
+        chars += 1;
+        setTyped(word.slice(0, chars));
+        if (chars === word.length) {
+          deleting = true;
+          timeout = setTimeout(tick, HOLD_MS);
+          return;
+        }
+        timeout = setTimeout(tick, easedDelay(TYPE_MS, chars, word.length));
+      }
+    };
+
+    timeout = setTimeout(tick, HOLD_MS);
+    return () => clearTimeout(timeout);
+  }, [typingStarted]);
 
   return (
     <section
       ref={sectionRef}
       className="relative flex min-h-screen flex-col justify-between px-8 pt-10 pb-8 md:px-12 md:pt-12 md:pb-10"
     >
-      <div className="flex flex-1 flex-col items-center justify-center gap-6 text-center">
-        <div ref={composeRef} className="flex items-center gap-4 md:gap-6">
+      <div className="flex flex-1 flex-col items-center justify-center">
+        <div ref={composeRef} className="relative w-full">
           <div
-            ref={portraitScrollRef}
-            className="aspect-square h-[clamp(48px,9vw,145px)] will-change-transform"
+            ref={chipRef}
+            className="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded-full bg-neutral-200/90 px-4 py-2 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.25)] backdrop-blur-sm md:gap-3.5 md:px-6 md:py-3"
+            style={{ willChange: "transform" }}
           >
-            <div
-              ref={portraitRef}
-              className="h-full w-full overflow-hidden rounded-[14px] will-change-transform"
-            >
+            <span className="relative aspect-square h-9 overflow-hidden rounded-full md:h-12">
               <Image
                 src="/images/nikita.jpg"
                 alt="Portrait of Nikita Protsenko"
-                width={400}
-                height={400}
+                width={96}
+                height={96}
                 priority
                 className="h-full w-full object-cover"
               />
-            </div>
+            </span>
+            <span className="whitespace-nowrap font-[family-name:var(--font-switzer)] text-[18px] font-bold text-black md:text-[26px]">
+              Hi, I&rsquo;m Nikita
+            </span>
           </div>
+
           <div ref={headlineScrollRef} className="will-change-transform">
             <h1
               ref={headlineRef}
-              className="hero-headline font-[family-name:var(--font-switzer)] text-[clamp(56px,12vw,200px)] font-black uppercase leading-[0.95] tracking-[-0.04em]"
+              className="hero-headline whitespace-nowrap text-center font-[family-name:var(--font-switzer)] text-[clamp(36px,8.2vw,148px)] font-black uppercase leading-[0.95] tracking-[-0.04em]"
             >
-              Hi, I&rsquo;m Nikita
+              <span>I craft </span>
+              <span className="text-[#F36A1F]">
+                {typed}
+                <span aria-hidden className="hero-caret" />
+              </span>
             </h1>
           </div>
         </div>
-        <RevealText
-          as="p"
-          trigger="load"
-          delay={0.4}
-          className="max-w-[640px] text-[15px] leading-[1.45] text-neutral-800 md:text-base"
-        >
-          I build unique and friendly product experiences for startups, corporations and myself.
-        </RevealText>
       </div>
 
       <div
@@ -190,12 +235,11 @@ export default function Hero() {
         className="grid grid-cols-3 items-end gap-8 pt-16 text-[13px] md:text-sm"
       >
         <div data-meta-item className="flex flex-col gap-1 text-left">
-          <span className="text-neutral-400">Scroll to see</span>
-          <HoverText className="font-medium">My work</HoverText>
-        </div>
-        <div data-meta-item className="flex flex-col gap-1 text-center">
           <span className="text-neutral-400">Currently at</span>
           <HoverText className="font-medium">Guesty</HoverText>
+        </div>
+        <div data-meta-item className="flex justify-center">
+          <HoverText className="font-medium">See my work</HoverText>
         </div>
         <div data-meta-item className="flex flex-col gap-1 text-right">
           <span className="text-neutral-400">Based in</span>
