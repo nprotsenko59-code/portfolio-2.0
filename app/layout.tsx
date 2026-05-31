@@ -43,7 +43,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${satoshi.variable} ${switzer.variable} antialiased`}>
-      <body className="bg-white text-black">
+      <body className="bg-white text-ink">
         <SmoothScroll />
         {children}
       </body>

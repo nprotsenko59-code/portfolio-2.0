@@ -6,17 +6,16 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
   return (
     <article
       data-case-card
-      className="flex h-full flex-col bg-white pt-6 md:pt-8"
+      className="flex h-full flex-col rounded-[40px] border border-card-border bg-card p-8 md:p-12"
       aria-label={data.title}
     >
-      <div className="h-px w-full bg-black/10" />
-      <div className="grid flex-1 grid-cols-1 gap-8 pt-8 md:grid-cols-2 md:gap-12">
+      <div className="grid flex-1 grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
         <div className="flex flex-col">
-          <h3 className="text-[clamp(36px,4vw,56px)] font-black uppercase leading-none tracking-[-0.03em]">
+          <h3 className="text-[clamp(36px,4vw,56px)] font-black uppercase leading-none tracking-[-0.03em] text-ink">
             {data.title}
           </h3>
-          <p className="mt-3 text-sm text-neutral-500">{data.dates}</p>
-          <p className="mt-8 max-w-md text-[15px] leading-[1.5] text-neutral-700">
+          <p className="mt-3 text-sm text-ink-muted">{data.dates}</p>
+          <p className="mt-8 max-w-md text-[15px] leading-[1.5] text-ink">
             {data.description}
           </p>
           {data.website ? (
@@ -27,7 +26,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
                 rel="noreferrer"
                 data-cursor
                 data-cursor-label="Open"
-                className="inline-flex items-center rounded-full bg-neutral-100 px-5 py-2.5 text-sm font-medium text-black transition-colors hover:bg-neutral-200"
+                className="inline-flex items-center rounded-full bg-white/70 px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-white"
               >
                 Website
               </a>

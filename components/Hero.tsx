@@ -71,7 +71,7 @@ export default function Hero() {
       }
 
       gsap.set(headline, { y: 40, opacity: 0 });
-      gsap.set(chip, { y: -20, opacity: 0, scale: 0.85, rotate: -6 });
+      gsap.set(chip, { y: -20, opacity: 0, scale: 0.85 });
       gsap.set(metaItems, { y: 24, opacity: 0 });
       gsap.set(headlineScroll, { perspective: 1000 });
 
@@ -97,7 +97,7 @@ export default function Hero() {
       tl.to(headline, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out" }, 0);
       tl.to(
         chip,
-        { y: 0, opacity: 1, scale: 1, rotate: -3, duration: 0.9, ease: "expo.out" },
+        { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: "expo.out" },
         0.25,
       );
       tl.to(
@@ -194,33 +194,35 @@ export default function Hero() {
       <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 z-0" />
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center">
         <div ref={composeRef} className="relative w-full">
-          <div
-            ref={chipRef}
-            className="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded-full bg-neutral-200/90 px-4 py-2 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.25)] backdrop-blur-sm md:gap-3.5 md:px-6 md:py-3"
-            style={{ willChange: "transform" }}
-          >
-            <span className="relative aspect-square h-9 overflow-hidden rounded-full md:h-12">
-              <Image
-                src="/images/nikita.jpg"
-                alt="Portrait of Nikita Protsenko"
-                width={96}
-                height={96}
-                priority
-                className="h-full w-full object-cover"
-              />
-            </span>
-            <span className="whitespace-nowrap font-[family-name:var(--font-switzer)] text-[18px] font-bold text-black md:text-[26px]">
-              Hi, I&rsquo;m Nikita
-            </span>
+          <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-[120%]">
+            <div
+              ref={chipRef}
+              className="flex items-center gap-2.5 rounded-full border border-card-border bg-neutral-200/90 px-3 py-2 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.25)] backdrop-blur-sm md:gap-3.5 md:py-3"
+              style={{ willChange: "transform" }}
+            >
+              <span className="relative aspect-square h-9 overflow-hidden rounded-full md:h-12">
+                <Image
+                  src="/images/nikita.jpg"
+                  alt="Portrait of Nikita Protsenko"
+                  width={96}
+                  height={96}
+                  priority
+                  className="h-full w-full object-cover"
+                />
+              </span>
+              <span className="whitespace-nowrap font-[family-name:var(--font-satoshi)] text-[20px] font-bold leading-[0.9] text-ink">
+                Hi, I&rsquo;m Nikita
+              </span>
+            </div>
           </div>
 
           <div ref={headlineScrollRef} className="will-change-transform">
             <h1
               ref={headlineRef}
-              className="hero-headline whitespace-nowrap text-center font-[family-name:var(--font-switzer)] text-[clamp(36px,8.2vw,148px)] font-black uppercase leading-[0.95] tracking-[-0.04em]"
+              className="hero-headline text-center font-[family-name:var(--font-switzer)] text-[clamp(36px,8.2vw,148px)] font-black uppercase leading-[0.95] tracking-[-0.04em]"
             >
-              <span>I craft </span>
-              <span className="text-[#F36A1F]">
+              <span className="block">I craft</span>
+              <span className="block text-accent">
                 {typed}
                 <span aria-hidden className="hero-caret" />
               </span>
@@ -234,7 +236,7 @@ export default function Hero() {
         className="relative z-10 grid grid-cols-3 items-end gap-8 pt-16 text-[13px] md:text-sm"
       >
         <div data-meta-item className="flex flex-col gap-1 text-left">
-          <span className="text-neutral-400">Currently at</span>
+          <span className="text-ink-muted">Currently at</span>
           <HoverText className="font-medium">Guesty</HoverText>
         </div>
         <div data-meta-item className="flex flex-col items-center gap-4">
@@ -246,7 +248,7 @@ export default function Hero() {
           <HoverText className="font-medium">See my work</HoverText>
         </div>
         <div data-meta-item className="flex flex-col gap-1 text-right">
-          <span className="text-neutral-400">Based in</span>
+          <span className="text-ink-muted">Based in</span>
           <HoverText className="font-medium">Tel Aviv</HoverText>
         </div>
       </div>
