@@ -6,7 +6,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
   return (
     <article
       data-case-card
-      className="flex h-full flex-col rounded-[40px] border border-card-border bg-card p-8 md:p-12"
+      className="flex h-full w-full flex-col rounded-[40px] border border-card-border bg-card p-8 md:h-[82vh] md:p-12"
       aria-label={data.title}
     >
       <div className="grid flex-1 grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
