@@ -67,12 +67,13 @@ export default function Hero() {
       const metaItems = meta.querySelectorAll<HTMLElement>("[data-meta-item]");
 
       if (reduced) {
+        gsap.set(chip, { rotation: -6 });
         setTypingStarted(true);
         return;
       }
 
       gsap.set(headline, { y: 40, opacity: 0 });
-      gsap.set(chip, { y: -20, opacity: 0, scale: 0.85 });
+      gsap.set(chip, { y: -20, opacity: 0, scale: 0.85, rotation: -12 });
       gsap.set(metaItems, { y: 24, opacity: 0 });
       gsap.set(headlineScroll, { perspective: 1000 });
 
@@ -98,7 +99,7 @@ export default function Hero() {
       tl.to(headline, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out" }, 0);
       tl.to(
         chip,
-        { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: "expo.out" },
+        { y: 0, opacity: 1, scale: 1, rotation: -6, duration: 0.9, ease: "expo.out" },
         0.25,
       );
       tl.to(
@@ -213,10 +214,10 @@ export default function Hero() {
       <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 z-0" />
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center">
         <div ref={composeRef} className="relative w-full">
-          <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-[120%]">
+          <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-[75%]">
             <div
               ref={chipRef}
-              className="flex items-center gap-2.5 rounded-full border border-card-border bg-neutral-200/90 px-3 py-2 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.25)] backdrop-blur-sm md:gap-3.5 md:py-3"
+              className="flex items-center gap-2.5 rounded-full border-[3px] border-white bg-ink px-3 py-2 md:gap-3.5 md:py-3"
               style={{ willChange: "transform" }}
             >
               <span className="relative aspect-square h-9 overflow-hidden rounded-full md:h-12">
@@ -229,7 +230,7 @@ export default function Hero() {
                   className="h-full w-full object-cover"
                 />
               </span>
-              <span className="whitespace-nowrap font-[family-name:var(--font-satoshi)] text-[20px] font-bold leading-[0.9] text-ink">
+              <span className="whitespace-nowrap font-[family-name:var(--font-satoshi)] text-[20px] font-bold leading-[0.9] text-white">
                 Hi, I&rsquo;m Nikita
               </span>
             </div>
@@ -238,7 +239,7 @@ export default function Hero() {
           <div ref={headlineScrollRef} className="will-change-transform">
             <h1
               ref={headlineRef}
-              className="hero-headline text-center font-[family-name:var(--font-switzer)] text-[clamp(36px,8.2vw,148px)] font-black uppercase leading-[0.95] tracking-[-0.04em]"
+              className="hero-headline text-center font-[family-name:var(--font-switzer)] text-[clamp(48px,12vw,140px)] font-black uppercase leading-[0.85] tracking-[-0.04em]"
             >
               <span className="block">I craft</span>
               <span className="block text-accent">

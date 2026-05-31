@@ -52,7 +52,7 @@ html {
 
 /* Hero grid background — subtle 1px lines, faded toward the edges */
 .hero-grid {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.09) 1.2px, transparent 1.4px);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.18) 1.6px, transparent 1.8px);
   background-size: 28px 28px;
   background-position: center center;
   -webkit-mask-image: radial-gradient(ellipse at center, #000 40%, transparent 85%);
