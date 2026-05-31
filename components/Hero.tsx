@@ -35,6 +35,7 @@ export default function Hero() {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const chipRef = useRef<HTMLDivElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
+  const workCardsRef = useRef<HTMLDivElement>(null);
 
   const [typed, setTyped] = useState(WORDS[0]);
   const [typingStarted, setTypingStarted] = useState(false);
@@ -107,34 +108,52 @@ export default function Hero() {
       );
 
       if (!coarsePointer) {
+        const workCards = workCardsRef.current;
+
         const setHeadRotY = gsap.quickTo(headline, "rotationY", { duration: 0.6, ease: "power3.out" });
         const setHeadRotX = gsap.quickTo(headline, "rotationX", { duration: 0.6, ease: "power3.out" });
+        const setHeadX = gsap.quickTo(headline, "x", { duration: 0.7, ease: "power3.out" });
+        const setHeadY = gsap.quickTo(headline, "y", { duration: 0.7, ease: "power3.out" });
         const setChipX = gsap.quickTo(chip, "x", { duration: 0.6, ease: "power3.out" });
         const setChipY = gsap.quickTo(chip, "y", { duration: 0.6, ease: "power3.out" });
+        const setWorkX = workCards
+          ? gsap.quickTo(workCards, "x", { duration: 0.7, ease: "power3.out" })
+          : null;
+        const setWorkY = workCards
+          ? gsap.quickTo(workCards, "y", { duration: 0.7, ease: "power3.out" })
+          : null;
 
         const onMove = (e: MouseEvent) => {
-          const rect = compose.getBoundingClientRect();
+          const rect = section.getBoundingClientRect();
           const cx = rect.left + rect.width / 2;
           const cy = rect.top + rect.height / 2;
           const nx = Math.max(-1, Math.min(1, (e.clientX - cx) / (rect.width / 2)));
           const ny = Math.max(-1, Math.min(1, (e.clientY - cy) / (rect.height / 2)));
           setHeadRotY(nx * 3);
           setHeadRotX(-ny * 3);
-          setChipX(nx * 14);
-          setChipY(ny * 8);
+          setHeadX(nx * 10);
+          setHeadY(ny * 6);
+          setChipX(nx * 22);
+          setChipY(ny * 14);
+          setWorkX?.(nx * 16);
+          setWorkY?.(ny * 10);
         };
         const onLeave = () => {
           setHeadRotY(0);
           setHeadRotX(0);
+          setHeadX(0);
+          setHeadY(0);
           setChipX(0);
           setChipY(0);
+          setWorkX?.(0);
+          setWorkY?.(0);
         };
 
-        compose.addEventListener("mousemove", onMove);
-        compose.addEventListener("mouseleave", onLeave);
+        section.addEventListener("mousemove", onMove);
+        section.addEventListener("mouseleave", onLeave);
         cleanup.push(() => {
-          compose.removeEventListener("mousemove", onMove);
-          compose.removeEventListener("mouseleave", onLeave);
+          section.removeEventListener("mousemove", onMove);
+          section.removeEventListener("mouseleave", onLeave);
         });
       }
     };
@@ -240,7 +259,12 @@ export default function Hero() {
           <HoverText className="font-medium">Guesty</HoverText>
         </div>
         <div data-meta-item className="flex flex-col items-center gap-4">
-          <div className="flex items-end justify-center" aria-hidden>
+          <div
+            ref={workCardsRef}
+            className="flex items-end justify-center"
+            style={{ willChange: "transform" }}
+            aria-hidden
+          >
             <div className="z-30 h-14 w-10 -mr-2.5 -rotate-[14deg] rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
             <div className="z-20 h-14 w-10 rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
             <div className="z-10 h-14 w-10 -ml-2.5 rotate-[14deg] rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
