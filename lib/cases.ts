@@ -1,21 +1,40 @@
 export type Case = {
   slug: string;
   title: string;
+  /** Optional long-form sentence headline. When set, replaces the uppercase title display. */
+  headline?: string;
   dates: string;
   description: string;
   website?: string;
   accent: string;
+  theme?: "light" | "dark";
+  image?: { src: string; alt: string };
+  /** Optional logo rendered above the headline. Recolored to the card text color. */
+  logo?: { src: string; alt: string; aspectRatio: number; height?: number };
 };
 
 export const cases: Case[] = [
   {
     slug: "case-1",
-    title: "Project One",
-    dates: "2024 – 2025",
+    title: "Guesty Installments",
+    headline:
+      "Unblocked [X] enterprise accounts by adapting payment automations for long-term rentals",
+    dates: "",
+    logo: {
+      src: "/images/guesty-logo.svg",
+      alt: "Guesty",
+      aspectRatio: 445 / 117,
+      height: 28,
+    },
     description:
-      "Short project description goes here. Two or three lines about the problem, the approach, and what shipped.",
+      "Large property managers were handling long-term billing manually or leaving Guesty for competitors. I ran discovery with property managers to map how they actually collect rent, then designed a three-step installments setup that handles recurring charges, proration, and move-in costs — without disrupting the existing short-term automation experience.",
     website: "#",
-    accent: "#E9E4DD",
+    accent: "#072C23",
+    theme: "dark",
+    image: {
+      src: "/images/guesty-installments.png",
+      alt: "Guesty Installments setup UI with payment cycle, automation example calendar, and house illustrations",
+    },
   },
   {
     slug: "case-2",
