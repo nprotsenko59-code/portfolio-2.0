@@ -45,6 +45,17 @@ html {
   will-change: transform;
 }
 
+/* Hero grid background — subtle 1px lines, faded toward the edges */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.14) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center center;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 40%, transparent 85%);
+  mask-image: radial-gradient(ellipse at center, #000 40%, transparent 85%);
+}
+
 /* Typing caret for hero headline. Sits between the current word and the period. */
 .hero-caret {
   display: inline-block;

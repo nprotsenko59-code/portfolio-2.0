@@ -193,7 +193,8 @@ export default function Hero() {
       ref={sectionRef}
       className="relative flex min-h-screen flex-col justify-between px-8 pt-10 pb-8 md:px-12 md:pt-12 md:pb-10"
     >
-      <div className="flex flex-1 flex-col items-center justify-center">
+      <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 z-0" />
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center">
         <div ref={composeRef} className="relative w-full">
           <div
             ref={chipRef}
@@ -232,7 +233,7 @@ export default function Hero() {
 
       <div
         ref={metaRef}
-        className="grid grid-cols-3 items-end gap-8 pt-16 text-[13px] md:text-sm"
+        className="relative z-10 grid grid-cols-3 items-end gap-8 pt-16 text-[13px] md:text-sm"
       >
         <div data-meta-item className="flex flex-col gap-1 text-left">
           <span className="text-neutral-400">Currently at</span>
