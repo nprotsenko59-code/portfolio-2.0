@@ -8,12 +8,10 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 const WORDS = [
   "experiences",
   "products",
-  "systems",
-  "clarity",
+  "journeys",
   "interactions",
-  "trust",
+  "systems",
   "moments",
-  "outcomes",
 ];
 
 const TYPE_MS = 120;
@@ -239,7 +237,12 @@ export default function Hero() {
           <span className="text-neutral-400">Currently at</span>
           <HoverText className="font-medium">Guesty</HoverText>
         </div>
-        <div data-meta-item className="flex justify-center">
+        <div data-meta-item className="flex flex-col items-center gap-4">
+          <div className="flex items-end justify-center" aria-hidden>
+            <div className="z-30 h-14 w-10 -mr-2.5 -rotate-[14deg] rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
+            <div className="z-20 h-14 w-10 rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
+            <div className="z-10 h-14 w-10 -ml-2.5 rotate-[14deg] rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
+          </div>
           <HoverText className="font-medium">See my work</HoverText>
         </div>
         <div data-meta-item className="flex flex-col gap-1 text-right">
