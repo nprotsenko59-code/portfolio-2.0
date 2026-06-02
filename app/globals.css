@@ -75,6 +75,12 @@ html {
   50%, 100% { opacity: 0; }
 }
 
+/* Case study: native CSS scroll snap. Applied via JS-toggled class on <html>. */
+html.case-snap {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
 /* Reduced motion: snap everything to final state, disable smooth scroll */
 @media (prefers-reduced-motion: reduce) {
   .reveal-line > .line-inner {
@@ -86,5 +92,9 @@ html {
   }
   html.lenis, html.lenis body {
     scroll-behavior: auto !important;
+  }
+  html.case-snap {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
   }
 }

@@ -16,6 +16,7 @@ export default function CaseStudyNav({
     <>
       <div
         aria-hidden
+        data-case-progress
         className="pointer-events-none fixed left-0 right-0 top-0 z-[60] h-[3px] bg-ink/10"
       >
         <div
@@ -27,9 +28,11 @@ export default function CaseStudyNav({
         <div className="pointer-events-auto">
           <Link
             href="/"
+            scroll={false}
             data-cursor
             data-cursor-label="Back"
-            className="text-xs font-medium uppercase tracking-widest text-ink-muted transition-colors hover:text-ink"
+            data-case-back
+            className="inline-block text-xs font-medium uppercase tracking-widest text-ink-muted transition-colors hover:text-ink"
           >
             ← Back
           </Link>

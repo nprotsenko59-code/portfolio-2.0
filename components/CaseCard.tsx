@@ -64,6 +64,13 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
             href={`/work/${data.slug}`}
             data-cursor
             data-cursor-label="View"
+            onClick={() => {
+              try {
+                sessionStorage.setItem("home:returnScroll", String(window.scrollY));
+              } catch {
+                /* ignore */
+              }
+            }}
             className={`group inline-flex items-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
               isDark
                 ? "bg-white text-ink hover:bg-white/90"
