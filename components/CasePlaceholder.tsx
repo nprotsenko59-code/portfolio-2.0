@@ -1,5 +1,59 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import type { CaseStudySection } from "@/lib/cases";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+function ProcessVisual() {
+  const imgRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const img = imgRef.current;
+    if (!img) return;
+
+    const section = document.querySelector<HTMLElement>('section[id="process"]');
+    if (!section) return;
+
+    gsap.set(img, { opacity: 0, y: 20 });
+
+    const tl = gsap.timeline({
+      defaults: { ease: "power2.out" },
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.4,
+      },
+    });
+
+    // Fade in as paragraph 2 begins to reveal (~33% through the section).
+    tl.to(img, { opacity: 1, y: 0, duration: 0.18 }, 0.33);
+    // Hold through end so scroll range maps cleanly.
+    tl.to({}, { duration: 0.1 }, 1);
+
+    const trigger = tl.scrollTrigger;
+    return () => {
+      trigger?.kill();
+    };
+  }, []);
+
+  return (
+    <div className="relative flex h-full w-full items-center justify-center p-12">
+      <div ref={imgRef} className="relative w-full max-w-[520px]">
+        <Image
+          src="/images/case-process/find-inspiration.png"
+          alt="Reference Scout — finding UI inspiration via Mobbin"
+          width={2133}
+          height={2463}
+          className="h-auto w-full"
+          priority={false}
+        />
+      </div>
+    </div>
+  );
+}
 
 function ResearchVisual() {
   return (
@@ -142,7 +196,7 @@ export default function CasePlaceholder({
       className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[40px] bg-[#F6F5F1]"
       aria-label={`${section.chip} visual`}
     >
-      {section.id !== "research" ? (
+      {section.id !== "research" && section.id !== "process" ? (
         <div aria-hidden className="case-grid pointer-events-none absolute inset-0" />
       ) : null}
       {section.id === "background" || section.id === "problem" ? (
@@ -152,6 +206,10 @@ export default function CasePlaceholder({
       ) : section.id === "research" ? (
         <div className="relative h-full w-full">
           <ResearchVisual />
+        </div>
+      ) : section.id === "process" ? (
+        <div className="relative h-full w-full">
+          <ProcessVisual />
         </div>
       ) : (
         <span className="relative text-sm text-ink/40">Visual</span>
