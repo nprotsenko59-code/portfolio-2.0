@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { Case } from "@/lib/cases";
 
 export default function CaseCard({ data }: { data: Case; index: number }) {
@@ -30,7 +31,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
       ) : null}
       {data.headline ? (
         <h3
-          className={`text-[clamp(28px,2.8vw,46px)] font-bold uppercase leading-[1.1] tracking-[-0.02em] ${
+          className={`font-display text-[clamp(28px,2.8vw,46px)] font-bold uppercase leading-[1.1] tracking-[-0.02em] ${
             isDark ? "text-white" : "text-ink"
           }`}
         >
@@ -38,7 +39,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
         </h3>
       ) : (
         <h3
-          className={`text-[clamp(36px,4vw,56px)] font-black uppercase leading-none tracking-[-0.03em] ${
+          className={`font-display text-[clamp(36px,4vw,56px)] font-bold uppercase leading-none tracking-[-0.03em] ${
             isDark ? "text-white" : "text-ink"
           }`}
         >
@@ -57,7 +58,35 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
       >
         {data.description}
       </p>
-      {data.website ? (
+      {data.study ? (
+        <div className="mt-auto pt-10">
+          <Link
+            href={`/work/${data.slug}`}
+            data-cursor
+            data-cursor-label="View"
+            onClick={() => {
+              try {
+                sessionStorage.setItem("home:returnScroll", String(window.scrollY));
+              } catch {
+                /* ignore */
+              }
+            }}
+            className={`group inline-flex items-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
+              isDark
+                ? "bg-white text-ink hover:bg-white/90"
+                : "bg-white/70 text-ink hover:bg-white"
+            }`}
+          >
+            <span>View</span>
+            <span
+              aria-hidden
+              className="ml-0 inline-flex w-0 -translate-x-1 items-center overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-out group-hover:ml-1.5 group-hover:w-[14px] group-hover:translate-x-0 group-hover:opacity-100"
+            >
+              →
+            </span>
+          </Link>
+        </div>
+      ) : data.website ? (
         <div className="mt-auto pt-10">
           <a
             href={data.website}
