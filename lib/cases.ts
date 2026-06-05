@@ -72,15 +72,15 @@ const guestyStudy: { sections: CaseStudySection[] } = {
     {
       id: "decisions",
       chip: "Decisions",
-      title: "Key design decisions",
+      title: "Final design — key decisions",
       revealParagraphsOnScroll: true,
       body: "I designed a dedicated, separate setup flow for installment-based automations. Users still enter from the Payment Automations area, but long-term billing has its own guided path with its own mental model. This keeps the short-term experience intact, gives the system clean logic to detect conflicts, and lets both paths evolve independently.\n\nA guided three-step wizard sequences the decisions: Conditions (channel, properties, length of stay floor of 28 nights), Payment Cycle (cadence, amount, when within the cycle to charge), and Move-in Costs (initial payment and optional refundable deposit). Users think about one layer at a time; the structure itself communicates the mental model.\n\nProration is handled automatically and made legible two ways. A plain-language line directly below the cycle setting: \"The first installment will be pro-rated to cover only the period from check-in to the end of the month.\" And a live calendar preview that renders a sample reservation across multiple months, with payment badges on the exact dates each charge will fire.",
     },
     {
       id: "key-improvement",
-      chip: "Key Improvement",
-      title: "Key improvement",
-      body: "I noticed that the setup flow and all this logic might be hard for users to comprehend, so we added a calendar visualisation with reservation example that was updating based on decisions that user made during the flow.",
+      chip: "Main Challenge",
+      title: "Main challenge",
+      body: "I needed the way for users to preview the automation while they are creating it, so that it is easier for them to understand how it works. I added a calendar visualisation with reservation example that was updating based on decisions that user made during the flow.",
     },
     {
       id: "ahead",

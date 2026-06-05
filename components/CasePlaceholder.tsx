@@ -6,17 +6,20 @@ import type { CaseStudySection } from "@/lib/cases";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 function ProcessVisual() {
-  const imgRef = useRef<HTMLDivElement>(null);
+  const img1Ref = useRef<HTMLDivElement>(null);
+  const img2Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const img = imgRef.current;
-    if (!img) return;
+    const img1 = img1Ref.current;
+    const img2 = img2Ref.current;
+    if (!img1 || !img2) return;
 
     const section = document.querySelector<HTMLElement>('section[id="process"]');
     if (!section) return;
 
-    gsap.set(img, { opacity: 0, y: 20 });
+    gsap.set(img1, { opacity: 0, y: 20 });
+    gsap.set(img2, { opacity: 0, y: 20 });
 
     const tl = gsap.timeline({
       defaults: { ease: "power2.out" },
@@ -28,9 +31,14 @@ function ProcessVisual() {
       },
     });
 
-    // Fade in as paragraph 2 begins to reveal (~33% through the section).
-    tl.to(img, { opacity: 1, y: 0, duration: 0.18 }, 0.33);
-    // Hold through end so scroll range maps cleanly.
+    // Image 1 (find-inspiration): fades in with paragraph 2 (~33%),
+    // then fades out as paragraph 3 begins (~62%).
+    tl.to(img1, { opacity: 1, y: 0, duration: 0.18 }, 0.33);
+    tl.to(img1, { opacity: 0, y: -16, duration: 0.16 }, 0.62);
+
+    // Image 2 (cursor-screenshot): fades in with paragraph 3 (~66%).
+    tl.to(img2, { opacity: 1, y: 0, duration: 0.18 }, 0.66);
+
     tl.to({}, { duration: 0.1 }, 1);
 
     const trigger = tl.scrollTrigger;
@@ -40,16 +48,30 @@ function ProcessVisual() {
   }, []);
 
   return (
-    <div className="relative flex h-full w-full items-center justify-center p-12">
-      <div ref={imgRef} className="relative w-full max-w-[520px]">
-        <Image
-          src="/images/case-process/find-inspiration.png"
-          alt="Reference Scout — finding UI inspiration via Mobbin"
-          width={2133}
-          height={2463}
-          className="h-auto w-full"
-          priority={false}
-        />
+    <div className="relative h-full w-full">
+      <div ref={img1Ref} className="absolute inset-0 flex items-center justify-center p-10">
+        <div className="relative h-full w-full max-w-[520px]">
+          <Image
+            src="/images/case-process/find-inspiration.png"
+            alt="Reference Scout — finding UI inspiration via Mobbin"
+            fill
+            sizes="(min-width: 768px) 520px, 100vw"
+            className="object-contain"
+            priority={false}
+          />
+        </div>
+      </div>
+      <div ref={img2Ref} className="absolute inset-0">
+        <div className="absolute left-[8%] top-[10%] w-[140%]">
+          <Image
+            src="/images/case-process/cursor-screenshot.png"
+            alt="Coded prototype in Cursor"
+            width={5157}
+            height={3240}
+            className="h-auto w-full rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.25)]"
+            priority={false}
+          />
+        </div>
       </div>
     </div>
   );
