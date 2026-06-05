@@ -60,6 +60,16 @@ html {
   mask-image: radial-gradient(ellipse at center, #000 40%, transparent 85%);
 }
 
+/* Case study visual placeholder grid — softer than the hero version, tuned
+   for the warm #F6F5F1 card background. */
+.case-grid {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.11) 1.4px, transparent 1.6px);
+  background-size: 28px 28px;
+  background-position: center center;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 90%);
+  mask-image: radial-gradient(ellipse at center, #000 45%, transparent 90%);
+}
+
 /* Typing caret for hero headline. Sits between the current word and the period. */
 .hero-caret {
   display: inline-block;
