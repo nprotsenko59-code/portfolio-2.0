@@ -66,6 +66,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
       id: "process",
       chip: "Process",
       title: "Synthesis and prototyping",
+      revealParagraphsOnScroll: true,
       body: "After discovery, I translated findings into flowcharts before touching UI. Mapping how channel, length of stay, and billing paradigm interact made it clear early on that installments couldn't coexist cleanly with existing automation rules — the conflict problem surfaced in a flowchart, before becoming a design problem.\n\nTo support the research and design process, I used two internal tools that I build for the team: Reference scout — an agent connected to Mobbin via MCP that searches for relevant UI references based on a design brief. Rather than manually browsing for comparable patterns, the agent surfaces them automatically, saving research time and broadening the reference pool beyond the obvious sources.\n\nI built a coded prototype in Cursor to explore wizard variations in low fidelity. It served two purposes: aligning stakeholders on the concept, and pressure-testing the billing logic — especially proration — across edge cases. Finding logic gaps at prototype stage is far cheaper than finding them in Figma or in development.",
     },
     {
