@@ -104,7 +104,7 @@ export const cases: Case[] = [
       height: 28,
     },
     description:
-      "Large property managers were handling long-term billing manually or leaving Guesty for competitors. I ran discovery with property managers to map how they actually collect rent, then designed a three-step installments setup that handles recurring charges, proration, and move-in costs — without disrupting the existing short-term automation experience.",
+      "Guesty's payment engine was built for short-term rentals. Long-term operators — managing monthly billing, proration, move-in costs — had no way to automate their collections. I led research and end-to-end design of a dedicated flow to allow users to automate their long-term reservations billing and unblock sales.",
     accent: "#072C23",
     theme: "dark",
     image: {

@@ -77,8 +77,11 @@ html {
 
 /* Case study: native CSS scroll snap. Applied via JS-toggled class on <html>. */
 html.case-snap {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y mandatory !important;
   scroll-behavior: smooth;
+}
+html.case-snap body {
+  scroll-snap-type: y mandatory;
 }
 
 /* Reduced motion: snap everything to final state, disable smooth scroll */
