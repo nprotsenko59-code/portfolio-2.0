@@ -34,6 +34,7 @@ export default function Hero() {
   const headlineScrollRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const chipRef = useRef<HTMLDivElement>(null);
+  const photoCardRef = useRef<HTMLDivElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
   const workCardsRef = useRef<HTMLDivElement>(null);
 
@@ -46,8 +47,9 @@ export default function Hero() {
     const headlineScroll = headlineScrollRef.current;
     const headline = headlineRef.current;
     const chip = chipRef.current;
+    const photoCard = photoCardRef.current;
     const meta = metaRef.current;
-    if (!section || !compose || !headlineScroll || !headline || !chip || !meta) {
+    if (!section || !compose || !headlineScroll || !headline || !chip || !photoCard || !meta) {
       return;
     }
 
@@ -67,13 +69,15 @@ export default function Hero() {
       const metaItems = meta.querySelectorAll<HTMLElement>("[data-meta-item]");
 
       if (reduced) {
-        gsap.set(chip, { rotation: -6 });
+        gsap.set(chip, { rotation: -8 });
+        gsap.set(photoCard, { rotation: 4 });
         setTypingStarted(true);
         return;
       }
 
       gsap.set(headline, { y: 40, opacity: 0 });
-      gsap.set(chip, { y: -20, opacity: 0, scale: 0.85, rotation: -12 });
+      gsap.set(chip, { y: -40, opacity: 0, scale: 0.6, rotation: -22 });
+      gsap.set(photoCard, { y: -30, opacity: 0, scale: 0.9, rotation: 10 });
       gsap.set(metaItems, { y: 24, opacity: 0 });
       gsap.set(headlineScroll, { perspective: 1000 });
 
@@ -85,6 +89,7 @@ export default function Hero() {
             .timeline()
             .to(headline, { scale: 1.18, opacity: 0, ease: "none" }, 0)
             .to(chip, { y: -60, opacity: 0, ease: "none" }, 0)
+            .to(photoCard, { y: -80, opacity: 0, ease: "none" }, 0)
             .to(metaItems, { opacity: 0, y: -20, ease: "none", duration: 0.3 }, 0);
 
           scrollTrigger = ScrollTrigger.create({
@@ -98,9 +103,14 @@ export default function Hero() {
       });
       tl.to(headline, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out" }, 0);
       tl.to(
+        photoCard,
+        { y: 0, opacity: 1, scale: 1, rotation: 4, duration: 1.1, ease: "expo.out" },
+        0.15,
+      );
+      tl.to(
         chip,
-        { y: 0, opacity: 1, scale: 1, rotation: -6, duration: 0.9, ease: "expo.out" },
-        0.25,
+        { y: 0, opacity: 1, scale: 1, rotation: -8, duration: 1, ease: "back.out(1.6)" },
+        0.45,
       );
       tl.to(
         metaItems,
@@ -117,6 +127,8 @@ export default function Hero() {
         const setHeadY = gsap.quickTo(headline, "y", { duration: 0.7, ease: "power3.out" });
         const setChipX = gsap.quickTo(chip, "x", { duration: 0.6, ease: "power3.out" });
         const setChipY = gsap.quickTo(chip, "y", { duration: 0.6, ease: "power3.out" });
+        const setPhotoX = gsap.quickTo(photoCard, "x", { duration: 0.7, ease: "power3.out" });
+        const setPhotoY = gsap.quickTo(photoCard, "y", { duration: 0.7, ease: "power3.out" });
         const setWorkX = workCards
           ? gsap.quickTo(workCards, "x", { duration: 0.7, ease: "power3.out" })
           : null;
@@ -134,8 +146,10 @@ export default function Hero() {
           setHeadRotX(-ny * 3);
           setHeadX(nx * 10);
           setHeadY(ny * 6);
-          setChipX(nx * 22);
-          setChipY(ny * 14);
+          setChipX(nx * 32);
+          setChipY(ny * 20);
+          setPhotoX(nx * 18);
+          setPhotoY(ny * 12);
           setWorkX?.(nx * 16);
           setWorkY?.(ny * 10);
         };
@@ -146,6 +160,8 @@ export default function Hero() {
           setHeadY(0);
           setChipX(0);
           setChipY(0);
+          setPhotoX(0);
+          setPhotoY(0);
           setWorkX?.(0);
           setWorkY?.(0);
         };
@@ -212,31 +228,36 @@ export default function Hero() {
       className="relative flex min-h-screen flex-col justify-between px-8 pt-10 pb-8 md:px-12 md:pt-12 md:pb-10"
     >
       <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 z-0" />
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center pt-32 md:pt-40">
         <div ref={composeRef} className="relative w-full">
-          <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-[75%]">
+          <div className="pointer-events-none absolute left-1/2 top-0 z-0 -translate-x-1/2 translate-y-[calc(-100%+55px)]">
             <div
-              ref={chipRef}
-              className="flex items-center gap-2.5 rounded-full border-[3px] border-white bg-ink px-3 py-2 md:gap-3.5 md:py-3"
+              ref={photoCardRef}
+              className="relative"
               style={{ willChange: "transform" }}
             >
-              <span className="relative aspect-square h-9 overflow-hidden rounded-full md:h-12">
+              <span className="relative block aspect-square w-52 overflow-hidden rounded-[28px] border-[5px] border-white md:w-64 md:rounded-[32px] lg:w-72">
                 <Image
-                  src="/images/nikita.jpg"
+                  src="/images/nikita-hero.png"
                   alt="Portrait of Nikita Protsenko"
-                  width={96}
-                  height={96}
+                  width={768}
+                  height={768}
                   priority
                   className="h-full w-full object-cover"
                 />
               </span>
-              <span className="whitespace-nowrap font-[family-name:var(--font-satoshi)] text-[20px] font-bold leading-[0.9] text-white">
-                Hi, I&rsquo;m Nikita
-              </span>
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-[5px] rounded-[23px] md:rounded-[27px]"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, rgba(255,255,255,0) 35%, rgba(255,255,255,1) 100%)",
+                }}
+              />
             </div>
           </div>
 
-          <div ref={headlineScrollRef} className="will-change-transform">
+          <div ref={headlineScrollRef} className="relative z-10 will-change-transform">
             <h1
               ref={headlineRef}
               className="hero-headline text-center font-[family-name:var(--font-switzer)] text-[clamp(48px,12vw,140px)] font-black uppercase leading-[0.85] tracking-[-0.04em]"
@@ -247,6 +268,16 @@ export default function Hero() {
                 <span aria-hidden className="hero-caret" />
               </span>
             </h1>
+          </div>
+
+          <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
+            <div
+              ref={chipRef}
+              className="whitespace-nowrap rounded-full border-[3px] border-white bg-ink px-4 py-2 font-[family-name:var(--font-satoshi)] text-[16px] font-bold leading-[0.9] text-white shadow-[0_10px_24px_-12px_rgba(0,0,0,0.45)] md:px-5 md:py-2.5 md:text-[18px]"
+              style={{ willChange: "transform" }}
+            >
+              Hi, I&rsquo;m Nikita
+            </div>
           </div>
         </div>
       </div>
