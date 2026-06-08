@@ -143,6 +143,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
             width={2370}
             height={1456}
             sizes="(min-width: 768px) 60vw, 100vw"
+            quality={90}
             className="pointer-events-none absolute left-1/2 top-0 h-full w-auto max-w-none -translate-x-[40%] select-none md:-translate-x-[35%]"
             priority={false}
           />

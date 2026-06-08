@@ -240,9 +240,11 @@ export default function Hero() {
                 <Image
                   src="/images/nikita-hero.png"
                   alt="Portrait of Nikita Protsenko"
-                  width={768}
-                  height={768}
+                  width={1254}
+                  height={1254}
                   priority
+                  quality={90}
+                  sizes="(min-width: 1024px) 288px, (min-width: 768px) 256px, 208px"
                   className="h-full w-full object-cover"
                 />
               </span>

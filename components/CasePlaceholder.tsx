@@ -56,6 +56,7 @@ function ProcessVisual() {
             alt="Reference Scout — finding UI inspiration via Mobbin"
             fill
             sizes="(min-width: 768px) 520px, 100vw"
+            quality={90}
             className="object-contain"
             priority={false}
           />
@@ -68,6 +69,8 @@ function ProcessVisual() {
             alt="Coded prototype in Cursor"
             width={5157}
             height={3240}
+            sizes="(min-width: 768px) 140vw, 140vw"
+            quality={90}
             className="h-auto w-full rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.25)]"
             priority={false}
           />
@@ -103,6 +106,8 @@ function ResearchVisual() {
             alt=""
             width={411}
             height={411}
+            sizes="(min-width: 768px) 100px, 14vw"
+            quality={90}
             className="h-auto w-full"
           />
         </div>
@@ -115,6 +120,8 @@ function ResearchVisual() {
             alt="30+ nights"
             width={927}
             height={369}
+            sizes="(min-width: 768px) 260px, 36vw"
+            quality={90}
             className="h-auto w-full"
           />
         </div>
@@ -126,6 +133,8 @@ function ResearchVisual() {
             alt="Upfront charges"
             width={1167}
             height={369}
+            sizes="(min-width: 768px) 320px, 45vw"
+            quality={90}
             className="h-auto w-full"
           />
         </div>
@@ -137,6 +146,8 @@ function ResearchVisual() {
             alt="Anniversary billing"
             width={1242}
             height={369}
+            sizes="(min-width: 768px) 340px, 48vw"
+            quality={90}
             className="h-auto w-full"
           />
         </div>
@@ -148,6 +159,8 @@ function ResearchVisual() {
             alt="Payment cycles"
             width={1137}
             height={369}
+            sizes="(min-width: 768px) 310px, 44vw"
+            quality={90}
             className="h-auto w-full"
           />
         </div>
@@ -167,6 +180,8 @@ function BackgroundVisual() {
             alt="Current logic"
             width={621}
             height={336}
+            sizes="(min-width: 768px) 195px, 42vw"
+            quality={90}
             className="h-auto w-full"
             priority={false}
           />
@@ -179,6 +194,8 @@ function BackgroundVisual() {
             alt="Charge at booking confirmation"
             width={1670}
             height={424}
+            sizes="(min-width: 768px) 460px, 100vw"
+            quality={90}
             className="h-auto w-full"
             priority={false}
           />
@@ -189,6 +206,8 @@ function BackgroundVisual() {
             alt="Charge at check-in"
             width={1670}
             height={424}
+            sizes="(min-width: 768px) 460px, 100vw"
+            quality={90}
             className="h-auto w-full"
             priority={false}
           />
@@ -199,6 +218,8 @@ function BackgroundVisual() {
             alt="Charge at check-out"
             width={1670}
             height={424}
+            sizes="(min-width: 768px) 460px, 100vw"
+            quality={90}
             className="h-auto w-full"
             priority={false}
           />
@@ -218,9 +239,6 @@ export default function CasePlaceholder({
       className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[40px] bg-[#F6F5F1]"
       aria-label={`${section.chip} visual`}
     >
-      {section.id !== "research" && section.id !== "process" ? (
-        <div aria-hidden className="case-grid pointer-events-none absolute inset-0" />
-      ) : null}
       {section.id === "background" || section.id === "problem" ? (
         <div className="relative h-full w-full">
           <BackgroundVisual />
