@@ -50,7 +50,7 @@ function ProcessVisual() {
   return (
     <div className="relative h-full w-full">
       <div ref={img1Ref} className="absolute inset-0 flex items-center justify-center p-10">
-        <div className="relative h-full w-full max-w-[520px]">
+        <div className="relative h-[70%] w-[70%]">
           <Image
             src="/images/case-process/find-inspiration.png"
             alt="Reference Scout — finding UI inspiration via Mobbin"
@@ -169,61 +169,35 @@ function ResearchVisual() {
   );
 }
 
+function OverviewVisual() {
+  return (
+    <div className="relative h-full w-full">
+      <Image
+        src="/images/case-overview/first-screen.jpg"
+        alt="Payment Installments — first screen"
+        fill
+        sizes="(min-width: 768px) 60vw, 100vw"
+        quality={90}
+        className="object-cover"
+        priority
+      />
+    </div>
+  );
+}
+
 function BackgroundVisual() {
   return (
-    <div className="relative flex h-full w-full items-center justify-center px-8">
-      <div className="relative w-full max-w-[460px]">
-        {/* Sticker — sits on top, slightly tilted */}
-        <div className="relative z-30 mx-auto -mb-4 w-[42%] -rotate-[8deg] drop-shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
-          <Image
-            src="/images/case-background/sticker.png"
-            alt="Current logic"
-            width={621}
-            height={336}
-            sizes="(min-width: 768px) 195px, 42vw"
-            quality={90}
-            className="h-auto w-full"
-            priority={false}
-          />
-        </div>
-
-        {/* Charge cards stacked below, each slightly rotated */}
-        <div className="relative z-20 -mt-2 rotate-[2deg] drop-shadow-[0_18px_30px_rgba(0,0,0,0.08)]">
-          <Image
-            src="/images/case-background/charge-1.png"
-            alt="Charge at booking confirmation"
-            width={1670}
-            height={424}
-            sizes="(min-width: 768px) 460px, 100vw"
-            quality={90}
-            className="h-auto w-full"
-            priority={false}
-          />
-        </div>
-        <div className="relative z-20 mt-4 -rotate-[3deg] drop-shadow-[0_18px_30px_rgba(0,0,0,0.08)]">
-          <Image
-            src="/images/case-background/charge-2.png"
-            alt="Charge at check-in"
-            width={1670}
-            height={424}
-            sizes="(min-width: 768px) 460px, 100vw"
-            quality={90}
-            className="h-auto w-full"
-            priority={false}
-          />
-        </div>
-        <div className="relative z-10 mt-4 rotate-[3deg] drop-shadow-[0_18px_30px_rgba(0,0,0,0.08)]">
-          <Image
-            src="/images/case-background/charge-3.png"
-            alt="Charge at check-out"
-            width={1670}
-            height={424}
-            sizes="(min-width: 768px) 460px, 100vw"
-            quality={90}
-            className="h-auto w-full"
-            priority={false}
-          />
-        </div>
+    <div className="relative flex h-full w-full items-center justify-center p-10">
+      <div className="relative h-[70%] w-[70%]">
+        <Image
+          src="/images/case-background/cards.png"
+          alt="Charge cards illustrating Guesty's short-term payment logic"
+          fill
+          sizes="(min-width: 768px) 520px, 100vw"
+          quality={90}
+          className="object-contain"
+          priority={false}
+        />
       </div>
     </div>
   );
@@ -239,7 +213,11 @@ export default function CasePlaceholder({
       className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[40px] bg-[#F6F5F1]"
       aria-label={`${section.chip} visual`}
     >
-      {section.id === "background" || section.id === "problem" ? (
+      {section.id === "overview" ? (
+        <div className="relative h-full w-full">
+          <OverviewVisual />
+        </div>
+      ) : section.id === "background" || section.id === "problem" ? (
         <div className="relative h-full w-full">
           <BackgroundVisual />
         </div>
