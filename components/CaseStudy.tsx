@@ -277,7 +277,7 @@ export default function CaseStudy({ data }: { data: Case }) {
                 className="relative"
                 style={{ height: `${paragraphs.length * 100}vh` }}
               >
-                <div className="sticky top-0 flex h-screen items-start px-8 pb-12 pt-24 md:px-12 md:pt-20">
+                <div className="sticky top-0 flex h-screen items-start px-8 pb-12 pt-32 md:px-12 md:pt-28">
                   {textBlock}
                 </div>
                 {/* Snap markers — one per paragraph reveal step. */}
@@ -301,7 +301,7 @@ export default function CaseStudy({ data }: { data: Case }) {
               }}
               id={section.id}
               aria-label={section.chip}
-              className="flex min-h-screen snap-start snap-always flex-col justify-start px-8 pb-12 pt-24 md:px-12 md:pt-20"
+              className="flex min-h-screen snap-start snap-always flex-col justify-start px-8 pb-12 pt-32 md:px-12 md:pt-28"
             >
               {textBlock}
             </section>

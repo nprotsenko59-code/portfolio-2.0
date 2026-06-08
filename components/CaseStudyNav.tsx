@@ -32,9 +32,15 @@ export default function CaseStudyNav({
             data-cursor
             data-cursor-label="Back"
             data-case-back
-            className="inline-block text-xs font-medium uppercase tracking-widest text-ink-muted transition-colors hover:text-ink"
+            className="group inline-flex items-center rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ink/90"
           >
-            ← Back
+            <span
+              aria-hidden
+              className="mr-0 inline-flex w-0 -translate-x-1 items-center overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-out group-hover:mr-1.5 group-hover:w-[14px] group-hover:translate-x-0 group-hover:opacity-100"
+            >
+              ←
+            </span>
+            <span>Back</span>
           </Link>
         </div>
       </header>
