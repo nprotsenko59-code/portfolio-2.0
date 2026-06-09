@@ -50,7 +50,7 @@ function ProcessVisual() {
   return (
     <div className="relative h-full w-full">
       <div ref={img1Ref} className="absolute inset-0 flex items-center justify-center p-10">
-        <div className="relative h-[70%] w-[70%]">
+        <div className="relative h-full w-full">
           <Image
             src="/images/case-process/find-inspiration.png"
             alt="Reference Scout — finding UI inspiration via Mobbin"
@@ -187,8 +187,8 @@ function OverviewVisual() {
 
 function BackgroundVisual() {
   return (
-    <div className="relative flex h-full w-full items-center justify-center p-10">
-      <div className="relative h-[70%] w-[70%]">
+    <div className="relative flex h-full w-full items-center justify-center">
+      <div className="relative h-full w-full">
         <Image
           src="/images/case-background/cards.png"
           alt="Charge cards illustrating Guesty's short-term payment logic"
@@ -208,9 +208,11 @@ export default function CasePlaceholder({
 }: {
   section: CaseStudySection;
 }) {
+  const isDarkVisual = section.id === "background" || section.id === "problem";
   return (
     <div
-      className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[40px] bg-[#F6F5F1]"
+      className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[40px]"
+      style={{ backgroundColor: isDarkVisual ? "#072C23" : "#F6F5F1" }}
       aria-label={`${section.chip} visual`}
     >
       {section.id === "overview" ? (
