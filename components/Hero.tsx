@@ -299,7 +299,17 @@ export default function Hero() {
             style={{ willChange: "transform" }}
             aria-hidden
           >
-            <div className="z-30 h-14 w-10 -mr-2.5 -rotate-[14deg] rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
+            <div className="z-30 h-14 w-10 -mr-2.5 -rotate-[14deg] overflow-hidden rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12">
+              <Image
+                src="/images/case-overview/first-screen.jpg"
+                alt=""
+                width={2636}
+                height={3000}
+                sizes="48px"
+                quality={75}
+                className="h-full w-full object-cover"
+              />
+            </div>
             <div className="z-20 h-14 w-10 rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
             <div className="z-10 h-14 w-10 -ml-2.5 rotate-[14deg] rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
           </div>
