@@ -208,10 +208,11 @@ export default function CasePlaceholder({
 }: {
   section: CaseStudySection;
 }) {
-  const isDarkVisual = section.id === "background" || section.id === "problem";
+  const isDarkVisual =
+    section.id === "background" || section.id === "problem" || section.id === "process";
   return (
     <div
-      className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[40px]"
+      className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[24px]"
       style={{ backgroundColor: isDarkVisual ? "#072C23" : "#F6F5F1" }}
       aria-label={`${section.chip} visual`}
     >
