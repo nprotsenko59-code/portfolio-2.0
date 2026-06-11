@@ -136,7 +136,7 @@ export default function Connect() {
               transform: `rotate(${icon.rotation}deg)`,
               marginLeft: i === 0 ? 0 : "-1.25rem",
             }}
-            className="flex h-20 w-20 items-center justify-center rounded-[22px] border border-black/30 bg-white text-black shadow-[0_2px_0_rgba(0,0,0,0.04)] md:h-28 md:w-28"
+            className="flex h-20 w-20 items-center justify-center rounded-[22px] border border-white/10 bg-[#1F1F1F] text-white shadow-[0_2px_0_rgba(0,0,0,0.3)] md:h-28 md:w-28"
           >
             {icon.node}
           </div>
@@ -149,7 +149,7 @@ export default function Connect() {
       >
         <div
           ref={trackRef}
-          className="flex whitespace-nowrap font-[family-name:var(--font-switzer)] text-[clamp(80px,15vw,240px)] font-black uppercase leading-none tracking-[-0.04em] text-neutral-200 will-change-transform"
+          className="flex whitespace-nowrap font-[family-name:var(--font-switzer)] text-[clamp(80px,15vw,240px)] font-black uppercase leading-none tracking-[-0.04em] text-white/[0.06] will-change-transform"
         >
           {Array.from({ length: repeats }).map((_, i) => (
             <span

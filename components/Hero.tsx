@@ -240,7 +240,6 @@ export default function Hero() {
       ref={sectionRef}
       className="relative flex min-h-screen flex-col justify-between px-8 pt-10 pb-8 md:px-12 md:pt-12 md:pb-10"
     >
-      <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 z-0" />
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center pt-32 md:pt-40">
         <div ref={composeRef} className="relative w-full">
           <div className="pointer-events-none absolute left-1/2 top-0 z-20 -translate-x-1/2 translate-y-[calc(-100%+12px)]">
@@ -249,7 +248,7 @@ export default function Hero() {
               className="relative"
               style={{ willChange: "transform" }}
             >
-              <span className="relative block h-[100px] w-[100px] overflow-hidden rounded-full border-[5px] border-white">
+              <span className="relative block h-[100px] w-[100px] overflow-hidden rounded-full">
                 <Image
                   src="/images/nikita-hero.png"
                   alt="Portrait of Nikita Protsenko"
@@ -269,7 +268,7 @@ export default function Hero() {
               ref={headlineRef}
               className="hero-headline text-center font-[family-name:var(--font-switzer)] text-[96px] font-black uppercase leading-[0.85] tracking-[-0.04em]"
             >
-              <span className="block">I craft</span>
+              <span className="hero-title-gradient block">I craft</span>
               <span className="block text-accent">
                 {typed}
                 <span aria-hidden ref={caretRef} className="hero-caret" />
@@ -294,7 +293,7 @@ export default function Hero() {
                 height="68"
                 viewBox="0 0 130 90"
                 fill="none"
-                stroke="#3E3E3E"
+                stroke="#FFFFFF"
                 strokeWidth="3.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -322,7 +321,7 @@ export default function Hero() {
             style={{ willChange: "transform" }}
             aria-hidden
           >
-            <div className="z-30 h-14 w-10 -mr-2.5 -rotate-[14deg] overflow-hidden rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12">
+            <div className="z-30 h-14 w-10 -mr-2.5 -rotate-[14deg] overflow-hidden rounded-lg border-2 border-white/15 bg-neutral-700/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.6)] md:h-16 md:w-12">
               <Image
                 src="/images/case-overview/first-screen.jpg"
                 alt=""
@@ -333,8 +332,8 @@ export default function Hero() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="z-20 h-14 w-10 rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
-            <div className="z-10 h-14 w-10 -ml-2.5 rotate-[14deg] rounded-lg border-2 border-white bg-neutral-300/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.3)] md:h-16 md:w-12" />
+            <div className="z-20 h-14 w-10 rounded-lg border-2 border-white/15 bg-neutral-700/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.6)] md:h-16 md:w-12" />
+            <div className="z-10 h-14 w-10 -ml-2.5 rotate-[14deg] rounded-lg border-2 border-white/15 bg-neutral-700/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.6)] md:h-16 md:w-12" />
           </div>
           <HoverText className="font-medium">See my work</HoverText>
         </div>

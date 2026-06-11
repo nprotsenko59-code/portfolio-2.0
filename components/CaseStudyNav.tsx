@@ -32,7 +32,7 @@ export default function CaseStudyNav({
             data-cursor
             data-cursor-label="Back"
             data-case-back
-            className="group inline-flex items-center rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ink/90"
+            className="group inline-flex items-center rounded-full bg-white px-5 py-2.5 text-sm font-medium text-[#161616] transition-colors hover:bg-white/90"
           >
             <span
               aria-hidden

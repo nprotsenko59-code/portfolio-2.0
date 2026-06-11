@@ -52,8 +52,8 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
     <span
       className={`inline-flex items-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
         isDark
-          ? "bg-white text-ink group-hover:bg-white/90"
-          : "bg-white/70 text-ink group-hover:bg-white"
+          ? "bg-white text-[#161616] group-hover:bg-white/90"
+          : "bg-white/70 text-[#3E3E3E] group-hover:bg-white"
       }`}
     >
       <span>View</span>
@@ -72,7 +72,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
         <div
           role="img"
           aria-label={data.logo.alt}
-          className={`mb-6 ${isDark ? "text-white" : "text-ink"}`}
+          className={`mb-6 ${isDark ? "text-white" : "text-[#3E3E3E]"}`}
           style={{
             height: data.logo.height ?? 28,
             width: (data.logo.height ?? 28) * data.logo.aspectRatio,
@@ -91,7 +91,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
       {data.headline ? (
         <h3
           className={`font-display text-[clamp(28px,2.8vw,46px)] font-bold uppercase leading-[1.1] tracking-[-0.02em] ${
-            isDark ? "text-white" : "text-ink"
+            isDark ? "text-white" : "text-[#3E3E3E]"
           }`}
         >
           {data.headline}
@@ -99,20 +99,20 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
       ) : (
         <h3
           className={`font-display text-[clamp(36px,4vw,56px)] font-bold uppercase leading-none tracking-[-0.03em] ${
-            isDark ? "text-white" : "text-ink"
+            isDark ? "text-white" : "text-[#3E3E3E]"
           }`}
         >
           {data.title}
         </h3>
       )}
       {data.dates ? (
-        <p className={`mt-3 text-sm ${isDark ? "text-white/55" : "text-ink-muted"}`}>
+        <p className={`mt-3 text-sm ${isDark ? "text-white/55" : "text-[#858585]"}`}>
           {data.dates}
         </p>
       ) : null}
       <p
         className={`mt-4 max-w-md text-[15px] leading-[1.55] ${
-          isDark ? "text-white/85" : "text-ink"
+          isDark ? "text-white/85" : "text-[#3E3E3E]"
         }`}
       >
         {data.description}

@@ -49,7 +49,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${satoshi.variable} ${switzer.variable} ${patrickHandSC.variable} antialiased`}>
-      <body className="bg-white text-ink">
+      <body className="bg-[#161616] text-ink">
         <SmoothScroll />
         {children}
       </body>

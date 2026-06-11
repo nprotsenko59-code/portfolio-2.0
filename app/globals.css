@@ -3,16 +3,16 @@
 @theme {
   --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-switzer), ui-sans-serif, system-ui, sans-serif;
-  --color-ink: #3E3E3E;
-  --color-ink-muted: #858585;
-  --color-accent: #FC7B27;
-  --color-card: #E1E1E1;
-  --color-card-border: #CDCDCD;
+  --color-ink: #FFFFFF;
+  --color-ink-muted: #B9B9B9;
+  --color-accent: #84FF00;
+  --color-card: #1E1E1E;
+  --color-card-border: rgba(255, 255, 255, 0.08);
 }
 
 html, body {
-  background: #ffffff;
-  color: #3E3E3E;
+  background: #161616;
+  color: #FFFFFF;
 }
 
 html {
@@ -51,23 +51,14 @@ html {
   will-change: transform;
 }
 
-/* Hero grid background — subtle 1px lines, faded toward the edges */
-.hero-grid {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.18) 1.6px, transparent 1.8px);
-  background-size: 28px 28px;
-  background-position: center center;
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 40%, transparent 85%);
-  mask-image: radial-gradient(ellipse at center, #000 40%, transparent 85%);
-}
-
-/* Case study visual placeholder grid — softer than the hero version, tuned
-   for the warm #F6F5F1 card background. */
-.case-grid {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.11) 1.4px, transparent 1.6px);
-  background-size: 28px 28px;
-  background-position: center center;
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 90%);
-  mask-image: radial-gradient(ellipse at center, #000 45%, transparent 90%);
+/* Hero headline — vertical gradient from white at the top to near-black at the
+   bottom, clipped to the glyphs. */
+.hero-title-gradient {
+  background-image: linear-gradient(to bottom, #FFFFFF 0%, #3E3D3D 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* Typing caret for hero headline. Sits between the current word and the period. */

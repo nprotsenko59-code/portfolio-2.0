@@ -88,15 +88,15 @@ function ResearchVisual() {
         {/* Concentric "sonar" rings emanating from the call icon */}
         <div
           aria-hidden
-          className="absolute left-1/2 top-[47%] aspect-square w-[52%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-ink/[0.06]"
+          className="absolute left-1/2 top-[47%] aspect-square w-[52%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-black/[0.06]"
         />
         <div
           aria-hidden
-          className="absolute left-1/2 top-[47%] aspect-square w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-ink/[0.05]"
+          className="absolute left-1/2 top-[47%] aspect-square w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-black/[0.05]"
         />
         <div
           aria-hidden
-          className="absolute left-1/2 top-[47%] aspect-square w-[132%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-ink/[0.04]"
+          className="absolute left-1/2 top-[47%] aspect-square w-[132%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-black/[0.04]"
         />
 
         {/* Central call icon */}
@@ -233,7 +233,7 @@ export default function CasePlaceholder({
           <ProcessVisual />
         </div>
       ) : (
-        <span className="relative text-sm text-ink/40">Visual</span>
+        <span className="relative text-sm text-black/40">Visual</span>
       )}
     </div>
   );
