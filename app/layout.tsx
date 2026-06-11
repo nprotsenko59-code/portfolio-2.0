@@ -33,6 +33,12 @@ const switzer = localFont({
   display: "swap",
 });
 
+const patrickHandSC = localFont({
+  src: [{ path: "../public/fonts/PatrickHandSC-Regular.ttf", weight: "400", style: "normal" }],
+  variable: "--font-patrick-hand",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Nikita Protsenko — Product Designer",
   description: "I build unique and friendly product experiences for startups, corporations and myself.",
@@ -42,7 +48,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${satoshi.variable} ${switzer.variable} antialiased`}>
+    <html lang="en" className={`${satoshi.variable} ${switzer.variable} ${patrickHandSC.variable} antialiased`}>
       <body className="bg-white text-ink">
         <SmoothScroll />
         {children}

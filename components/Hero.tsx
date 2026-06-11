@@ -243,13 +243,13 @@ export default function Hero() {
       <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 z-0" />
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center pt-32 md:pt-40">
         <div ref={composeRef} className="relative w-full">
-          <div className="pointer-events-none absolute left-1/2 top-0 z-0 -translate-x-1/2 translate-y-[calc(-100%+55px)]">
+          <div className="pointer-events-none absolute left-1/2 top-0 z-20 -translate-x-1/2 translate-y-[calc(-100%+12px)]">
             <div
               ref={photoCardRef}
               className="relative"
               style={{ willChange: "transform" }}
             >
-              <span className="relative block aspect-square w-52 overflow-hidden rounded-[28px] border-[5px] border-white md:w-64 md:rounded-[32px] lg:w-72">
+              <span className="relative block h-[100px] w-[100px] overflow-hidden rounded-full border-[5px] border-white">
                 <Image
                   src="/images/nikita-hero.png"
                   alt="Portrait of Nikita Protsenko"
@@ -261,21 +261,13 @@ export default function Hero() {
                   className="h-full w-full object-cover"
                 />
               </span>
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-[5px] rounded-[23px] md:rounded-[27px]"
-                style={{
-                  background:
-                    "linear-gradient(to bottom, rgba(255,255,255,0) 35%, rgba(255,255,255,1) 100%)",
-                }}
-              />
             </div>
           </div>
 
           <div ref={headlineScrollRef} className="relative z-10 will-change-transform">
             <h1
               ref={headlineRef}
-              className="hero-headline text-center font-[family-name:var(--font-switzer)] text-[clamp(48px,12vw,140px)] font-black uppercase leading-[0.85] tracking-[-0.04em]"
+              className="hero-headline text-center font-[family-name:var(--font-switzer)] text-[96px] font-black uppercase leading-[0.85] tracking-[-0.04em]"
             >
               <span className="block">I craft</span>
               <span className="block text-accent">
@@ -286,13 +278,30 @@ export default function Hero() {
             </h1>
           </div>
 
-          <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
+          <div className="pointer-events-none absolute left-1/2 top-0 z-30 -translate-x-[210px] -translate-y-[120px]">
             <div
               ref={chipRef}
-              className="whitespace-nowrap rounded-full border-[3px] border-white bg-ink px-4 py-2 font-[family-name:var(--font-satoshi)] text-[16px] font-bold leading-[0.9] text-white shadow-[0_10px_24px_-12px_rgba(0,0,0,0.45)] md:px-5 md:py-2.5 md:text-[18px]"
+              className="relative whitespace-nowrap"
               style={{ willChange: "transform" }}
             >
-              Hi, I&rsquo;m Nikita
+              <span className="block font-[family-name:var(--font-patrick-hand)] text-[32px] uppercase leading-none text-ink">
+                Hi, I&rsquo;m Nikita
+              </span>
+              <svg
+                aria-hidden
+                className="absolute left-1/2 top-full mt-1 -translate-x-1/2"
+                width="98"
+                height="68"
+                viewBox="0 0 130 90"
+                fill="none"
+                stroke="#3E3E3E"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M8 10 C26 64 80 66 116 66" fill="none" />
+                <path d="M116 66 L96 54 M116 66 L96 80" fill="none" />
+              </svg>
             </div>
           </div>
         </div>
