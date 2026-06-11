@@ -38,8 +38,21 @@ export default function Hero() {
   const metaRef = useRef<HTMLDivElement>(null);
   const workCardsRef = useRef<HTMLDivElement>(null);
 
+  const caretRef = useRef<HTMLSpanElement>(null);
+  const iMeasureRef = useRef<HTMLSpanElement>(null);
+
   const [typed, setTyped] = useState(WORDS[0]);
   const [typingStarted, setTypingStarted] = useState(false);
+
+  useEffect(() => {
+    const syncCaretWidth = () => {
+      if (!iMeasureRef.current || !caretRef.current) return;
+      caretRef.current.style.width = `${iMeasureRef.current.getBoundingClientRect().width}px`;
+    };
+    document.fonts.ready.then(syncCaretWidth);
+    window.addEventListener("resize", syncCaretWidth);
+    return () => window.removeEventListener("resize", syncCaretWidth);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -267,7 +280,8 @@ export default function Hero() {
               <span className="block">I craft</span>
               <span className="block text-accent">
                 {typed}
-                <span aria-hidden className="hero-caret" />
+                <span aria-hidden ref={caretRef} className="hero-caret" />
+                <span aria-hidden ref={iMeasureRef} className="invisible absolute pointer-events-none select-none">I</span>
               </span>
             </h1>
           </div>
