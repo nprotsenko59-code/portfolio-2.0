@@ -149,7 +149,7 @@ export default function Connect() {
       >
         <div
           ref={trackRef}
-          className="flex whitespace-nowrap font-[family-name:var(--font-switzer)] text-[clamp(80px,15vw,240px)] font-black uppercase leading-none tracking-[-0.04em] text-white/[0.06] will-change-transform"
+          className="flex whitespace-nowrap font-[family-name:var(--font-neue-machina)] text-[clamp(80px,15vw,240px)] font-black uppercase leading-none tracking-[-0.04em] text-white/[0.06] will-change-transform"
         >
           {Array.from({ length: repeats }).map((_, i) => (
             <span

@@ -2,7 +2,7 @@
 
 @theme {
   --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-switzer), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-neue-machina), ui-sans-serif, system-ui, sans-serif;
   --color-ink: #FFFFFF;
   --color-ink-muted: #B9B9B9;
   --color-accent: #84FF00;
@@ -49,6 +49,18 @@ html {
 .reveal-line > .line-inner {
   display: inline-block;
   will-change: transform;
+}
+
+/* Hero grid background — thin white lines forming a square grid, faded out
+   from center to edges via a radial mask. */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center center;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, #000 0%, transparent 75%);
 }
 
 /* Hero headline — vertical gradient from white at the top to near-black at the

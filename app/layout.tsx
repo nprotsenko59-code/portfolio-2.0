@@ -33,6 +33,20 @@ const switzer = localFont({
   display: "swap",
 });
 
+const neueMachina = localFont({
+  src: [
+    { path: "../public/fonts/NeueMachina-Ultralight.ttf", weight: "200", style: "normal" },
+    { path: "../public/fonts/NeueMachina-Light.ttf", weight: "300", style: "normal" },
+    { path: "../public/fonts/NeueMachina-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/NeueMachina-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../public/fonts/NeueMachina-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../public/fonts/NeueMachina-Ultrabold.ttf", weight: "800", style: "normal" },
+    { path: "../public/fonts/NeueMachina-Black.ttf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-neue-machina",
+  display: "swap",
+});
+
 const patrickHandSC = localFont({
   src: [{ path: "../public/fonts/PatrickHandSC-Regular.ttf", weight: "400", style: "normal" }],
   variable: "--font-patrick-hand",
@@ -48,7 +62,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${satoshi.variable} ${switzer.variable} ${patrickHandSC.variable} antialiased`}>
+    <html lang="en" className={`${satoshi.variable} ${switzer.variable} ${neueMachina.variable} ${patrickHandSC.variable} antialiased`}>
       <body className="bg-[#161616] text-ink">
         <SmoothScroll />
         {children}

@@ -240,6 +240,7 @@ export default function Hero() {
       ref={sectionRef}
       className="relative flex min-h-screen flex-col justify-between px-8 pt-10 pb-8 md:px-12 md:pt-12 md:pb-10"
     >
+      <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 z-0" />
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center pt-32 md:pt-40">
         <div ref={composeRef} className="relative w-full">
           <div className="pointer-events-none absolute left-1/2 top-0 z-20 -translate-x-1/2 translate-y-[calc(-100%+12px)]">
@@ -266,7 +267,7 @@ export default function Hero() {
           <div ref={headlineScrollRef} className="relative z-10 will-change-transform">
             <h1
               ref={headlineRef}
-              className="hero-headline text-center font-[family-name:var(--font-switzer)] text-[96px] font-black uppercase leading-[0.85] tracking-[-0.04em]"
+              className="hero-headline text-center font-[family-name:var(--font-neue-machina)] text-[96px] font-black uppercase leading-[0.85] tracking-[-0.04em]"
             >
               <span className="hero-title-gradient block">I craft</span>
               <span className="block text-accent">
@@ -284,11 +285,11 @@ export default function Hero() {
               style={{ willChange: "transform" }}
             >
               <span className="block font-[family-name:var(--font-patrick-hand)] text-[32px] uppercase leading-none text-ink">
-                Hi, I&rsquo;m Nikita
+                Hi, I&rsquo;m Nikita, product designer
               </span>
               <svg
                 aria-hidden
-                className="absolute left-1/2 top-full mt-1 -translate-x-1/2"
+                className="absolute left-[40px] top-full mt-1"
                 width="98"
                 height="68"
                 viewBox="0 0 130 90"
