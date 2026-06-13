@@ -47,7 +47,7 @@ export default function Hero() {
   useEffect(() => {
     const syncCaretWidth = () => {
       if (!iMeasureRef.current || !caretRef.current) return;
-      caretRef.current.style.width = `${iMeasureRef.current.getBoundingClientRect().width}px`;
+      caretRef.current.style.width = `${iMeasureRef.current.getBoundingClientRect().width / 2}px`;
     };
     document.fonts.ready.then(syncCaretWidth);
     window.addEventListener("resize", syncCaretWidth);
