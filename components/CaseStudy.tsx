@@ -4,49 +4,38 @@ import { useEffect, useRef, useState } from "react";
 import type { Case } from "@/lib/cases";
 import CaseStudyNav from "./CaseStudyNav";
 import CasePlaceholder from "./CasePlaceholder";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 
 export default function CaseStudy({ data }: { data: Case }) {
   const sections = data.study?.sections ?? [];
   const sectionRefs = useRef<Array<HTMLElement | null>>([]);
   const rootRef = useRef<HTMLElement>(null);
-  const visualRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Toggle scroll-snap on <html> while the case study is mounted.
+  // Land at top on mount (matches the prior history.scrollRestoration override).
   useEffect(() => {
-    document.documentElement.classList.add("case-snap");
     const prev = history.scrollRestoration;
     history.scrollRestoration = "manual";
-    // Land at the first snap point on mount — run after browser's scroll
-    // restoration attempt so it actually sticks on reload.
-    const raf1 = requestAnimationFrame(() => {
-      const raf2 = requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: "auto" });
-      });
-      return () => cancelAnimationFrame(raf2);
-    });
+    const raf = requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "auto" }));
     return () => {
-      cancelAnimationFrame(raf1);
-      document.documentElement.classList.remove("case-snap");
+      cancelAnimationFrame(raf);
       history.scrollRestoration = prev;
     };
   }, []);
 
-  // Entry animation — same vibe as the Hero load: fade + slide-up, expo.out, staggered.
+  // Entry animation — fade + slide-up on the hero section + chrome.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const firstSection = sectionRefs.current[0];
     const root = rootRef.current;
-    const visual = visualRef.current;
     if (!firstSection || !root) return;
 
     const logo = firstSection.querySelector<HTMLElement>("[role='img']");
     const heading = firstSection.querySelector<HTMLElement>("h2");
     const paragraphs = firstSection.querySelectorAll<HTMLElement>("p");
     const backLink = root.querySelector<HTMLElement>("[data-case-back]");
-    const progressBar = root.querySelector<HTMLElement>("[data-case-progress]");
+    const railItems = root.querySelectorAll<HTMLElement>("[data-case-rail] li");
 
     const slideTargets: HTMLElement[] = [];
     if (logo) slideTargets.push(logo);
@@ -54,41 +43,28 @@ export default function CaseStudy({ data }: { data: Case }) {
     paragraphs.forEach((p) => slideTargets.push(p));
 
     if (slideTargets.length) gsap.set(slideTargets, { y: 40, opacity: 0 });
-    if (visual) gsap.set(visual, { y: 60, opacity: 0 });
     if (backLink) gsap.set(backLink, { y: -12, opacity: 0 });
-    if (progressBar) gsap.set(progressBar, { opacity: 0 });
+    if (railItems.length) gsap.set(railItems, { y: 8, opacity: 0 });
 
     const tl = gsap.timeline();
-
-    if (progressBar) {
-      tl.to(progressBar, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0);
-    }
-    if (backLink) {
-      tl.to(backLink, { y: 0, opacity: 1, duration: 0.7, ease: "expo.out" }, 0);
-    }
-    if (visual) {
-      tl.to(visual, { y: 0, opacity: 1, duration: 1.2, ease: "expo.out" }, 0.1);
-    }
-    if (logo) {
-      tl.to(logo, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, 0.15);
-    }
-    if (heading) {
-      tl.to(heading, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out" }, 0.25);
-    }
-    if (paragraphs.length) {
+    if (backLink) tl.to(backLink, { y: 0, opacity: 1, duration: 0.7, ease: "expo.out" }, 0);
+    if (railItems.length)
+      tl.to(railItems, { y: 0, opacity: 1, duration: 0.6, ease: "expo.out", stagger: 0.04 }, 0.2);
+    if (logo) tl.to(logo, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, 0.15);
+    if (heading) tl.to(heading, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out" }, 0.25);
+    if (paragraphs.length)
       tl.to(
         paragraphs,
         { y: 0, opacity: 1, duration: 1.0, ease: "expo.out", stagger: 0.08 },
         0.45
       );
-    }
 
     return () => {
       tl.kill();
     };
   }, []);
 
-  // Track which section is at viewport center to drive the visual cross-fade.
+  // Scroll-spy: highlight the section closest to viewport center.
   useEffect(() => {
     const els = sectionRefs.current.filter(Boolean) as HTMLElement[];
     if (!els.length) return;
@@ -100,55 +76,18 @@ export default function CaseStudy({ data }: { data: Case }) {
           if (idx >= 0) setActiveIndex(idx);
         });
       },
-      // 10% zone at viewport center. Whichever section intersects it is active.
       { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, [sections.length]);
 
-  // Per-paragraph scroll reveal for sections marked with revealParagraphsOnScroll.
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const triggers: ScrollTrigger[] = [];
-
-    sections.forEach((section, i) => {
-      if (!section.revealParagraphsOnScroll) return;
-      const sectionEl = sectionRefs.current[i];
-      if (!sectionEl) return;
-
-      const paras = sectionEl.querySelectorAll<HTMLElement>("[data-reveal-paragraph]");
-      if (paras.length < 2) return;
-
-      const subsequent = Array.from(paras).slice(1);
-      gsap.set(subsequent, { opacity: 0, y: 24 });
-
-      const tl = gsap.timeline({
-        defaults: { ease: "power2.out" },
-        scrollTrigger: {
-          trigger: sectionEl,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.4,
-        },
-      });
-
-      const slots = subsequent.length + 1;
-      subsequent.forEach((p, idx) => {
-        const pos = (idx + 1) / slots;
-        tl.to(p, { opacity: 1, y: 0, duration: 0.15 }, pos);
-      });
-      tl.to({}, { duration: 0.1 }, 1);
-
-      const trigger = tl.scrollTrigger;
-      if (trigger) triggers.push(trigger);
-    });
-
-    return () => {
-      triggers.forEach((t) => t.kill());
-    };
-  }, [sections]);
+  const handleJump = (index: number) => {
+    const el = sectionRefs.current[index];
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
 
   if (!sections.length) {
     return (
@@ -160,154 +99,167 @@ export default function CaseStudy({ data }: { data: Case }) {
 
   return (
     <main ref={rootRef} className="relative">
-      <CaseStudyNav sections={sections} activeIndex={activeIndex} />
+      <CaseStudyNav sections={sections} activeIndex={activeIndex} onJump={handleJump} />
 
-      {/* Fixed right-side visual viewer — stays in place; content cross-fades on activeIndex */}
-      <div
-        ref={visualRef}
-        data-case-visual
-        aria-hidden
-        className="pointer-events-none fixed bottom-5 right-5 top-5 z-30 hidden md:block"
-        style={{ width: "calc(60% - 20px)" }}
-      >
+      <article className="w-full px-6 pb-40 pt-7 lg:pl-[220px] lg:pr-5">
         {sections.map((section, i) => (
-          <div
+          <section
             key={section.id}
-            className="absolute inset-0 transition-opacity duration-700 ease-out"
-            style={{ opacity: activeIndex === i ? 1 : 0 }}
+            ref={(el) => {
+              sectionRefs.current[i] = el;
+            }}
+            id={section.id}
+            aria-label={section.chip}
+            className={i === 0 ? "scroll-mt-32" : "scroll-mt-32 pt-16"}
           >
-            <CasePlaceholder section={section} />
-          </div>
-        ))}
-      </div>
-
-      {/* Left text column — flows in normal scroll */}
-      <div className="relative w-full md:w-[40%]">
-        {sections.map((section, i) => {
-          const paragraphs = section.body.split("\n\n");
-          const reveal = section.revealParagraphsOnScroll && paragraphs.length > 1;
-
-          const textBlock = (
-            <div className="flex flex-col">
-              {i === 0 ? (
-                <>
-                  {data.logo ? (
-                    <div
-                      role="img"
-                      aria-label={data.logo.alt}
-                      className="mb-6 text-ink"
-                      style={{
-                        height: data.logo.height ?? 28,
-                        width: (data.logo.height ?? 28) * data.logo.aspectRatio,
-                        backgroundColor: "currentColor",
-                        WebkitMaskImage: `url(${data.logo.src})`,
-                        maskImage: `url(${data.logo.src})`,
-                        WebkitMaskSize: "contain",
-                        maskSize: "contain",
-                        WebkitMaskRepeat: "no-repeat",
-                        maskRepeat: "no-repeat",
-                        WebkitMaskPosition: "left center",
-                        maskPosition: "left center",
-                      }}
-                    />
-                  ) : null}
-                  {data.headline ? (
-                    <h2 className="font-display text-[clamp(28px,2.8vw,46px)] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
-                      {data.headline}
-                    </h2>
-                  ) : (
-                    <h2 className="font-display text-[clamp(36px,4vw,56px)] font-bold uppercase leading-none tracking-[-0.03em] text-ink">
-                      {data.title}
-                    </h2>
-                  )}
-                  <p className="mt-4 max-w-md text-[15px] leading-[1.55] text-ink">
-                    {data.description}
-                  </p>
-                </>
-              ) : (
-                <>
+            {i === 0 ? (
+              <div className="max-w-[760px]">
+                {data.logo ? (
+                  <div
+                    role="img"
+                    aria-label={data.logo.alt}
+                    className="mb-10 text-ink"
+                    style={{
+                      height: data.logo.height ?? 28,
+                      width: (data.logo.height ?? 28) * data.logo.aspectRatio,
+                      backgroundColor: "currentColor",
+                      WebkitMaskImage: `url(${data.logo.src})`,
+                      maskImage: `url(${data.logo.src})`,
+                      WebkitMaskSize: "contain",
+                      maskSize: "contain",
+                      WebkitMaskRepeat: "no-repeat",
+                      maskRepeat: "no-repeat",
+                      WebkitMaskPosition: "left center",
+                      maskPosition: "left center",
+                    }}
+                  />
+                ) : null}
+                {data.headline ? (
+                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
+                    {data.headline}
+                  </h2>
+                ) : (
+                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.03em] text-ink">
+                    {data.title}
+                  </h2>
+                )}
+                <p className="mt-8 text-[18px] leading-[1.55] text-ink/85">
+                  {data.description}
+                </p>
+                {section.eyebrow ? (
+                  <div className="mt-10 flex flex-wrap gap-x-8 gap-y-2 text-[11px] font-medium uppercase tracking-widest text-ink-muted">
+                    <span>{section.eyebrow}</span>
+                    <span>Product Design</span>
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-10 lg:grid-cols-[320px_1fr] lg:gap-20">
+                <div>
                   {section.eyebrow ? (
-                    <span className="mb-4 text-[11px] font-medium uppercase tracking-widest text-ink-muted">
+                    <span className="mb-3 block text-[11px] font-medium uppercase tracking-widest text-ink-muted">
                       {section.eyebrow}
                     </span>
                   ) : null}
-                  <h2 className="font-display text-[clamp(28px,2.8vw,46px)] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
+                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
                     {section.title}
                   </h2>
-                  <div className="mt-5 space-y-3.5">
-                    {paragraphs.map((para, j) => (
-                      <p
-                        key={j}
-                        {...(reveal ? { "data-reveal-paragraph": "" } : {})}
-                        className="text-[14px] leading-[1.55] text-ink/85"
-                      >
-                        {para}
-                      </p>
-                    ))}
-                  </div>
-                  {section.aside ? (
-                    <div className="mt-4">
-                      <p className="text-[14px] leading-[1.55] text-ink/85">
-                        {section.aside.label}
-                      </p>
-                      <ul className="mt-3 space-y-3 text-[14px] leading-[1.55] text-ink/85">
-                        {section.aside.items.map((item, k) => (
-                          <li key={k} className="flex gap-3">
-                            <span className="shrink-0 text-ink-muted">—</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-                </>
-              )}
-            </div>
-          );
-
-          if (reveal) {
-            return (
-              <section
-                key={section.id}
-                ref={(el) => {
-                  sectionRefs.current[i] = el;
-                }}
-                id={section.id}
-                aria-label={section.chip}
-                className="relative"
-                style={{ height: `${paragraphs.length * 100}vh` }}
-              >
-                <div className="sticky top-0 flex h-screen items-start px-8 pb-12 pt-32 md:px-12 md:pt-28">
-                  {textBlock}
                 </div>
-                {/* Snap markers — one per paragraph reveal step. */}
-                {paragraphs.map((_, step) => (
-                  <div
-                    key={step}
-                    aria-hidden
-                    className="pointer-events-none absolute left-0 h-screen w-px snap-start snap-always"
-                    style={{ top: `${step * 100}vh` }}
-                  />
-                ))}
-              </section>
-            );
-          }
+                <div className="max-w-[680px]">
+                  {section.blocks.map((block, b) => (
+                    <div key={b} className={b === 0 ? "" : "mt-14"}>
+                      {block.heading ? (
+                        <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                          {block.heading}
+                        </h3>
+                      ) : null}
+                      {block.paragraphs?.length ? (
+                        <div className="space-y-5">
+                          {block.paragraphs.map((para, j) => (
+                            <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                              {para}
+                            </p>
+                          ))}
+                        </div>
+                      ) : null}
+                      {block.bullets ? (
+                        <ul
+                          className={`${
+                            block.paragraphs?.length ? "mt-5" : ""
+                          } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
+                        >
+                          {block.bullets.items.map((item, k) => (
+                            <li key={k} className="flex gap-3">
+                              <span className="shrink-0 text-ink-muted">—</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-          return (
-            <section
-              key={section.id}
-              ref={(el) => {
-                sectionRefs.current[i] = el;
-              }}
-              id={section.id}
-              aria-label={section.chip}
-              className="flex min-h-screen snap-start snap-always flex-col justify-start px-8 pb-12 pt-32 md:px-12 md:pt-28"
-            >
-              {textBlock}
-            </section>
-          );
-        })}
-      </div>
+            {i === 0 ? (
+              <div className="mt-16">
+                <CasePlaceholder section={section} />
+              </div>
+            ) : null}
+
+            {i === 0 ? (
+              <div className="mt-20 space-y-14">
+                {section.blocks.map((block, b) => (
+                  <div
+                    key={b}
+                    className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20"
+                  >
+                    <div>
+                      {block.heading ? (
+                        <h3 className="font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                          {block.heading}
+                        </h3>
+                      ) : null}
+                    </div>
+                    <div className="max-w-[680px]">
+                      {block.paragraphs?.length ? (
+                        <div className="space-y-5">
+                          {block.paragraphs.map((para, j) => (
+                            <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                              {para}
+                            </p>
+                          ))}
+                        </div>
+                      ) : null}
+                      {block.bullets ? (
+                        <ul
+                          className={`${
+                            block.paragraphs?.length ? "mt-5" : ""
+                          } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
+                        >
+                          {block.bullets.items.map((item, k) => (
+                            <li key={k} className="flex gap-3">
+                              <span className="shrink-0 text-ink-muted">—</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+
+            {i !== 0 && (section.id === "process") ? (
+              <div className="mt-16">
+                <CasePlaceholder section={section} />
+              </div>
+            ) : null}
+          </section>
+        ))}
+      </article>
     </main>
   );
 }
