@@ -111,7 +111,7 @@ export default function CaseStudy({ data }: { data: Case }) {
             }}
             id={section.id}
             aria-label={section.chip}
-            className={i === 0 ? "scroll-mt-32" : "scroll-mt-32 pt-16"}
+            className={i === 0 ? "scroll-mt-32" : "scroll-mt-32 mt-20 border-t border-ink/15 pt-20"}
           >
             {i === 0 ? (
               <div className="max-w-[760px]">
@@ -152,65 +152,123 @@ export default function CaseStudy({ data }: { data: Case }) {
               <div className="space-y-14">
                 {section.blocks.map((block, b) => (
                   <div key={b}>
-                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20">
-                      <div>
-                        {b === 0 ? (
-                          <>
-                            {section.eyebrow ? (
-                              <span className="mb-3 block text-[11px] font-medium uppercase tracking-widest text-ink-muted">
-                                {section.eyebrow}
-                              </span>
+                    {block.layout === "split" ? (
+                      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[320px_1fr] lg:gap-20">
+                        <div>
+                          {block.heading ? (
+                            <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                              {block.heading}
+                            </h3>
+                          ) : null}
+                          {block.paragraphs?.length ? (
+                            <div className="space-y-5">
+                              {block.paragraphs.map((para, j) => (
+                                <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                                  {para}
+                                </p>
+                              ))}
+                            </div>
+                          ) : null}
+                          {block.bullets ? (
+                            <ul
+                              className={`${
+                                block.paragraphs?.length ? "mt-5" : ""
+                              } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
+                            >
+                              {block.bullets.items.map((item, k) => (
+                                <li key={k} className="flex gap-3">
+                                  <span className="shrink-0 text-ink-muted">—</span>
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                        </div>
+                        {block.visual ? (
+                          <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
+                            <Image
+                              src={block.visual.src}
+                              alt={block.visual.alt}
+                              width={block.visual.width}
+                              height={block.visual.height}
+                              sizes="(min-width: 1024px) 800px, 100vw"
+                              quality={75}
+                              className="absolute inset-0 h-full w-full object-cover"
+                            />
+                          </figure>
+                        ) : (
+                          <div
+                            aria-hidden
+                            className="aspect-[16/9] w-full rounded-[20px] border border-dashed border-ink/25 bg-ink/[0.03]"
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <>
+                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20">
+                          <div>
+                            {b === 0 ? (
+                              <>
+                                {section.eyebrow ? (
+                                  <span className="mb-3 block text-[11px] font-medium uppercase tracking-widest text-ink-muted">
+                                    {section.eyebrow}
+                                  </span>
+                                ) : null}
+                                <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
+                                  {section.title}
+                                </h2>
+                              </>
                             ) : null}
-                            <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
-                              {section.title}
-                            </h2>
-                          </>
-                        ) : null}
-                      </div>
-                      <div className="max-w-[680px]">
-                        {block.heading ? (
-                          <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
-                            {block.heading}
-                          </h3>
-                        ) : null}
-                        {block.paragraphs?.length ? (
-                          <div className="space-y-5">
-                            {block.paragraphs.map((para, j) => (
-                              <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
-                                {para}
-                              </p>
-                            ))}
                           </div>
-                        ) : null}
-                        {block.bullets ? (
-                          <ul
-                            className={`${
-                              block.paragraphs?.length ? "mt-5" : ""
-                            } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
+                          <div className="max-w-[680px]">
+                            {block.heading ? (
+                              <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                                {block.heading}
+                              </h3>
+                            ) : null}
+                            {block.paragraphs?.length ? (
+                              <div className="space-y-5">
+                                {block.paragraphs.map((para, j) => (
+                                  <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                                    {para}
+                                  </p>
+                                ))}
+                              </div>
+                            ) : null}
+                            {block.bullets ? (
+                              <ul
+                                className={`${
+                                  block.paragraphs?.length ? "mt-5" : ""
+                                } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
+                              >
+                                {block.bullets.items.map((item, k) => (
+                                  <li key={k} className="flex gap-3">
+                                    <span className="shrink-0 text-ink-muted">—</span>
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : null}
+                          </div>
+                        </div>
+                        {block.visual ? (
+                          <figure
+                            className="relative mt-10 w-full overflow-hidden rounded-[20px] bg-[#0F1410]"
+                            style={{ aspectRatio: block.visual.aspectRatio ?? "21 / 9" }}
                           >
-                            {block.bullets.items.map((item, k) => (
-                              <li key={k} className="flex gap-3">
-                                <span className="shrink-0 text-ink-muted">—</span>
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
+                            <Image
+                              src={block.visual.src}
+                              alt={block.visual.alt}
+                              width={block.visual.width}
+                              height={block.visual.height}
+                              sizes="(min-width: 1024px) 1200px, 100vw"
+                              quality={75}
+                              className="absolute inset-0 h-full w-full object-cover"
+                            />
+                          </figure>
                         ) : null}
-                      </div>
-                    </div>
-                    {block.visual ? (
-                      <figure className="relative mt-10 aspect-[21/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
-                        <Image
-                          src={block.visual.src}
-                          alt={block.visual.alt}
-                          width={block.visual.width}
-                          height={block.visual.height}
-                          sizes="(min-width: 1024px) 1200px, 100vw"
-                          quality={75}
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
-                      </figure>
-                    ) : null}
+                      </>
+                    )}
                   </div>
                 ))}
               </div>
@@ -318,11 +376,6 @@ export default function CaseStudy({ data }: { data: Case }) {
               </div>
             ) : null}
 
-            {i !== 0 && (section.id === "process") ? (
-              <div className="mt-16">
-                <CasePlaceholder section={section} />
-              </div>
-            ) : null}
           </section>
         ))}
       </article>

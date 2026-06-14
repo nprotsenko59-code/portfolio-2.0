@@ -2,7 +2,8 @@ export type CaseSectionBlock = {
   heading?: string;
   paragraphs?: string[];
   bullets?: { label?: string; items: string[] };
-  visual?: { src: string; alt: string; width: number; height: number };
+  visual?: { src: string; alt: string; width: number; height: number; aspectRatio?: string };
+  layout?: "split";
 };
 
 export type CaseStudySection = {
@@ -90,6 +91,12 @@ const guestyStudy: { sections: CaseStudySection[] } = {
               "They charge part of the reservation total upfront (before guest checks-in). Usually, they take first and last installment. Also, there is a refundable security deposit: an amount on top of reservation total that they charge and refund at the end of the stay if there is no damage done.",
             ],
           },
+          visual: {
+            src: "/images/case-process/discovery.jpg",
+            alt: "Discovery research with property managers",
+            width: 2400,
+            height: 1350,
+          },
         },
         {
           heading: "Synthesis",
@@ -102,25 +109,62 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           paragraphs: [
             "So to understand how to solve it better, I needed to understand how similar problems had been solved in fintech apps. I researched financial and billing apps to look for comparable patterns. For this I used one of the internal tools I built for the team: Reference Scout, a skill connected to Mobbin via MCP that searches for relevant UI references based on a design brief. What would have taken hours of manual browsing was done in a fraction of the time, and with broader coverage than a manual search typically produces. The key finding: most financial products that handle similar flows break the setup into sequential steps rather than presenting everything at once.",
           ],
+          visual: {
+            src: "/images/case-process/competitors.jpg",
+            alt: "Competitor patterns research — fintech app references",
+            width: 2400,
+            height: 1350,
+          },
         },
         {
           heading: "Ideation and prototyping",
           paragraphs: [
             "Then I moved to early concepts and ideation. I built coded prototypes in Cursor to explore potential solutions in low fidelity. The goal was to try as many options as possible in a short amount of time, and to align stakeholders on the solution. After a successful review I moved to a detailed design phase.",
           ],
+          visual: {
+            src: "/images/case-process/prototype.jpg",
+            alt: "Coded prototype explorations in Cursor",
+            width: 2400,
+            height: 1350,
+          },
         },
       ],
     },
     {
       id: "decisions",
-      chip: "Final solution",
-      title: "Final solution — key decisions",
+      chip: "Key design decisions",
+      title: "Key design decisions",
       blocks: [
         {
           paragraphs: [
             "I designed a dedicated, separate setup flow for installment-based automations. Users still enter from the Payment Automations area, but long-term billing has its own guided path with its own mental model. This keeps the short-term experience intact, gives the system clean logic to detect conflicts, and lets both paths evolve independently.",
+          ],
+          visual: {
+            src: "/images/case-process/entry-point.jpg",
+            alt: "Entry point — separate setup flow for installment-based automations",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          paragraphs: [
             "Users start by defining the conditions under which this automation should be triggered. They can trigger it based on specific channels, properties, or reservation length. However, in this case, the reservation length cannot be less than 30 nights to avoid conflicts with our event-based automation flow. This is also the minimum stay length at which users typically start treating a reservation as a long-term stay.",
+          ],
+          visual: {
+            src: "/images/case-process/settings.jpg",
+            alt: "Trigger conditions setup — channels, properties, reservation length",
+            width: 2400,
+            height: 1350,
+            aspectRatio: "16/9",
+          },
+        },
+        {
+          paragraphs: [
             "Then users define the main charge logic: they choose a billing cycle — monthly, weekly, or every two weeks — decide whether the reservation total should be split equally or charged as a custom amount, and choose when the charge should occur.",
+          ],
+        },
+        {
+          paragraphs: [
             "And finally, they decide what to take from that logic: upfront charge and security deposit.",
           ],
         },
