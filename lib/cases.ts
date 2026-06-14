@@ -2,6 +2,7 @@ export type CaseSectionBlock = {
   heading?: string;
   paragraphs?: string[];
   bullets?: { label?: string; items: string[] };
+  visual?: { src: string; alt: string; width: number; height: number };
 };
 
 export type CaseStudySection = {
@@ -50,6 +51,12 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "But larger PMCs running corporate housing, serviced apartments, and mid-term rentals operate differently. Their guests stay 30, 60, or 90+ days, and payments often happen through installments that are not connected to reservation lifecycle.",
             "Without installment support, Guesty was losing enterprise deals to competitors. The same objection kept coming up in sales calls — and that became the starting point for this project.",
           ],
+          visual: {
+            src: "/images/case-process/current-logic.jpg",
+            alt: "Current Guesty payment automation logic — current state diagram",
+            width: 2400,
+            height: 1350,
+          },
         },
         {
           heading: "My role",
@@ -59,14 +66,9 @@ const guestyStudy: { sections: CaseStudySection[] } = {
         },
         {
           heading: "Team",
-          bullets: {
-            items: [
-              "Me (designer)",
-              "Product manager",
-              "Front-end developer",
-              "Back-end developer",
-            ],
-          },
+          paragraphs: [
+            "Me (designer), Product manager, Front-end developer, Back-end developer",
+          ],
         },
       ],
     },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import type { Case } from "@/lib/cases";
 import CaseStudyNav from "./CaseStudyNav";
 import CasePlaceholder from "./CasePlaceholder";
@@ -146,59 +147,72 @@ export default function CaseStudy({ data }: { data: Case }) {
                 <p className="mt-8 text-[18px] leading-[1.55] text-ink/85">
                   {data.description}
                 </p>
-                {section.eyebrow ? (
-                  <div className="mt-10 flex flex-wrap gap-x-8 gap-y-2 text-[11px] font-medium uppercase tracking-widest text-ink-muted">
-                    <span>{section.eyebrow}</span>
-                    <span>Product Design</span>
-                  </div>
-                ) : null}
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-10 lg:grid-cols-[320px_1fr] lg:gap-20">
-                <div>
-                  {section.eyebrow ? (
-                    <span className="mb-3 block text-[11px] font-medium uppercase tracking-widest text-ink-muted">
-                      {section.eyebrow}
-                    </span>
-                  ) : null}
-                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
-                    {section.title}
-                  </h2>
-                </div>
-                <div className="max-w-[680px]">
-                  {section.blocks.map((block, b) => (
-                    <div key={b} className={b === 0 ? "" : "mt-14"}>
-                      {block.heading ? (
-                        <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
-                          {block.heading}
-                        </h3>
-                      ) : null}
-                      {block.paragraphs?.length ? (
-                        <div className="space-y-5">
-                          {block.paragraphs.map((para, j) => (
-                            <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
-                              {para}
-                            </p>
-                          ))}
-                        </div>
-                      ) : null}
-                      {block.bullets ? (
-                        <ul
-                          className={`${
-                            block.paragraphs?.length ? "mt-5" : ""
-                          } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
-                        >
-                          {block.bullets.items.map((item, k) => (
-                            <li key={k} className="flex gap-3">
-                              <span className="shrink-0 text-ink-muted">—</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
+              <div className="space-y-14">
+                {section.blocks.map((block, b) => (
+                  <div key={b}>
+                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20">
+                      <div>
+                        {b === 0 ? (
+                          <>
+                            {section.eyebrow ? (
+                              <span className="mb-3 block text-[11px] font-medium uppercase tracking-widest text-ink-muted">
+                                {section.eyebrow}
+                              </span>
+                            ) : null}
+                            <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
+                              {section.title}
+                            </h2>
+                          </>
+                        ) : null}
+                      </div>
+                      <div className="max-w-[680px]">
+                        {block.heading ? (
+                          <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                            {block.heading}
+                          </h3>
+                        ) : null}
+                        {block.paragraphs?.length ? (
+                          <div className="space-y-5">
+                            {block.paragraphs.map((para, j) => (
+                              <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                                {para}
+                              </p>
+                            ))}
+                          </div>
+                        ) : null}
+                        {block.bullets ? (
+                          <ul
+                            className={`${
+                              block.paragraphs?.length ? "mt-5" : ""
+                            } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
+                          >
+                            {block.bullets.items.map((item, k) => (
+                              <li key={k} className="flex gap-3">
+                                <span className="shrink-0 text-ink-muted">—</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </div>
                     </div>
-                  ))}
-                </div>
+                    {block.visual ? (
+                      <figure className="relative mt-10 aspect-[21/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
+                        <Image
+                          src={block.visual.src}
+                          alt={block.visual.alt}
+                          width={block.visual.width}
+                          height={block.visual.height}
+                          sizes="(min-width: 1024px) 1200px, 100vw"
+                          quality={75}
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                      </figure>
+                    ) : null}
+                  </div>
+                ))}
               </div>
             )}
 
@@ -210,45 +224,97 @@ export default function CaseStudy({ data }: { data: Case }) {
 
             {i === 0 ? (
               <div className="mt-20 space-y-14">
-                {section.blocks.map((block, b) => (
-                  <div
-                    key={b}
-                    className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20"
-                  >
-                    <div>
-                      {block.heading ? (
-                        <h3 className="font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
-                          {block.heading}
-                        </h3>
-                      ) : null}
+                {section.blocks.slice(0, 2).map((block, b) => (
+                  <div key={b}>
+                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20">
+                      <div>
+                        {block.heading ? (
+                          <h3 className="font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                            {block.heading}
+                          </h3>
+                        ) : null}
+                      </div>
+                      <div className="max-w-[680px]">
+                        {block.paragraphs?.length ? (
+                          <div className="space-y-5">
+                            {block.paragraphs.map((para, j) => (
+                              <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                                {para}
+                              </p>
+                            ))}
+                          </div>
+                        ) : null}
+                        {block.bullets ? (
+                          <ul
+                            className={`${
+                              block.paragraphs?.length ? "mt-5" : ""
+                            } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
+                          >
+                            {block.bullets.items.map((item, k) => (
+                              <li key={k} className="flex gap-3">
+                                <span className="shrink-0 text-ink-muted">—</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </div>
                     </div>
-                    <div className="max-w-[680px]">
-                      {block.paragraphs?.length ? (
-                        <div className="space-y-5">
-                          {block.paragraphs.map((para, j) => (
-                            <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
-                              {para}
-                            </p>
-                          ))}
-                        </div>
-                      ) : null}
-                      {block.bullets ? (
-                        <ul
-                          className={`${
-                            block.paragraphs?.length ? "mt-5" : ""
-                          } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
-                        >
-                          {block.bullets.items.map((item, k) => (
-                            <li key={k} className="flex gap-3">
-                              <span className="shrink-0 text-ink-muted">—</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                    </div>
+                    {block.visual ? (
+                      <figure className="relative mt-10 aspect-[21/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
+                        <Image
+                          src={block.visual.src}
+                          alt={block.visual.alt}
+                          width={block.visual.width}
+                          height={block.visual.height}
+                          sizes="(min-width: 1024px) 1200px, 100vw"
+                          quality={75}
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                      </figure>
+                    ) : null}
                   </div>
                 ))}
+
+                {section.blocks.length > 2 ? (
+                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20">
+                    <div />
+                    <div className="grid max-w-[680px] grid-cols-1 gap-10 sm:grid-cols-2">
+                      {section.blocks.slice(2).map((block, b) => (
+                        <div key={b}>
+                          {block.heading ? (
+                            <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                              {block.heading}
+                            </h3>
+                          ) : null}
+                          {block.paragraphs?.length ? (
+                            <div className="space-y-5">
+                              {block.paragraphs.map((para, j) => (
+                                <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                                  {para}
+                                </p>
+                              ))}
+                            </div>
+                          ) : null}
+                          {block.bullets ? (
+                            <ul
+                              className={`${
+                                block.paragraphs?.length ? "mt-5" : ""
+                              } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
+                            >
+                              {block.bullets.items.map((item, k) => (
+                                <li key={k} className="flex gap-3">
+                                  <span className="shrink-0 text-ink-muted">—</span>
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             ) : null}
 
