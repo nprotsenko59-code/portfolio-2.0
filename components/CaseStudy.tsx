@@ -102,7 +102,7 @@ export default function CaseStudy({ data }: { data: Case }) {
     <main ref={rootRef} className="relative">
       <CaseStudyNav sections={sections} activeIndex={activeIndex} onJump={handleJump} />
 
-      <article className="w-full px-6 pb-40 pt-7 lg:pl-[220px] lg:pr-5">
+      <article className="w-full px-6 pb-40 pt-7 lg:pl-[260px] lg:pr-5">
         {sections.map((section, i) => (
           <section
             key={section.id}
