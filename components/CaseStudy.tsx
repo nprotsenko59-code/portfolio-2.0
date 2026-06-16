@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import type { Case } from "@/lib/cases";
-import CaseStudyNav from "./CaseStudyNav";
 import CasePlaceholder from "./CasePlaceholder";
 import { gsap } from "@/lib/gsap";
 
@@ -100,10 +100,40 @@ export default function CaseStudy({ data }: { data: Case }) {
 
   return (
     <main ref={rootRef} className="relative">
-      <CaseStudyNav sections={sections} activeIndex={activeIndex} onJump={handleJump} />
-
-      <article className="w-full px-6 pb-40 pt-7 lg:pl-[260px] lg:pr-5">
-        {sections.map((section, i) => (
+      <header className="pointer-events-none fixed left-0 right-0 top-0 z-[55] flex items-start justify-between px-8 pb-4 pt-7 md:px-12">
+        <div className="pointer-events-auto">
+          <Link
+            href="/"
+            scroll={false}
+            data-cursor
+            data-cursor-label="Back"
+            data-case-back
+            className="group inline-flex items-center rounded-full bg-white px-5 py-2.5 text-sm font-medium text-[#161616] transition-colors hover:bg-white/90"
+          >
+            <span
+              aria-hidden
+              className="mr-0 inline-flex w-0 -translate-x-1 items-center overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-out group-hover:mr-1.5 group-hover:w-[14px] group-hover:translate-x-0 group-hover:opacity-100"
+            >
+              ←
+            </span>
+            <span>Back</span>
+          </Link>
+        </div>
+      </header>
+      <article className="w-full px-6 pb-40 pt-7 lg:pt-24">
+        {sections.map((section, i) => {
+          const isHero = i === 0;
+          const heroSideBySide = isHero
+            ? section.blocks.filter(
+                (b) => b.heading === "My role" || b.heading === "Team"
+              )
+            : [];
+          const blocksToRender = isHero
+            ? section.blocks.filter(
+                (b) => b.heading !== "My role" && b.heading !== "Team"
+              )
+            : section.blocks;
+          return (
           <section
             key={section.id}
             ref={(el) => {
@@ -111,57 +141,53 @@ export default function CaseStudy({ data }: { data: Case }) {
             }}
             id={section.id}
             aria-label={section.chip}
-            className={i === 0 ? "scroll-mt-32" : "scroll-mt-32 mt-20 border-t border-ink/15 pt-20"}
+            className={i === 0 ? "scroll-mt-32" : "scroll-mt-32 mt-20 pt-20"}
           >
-            {i === 0 ? (
-              <div className="max-w-[760px]">
-                {data.logo ? (
-                  <div
-                    role="img"
-                    aria-label={data.logo.alt}
-                    className="mb-10 text-ink"
-                    style={{
-                      height: data.logo.height ?? 28,
-                      width: (data.logo.height ?? 28) * data.logo.aspectRatio,
-                      backgroundColor: "currentColor",
-                      WebkitMaskImage: `url(${data.logo.src})`,
-                      maskImage: `url(${data.logo.src})`,
-                      WebkitMaskSize: "contain",
-                      maskSize: "contain",
-                      WebkitMaskRepeat: "no-repeat",
-                      maskRepeat: "no-repeat",
-                      WebkitMaskPosition: "left center",
-                      maskPosition: "left center",
-                    }}
-                  />
-                ) : null}
-                {data.headline ? (
-                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
-                    {data.headline}
-                  </h2>
-                ) : (
-                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.03em] text-ink">
-                    {data.title}
-                  </h2>
-                )}
-                <p className="mt-8 text-[18px] leading-[1.55] text-ink/85">
-                  {data.description}
-                </p>
+            {i !== 0 ? (
+              <div className="mx-auto -mt-20 mb-20 max-w-[760px] px-6">
+                <div aria-hidden className="h-px w-full bg-ink/15" />
               </div>
-            ) : (
-              <div className="space-y-14">
-                {section.blocks.map((block, b) => (
-                  <div key={b}>
-                    {block.layout === "split" ? (
-                      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[320px_1fr] lg:gap-20">
-                        <div>
+            ) : null}
+            <div className="mx-auto max-w-[760px] px-6">
+              {i === 0 ? (
+                <>
+                  {data.logo ? (
+                    <div
+                      role="img"
+                      aria-label={data.logo.alt}
+                      className="mb-10 text-ink"
+                      style={{
+                        height: data.logo.height ?? 28,
+                        width: (data.logo.height ?? 28) * data.logo.aspectRatio,
+                        backgroundColor: "currentColor",
+                        WebkitMaskImage: `url(${data.logo.src})`,
+                        maskImage: `url(${data.logo.src})`,
+                        WebkitMaskSize: "contain",
+                        maskSize: "contain",
+                        WebkitMaskRepeat: "no-repeat",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskPosition: "left center",
+                        maskPosition: "left center",
+                      }}
+                    />
+                  ) : null}
+                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
+                    {data.headline ?? data.title}
+                  </h2>
+                  <p className="mt-8 text-[16px] leading-[1.65] text-ink/85">
+                    {data.description}
+                  </p>
+                  {heroSideBySide.length ? (
+                    <div className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2">
+                      {heroSideBySide.map((block, idx) => (
+                        <div key={idx}>
                           {block.heading ? (
-                            <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                            <h3 className="mb-3 font-display text-[14px] font-semibold uppercase tracking-widest text-ink-muted">
                               {block.heading}
                             </h3>
                           ) : null}
                           {block.paragraphs?.length ? (
-                            <div className="space-y-5">
+                            <div className="space-y-3">
                               {block.paragraphs.map((para, j) => (
                                 <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
                                   {para}
@@ -169,110 +195,24 @@ export default function CaseStudy({ data }: { data: Case }) {
                               ))}
                             </div>
                           ) : null}
-                          {block.bullets ? (
-                            <ul
-                              className={`${
-                                block.paragraphs?.length ? "mt-5" : ""
-                              } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
-                            >
-                              {block.bullets.items.map((item, k) => (
-                                <li key={k} className="flex gap-3">
-                                  <span className="shrink-0 text-ink-muted">—</span>
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          ) : null}
                         </div>
-                        {block.visual ? (
-                          <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
-                            <Image
-                              src={block.visual.src}
-                              alt={block.visual.alt}
-                              width={block.visual.width}
-                              height={block.visual.height}
-                              sizes="(min-width: 1024px) 800px, 100vw"
-                              quality={75}
-                              className="absolute inset-0 h-full w-full object-cover"
-                            />
-                          </figure>
-                        ) : (
-                          <div
-                            aria-hidden
-                            className="aspect-[16/9] w-full rounded-[20px] border border-dashed border-ink/25 bg-ink/[0.03]"
-                          />
-                        )}
-                      </div>
-                    ) : (
-                      <>
-                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20">
-                          <div>
-                            {b === 0 ? (
-                              <>
-                                {section.eyebrow ? (
-                                  <span className="mb-3 block text-[11px] font-medium uppercase tracking-widest text-ink-muted">
-                                    {section.eyebrow}
-                                  </span>
-                                ) : null}
-                                <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
-                                  {section.title}
-                                </h2>
-                              </>
-                            ) : null}
-                          </div>
-                          <div className="max-w-[680px]">
-                            {block.heading ? (
-                              <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
-                                {block.heading}
-                              </h3>
-                            ) : null}
-                            {block.paragraphs?.length ? (
-                              <div className="space-y-5">
-                                {block.paragraphs.map((para, j) => (
-                                  <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
-                                    {para}
-                                  </p>
-                                ))}
-                              </div>
-                            ) : null}
-                            {block.bullets ? (
-                              <ul
-                                className={`${
-                                  block.paragraphs?.length ? "mt-5" : ""
-                                } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
-                              >
-                                {block.bullets.items.map((item, k) => (
-                                  <li key={k} className="flex gap-3">
-                                    <span className="shrink-0 text-ink-muted">—</span>
-                                    <span>{item}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            ) : null}
-                          </div>
-                        </div>
-                        {block.visual ? (
-                          <figure
-                            className="relative mt-10 w-full overflow-hidden rounded-[20px] bg-[#0F1410]"
-                            style={{ aspectRatio: block.visual.aspectRatio ?? "21 / 9" }}
-                          >
-                            <Image
-                              src={block.visual.src}
-                              alt={block.visual.alt}
-                              width={block.visual.width}
-                              height={block.visual.height}
-                              sizes="(min-width: 1024px) 1200px, 100vw"
-                              quality={75}
-                              className="absolute inset-0 h-full w-full object-cover"
-                            />
-                          </figure>
-                        ) : null}
-                      </>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+                      ))}
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  {section.eyebrow ? (
+                    <span className="mb-3 block text-[11px] font-medium uppercase tracking-widest text-ink-muted">
+                      {section.eyebrow}
+                    </span>
+                  ) : null}
+                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
+                    {section.title}
+                  </h2>
+                </>
+              )}
+            </div>
 
             {i === 0 ? (
               <div className="mt-16">
@@ -280,104 +220,61 @@ export default function CaseStudy({ data }: { data: Case }) {
               </div>
             ) : null}
 
-            {i === 0 ? (
-              <div className="mt-20 space-y-14">
-                {section.blocks.slice(0, 2).map((block, b) => (
-                  <div key={b}>
-                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20">
-                      <div>
-                        {block.heading ? (
-                          <h3 className="font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
-                            {block.heading}
-                          </h3>
-                        ) : null}
+            <div className="mt-8 space-y-14">
+              {blocksToRender.map((block, b) => (
+                <div key={b}>
+                  <div className="mx-auto max-w-[760px] px-6">
+                    {block.heading ? (
+                      <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                        {block.heading}
+                      </h3>
+                    ) : null}
+                    {block.paragraphs?.length ? (
+                      <div className="space-y-5">
+                        {block.paragraphs.map((para, j) => (
+                          <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                            {para}
+                          </p>
+                        ))}
                       </div>
-                      <div className="max-w-[680px]">
-                        {block.paragraphs?.length ? (
-                          <div className="space-y-5">
-                            {block.paragraphs.map((para, j) => (
-                              <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
-                                {para}
-                              </p>
-                            ))}
-                          </div>
-                        ) : null}
-                        {block.bullets ? (
-                          <ul
-                            className={`${
-                              block.paragraphs?.length ? "mt-5" : ""
-                            } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
-                          >
-                            {block.bullets.items.map((item, k) => (
-                              <li key={k} className="flex gap-3">
-                                <span className="shrink-0 text-ink-muted">—</span>
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : null}
-                      </div>
-                    </div>
-                    {block.visual ? (
-                      <figure className="relative mt-10 aspect-[21/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
-                        <Image
-                          src={block.visual.src}
-                          alt={block.visual.alt}
-                          width={block.visual.width}
-                          height={block.visual.height}
-                          sizes="(min-width: 1024px) 1200px, 100vw"
-                          quality={75}
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
-                      </figure>
+                    ) : null}
+                    {block.bullets ? (
+                      <ul
+                        className={`${
+                          block.paragraphs?.length ? "mt-5" : ""
+                        } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
+                      >
+                        {block.bullets.items.map((item, k) => (
+                          <li key={k} className="flex gap-3">
+                            <span className="shrink-0 text-ink-muted">—</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
                     ) : null}
                   </div>
-                ))}
-
-                {section.blocks.length > 2 ? (
-                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr] lg:gap-20">
-                    <div />
-                    <div className="grid max-w-[680px] grid-cols-1 gap-10 sm:grid-cols-2">
-                      {section.blocks.slice(2).map((block, b) => (
-                        <div key={b}>
-                          {block.heading ? (
-                            <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
-                              {block.heading}
-                            </h3>
-                          ) : null}
-                          {block.paragraphs?.length ? (
-                            <div className="space-y-5">
-                              {block.paragraphs.map((para, j) => (
-                                <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
-                                  {para}
-                                </p>
-                              ))}
-                            </div>
-                          ) : null}
-                          {block.bullets ? (
-                            <ul
-                              className={`${
-                                block.paragraphs?.length ? "mt-5" : ""
-                              } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
-                            >
-                              {block.bullets.items.map((item, k) => (
-                                <li key={k} className="flex gap-3">
-                                  <span className="shrink-0 text-ink-muted">—</span>
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          ) : null}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
-
+                  {block.visual ? (
+                    <figure
+                      className="relative mt-10 w-full overflow-hidden rounded-[20px] bg-[#0F1410]"
+                      style={{ aspectRatio: block.visual.aspectRatio ?? "16 / 9" }}
+                    >
+                      <Image
+                        src={block.visual.src}
+                        alt={block.visual.alt}
+                        width={block.visual.width}
+                        height={block.visual.height}
+                        sizes="(min-width: 1280px) 1200px, 100vw"
+                        quality={75}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    </figure>
+                  ) : null}
+                </div>
+              ))}
+            </div>
           </section>
-        ))}
+          );
+        })}
       </article>
     </main>
   );

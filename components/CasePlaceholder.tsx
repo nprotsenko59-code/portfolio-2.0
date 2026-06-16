@@ -5,7 +5,7 @@ import type { CaseStudySection } from "@/lib/cases";
 
 function OverviewVisual() {
   return (
-    <figure className="relative aspect-[21/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
+    <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
       <Image
         src="/images/case-overview/first-screen.jpg"
         alt="Payment Installments — first screen"

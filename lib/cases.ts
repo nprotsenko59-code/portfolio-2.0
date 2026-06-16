@@ -162,11 +162,39 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           paragraphs: [
             "Then users define the main charge logic: they choose a billing cycle — monthly, weekly, or every two weeks — decide whether the reservation total should be split equally or charged as a custom amount, and choose when the charge should occur.",
           ],
+          visual: {
+            src: "/images/case-process/payment-cycle.jpg",
+            alt: "Payment cycle setup — billing cadence and split logic",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          visual: {
+            src: "/images/case-process/payment-cycle-cards.jpg",
+            alt: "Payment cycle option cards",
+            width: 2400,
+            height: 1350,
+          },
         },
         {
           paragraphs: [
             "And finally, they decide what to take from that logic: upfront charge and security deposit.",
           ],
+          visual: {
+            src: "/images/case-process/move-in-off.jpg",
+            alt: "Move-in costs — all options off",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          visual: {
+            src: "/images/case-process/move-in-on.jpg",
+            alt: "Move-in costs — all options on",
+            width: 2400,
+            height: 1350,
+          },
         },
       ],
     },
@@ -182,6 +210,12 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "By default, users will see the long reservation view — three months. This helps them understand cases that are difficult to explain verbally, such as how partial months are handled or how the guest will be charged if the first and last installments are collected upfront.",
             "Preview changes based on what payment cycle user chooses, and if they turn on upfront charge and security deposit.",
           ],
+          visual: {
+            src: "/images/case-process/preview.jpg",
+            alt: "Preview — calendar visualization of installments",
+            width: 2400,
+            height: 1350,
+          },
         },
         {
           heading: "Challenge 2 — Catching conflicts",
@@ -190,6 +224,12 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "One issue it surfaced was that many users already had event-based automations set to apply to any length of stay. This meant the new installment-based automation could overlap with an existing one.",
             "To solve this, we showed users the conflicting automations and suggested adjusting the length-of-stay condition so the rules would not overlap.",
           ],
+          visual: {
+            src: "/images/case-process/conflict.jpg",
+            alt: "Conflict resolution — suggesting length-of-stay adjustments",
+            width: 2400,
+            height: 1350,
+          },
         },
       ],
     },
