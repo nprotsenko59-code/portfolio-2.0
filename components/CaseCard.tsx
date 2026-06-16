@@ -53,7 +53,9 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
       className={`inline-flex items-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
         isDark
           ? "bg-white text-[#161616] group-hover:bg-white/90"
-          : "bg-white/70 text-[#3E3E3E] group-hover:bg-white"
+          : data.invertButton
+            ? "bg-[#3E3E3E] text-white group-hover:bg-[#2a2a2a]"
+            : "bg-white/70 text-[#3E3E3E] group-hover:bg-white"
       }`}
     >
       <span>View</span>
@@ -136,6 +138,20 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
       {textColumn}
 
       {data.image ? (
+        data.image.contain ? (
+          <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden p-4 md:min-h-0 md:p-6">
+            <Image
+              src={data.image.src}
+              alt={data.image.alt}
+              width={3337}
+              height={2209}
+              sizes="(min-width: 768px) 50vw, 100vw"
+              quality={90}
+              className="pointer-events-none h-full w-full select-none object-contain"
+              priority={false}
+            />
+          </div>
+        ) : (
         <div className="relative min-h-[280px] md:min-h-0">
           <Image
             src={data.image.src}
@@ -148,6 +164,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
             priority={false}
           />
         </div>
+        )
       ) : (
         <div
           className="relative mx-8 mb-8 min-h-[280px] overflow-hidden rounded-2xl md:my-12 md:mr-12 md:ml-0 md:min-h-0"

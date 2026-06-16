@@ -19,9 +19,11 @@ export type Case = {
   website?: string;
   accent: string;
   theme?: "light" | "dark";
-  image?: { src: string; alt: string };
+  image?: { src: string; alt: string; contain?: boolean };
   /** Optional logo rendered above the headline. Recolored to the card text color. */
   logo?: { src: string; alt: string; aspectRatio: number; height?: number };
+  /** When true, the CTA pill uses dark background + white text (for light cards with dark text). */
+  invertButton?: boolean;
   /** Optional long-form case study. When present, the card's View button links to /work/[slug]. */
   study?: { sections: CaseStudySection[] };
 };
@@ -118,11 +120,24 @@ export const cases: Case[] = [
   {
     slug: "case-2",
     title: "Project Two",
+    headline: "Boosting quality and speed of designers' work with AI skills",
     dates: "2023 – 2024",
     description:
-      "Short project description goes here. Two or three lines about the problem, the approach, and what shipped.",
+      "I built two Cursor commands for the design team: one to help anticipate edge cases, and another to quickly find relevant references.",
     website: "#",
-    accent: "#E3E8EC",
+    accent: "#F7F7F4",
+    invertButton: true,
+    logo: {
+      src: "/images/guesty-logo.svg",
+      alt: "Guesty",
+      aspectRatio: 445 / 117,
+      height: 28,
+    },
+    image: {
+      src: "/images/guesty-ai-2.png",
+      alt: "AI skills for designers",
+      contain: true,
+    },
   },
   {
     slug: "case-3",
