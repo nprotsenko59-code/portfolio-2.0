@@ -1,52 +1,42 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import type { Case } from "@/lib/cases";
-import CaseStudyNav from "./CaseStudyNav";
 import CasePlaceholder from "./CasePlaceholder";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 
 export default function CaseStudy({ data }: { data: Case }) {
   const sections = data.study?.sections ?? [];
   const sectionRefs = useRef<Array<HTMLElement | null>>([]);
   const rootRef = useRef<HTMLElement>(null);
-  const visualRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Toggle scroll-snap on <html> while the case study is mounted.
+  // Land at top on mount (matches the prior history.scrollRestoration override).
   useEffect(() => {
-    document.documentElement.classList.add("case-snap");
     const prev = history.scrollRestoration;
     history.scrollRestoration = "manual";
-    // Land at the first snap point on mount — run after browser's scroll
-    // restoration attempt so it actually sticks on reload.
-    const raf1 = requestAnimationFrame(() => {
-      const raf2 = requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: "auto" });
-      });
-      return () => cancelAnimationFrame(raf2);
-    });
+    const raf = requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "auto" }));
     return () => {
-      cancelAnimationFrame(raf1);
-      document.documentElement.classList.remove("case-snap");
+      cancelAnimationFrame(raf);
       history.scrollRestoration = prev;
     };
   }, []);
 
-  // Entry animation — same vibe as the Hero load: fade + slide-up, expo.out, staggered.
+  // Entry animation — fade + slide-up on the hero section + chrome.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const firstSection = sectionRefs.current[0];
     const root = rootRef.current;
-    const visual = visualRef.current;
     if (!firstSection || !root) return;
 
     const logo = firstSection.querySelector<HTMLElement>("[role='img']");
     const heading = firstSection.querySelector<HTMLElement>("h2");
     const paragraphs = firstSection.querySelectorAll<HTMLElement>("p");
     const backLink = root.querySelector<HTMLElement>("[data-case-back]");
-    const progressBar = root.querySelector<HTMLElement>("[data-case-progress]");
+    const railItems = root.querySelectorAll<HTMLElement>("[data-case-rail] li");
 
     const slideTargets: HTMLElement[] = [];
     if (logo) slideTargets.push(logo);
@@ -54,41 +44,28 @@ export default function CaseStudy({ data }: { data: Case }) {
     paragraphs.forEach((p) => slideTargets.push(p));
 
     if (slideTargets.length) gsap.set(slideTargets, { y: 40, opacity: 0 });
-    if (visual) gsap.set(visual, { y: 60, opacity: 0 });
     if (backLink) gsap.set(backLink, { y: -12, opacity: 0 });
-    if (progressBar) gsap.set(progressBar, { opacity: 0 });
+    if (railItems.length) gsap.set(railItems, { y: 8, opacity: 0 });
 
     const tl = gsap.timeline();
-
-    if (progressBar) {
-      tl.to(progressBar, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0);
-    }
-    if (backLink) {
-      tl.to(backLink, { y: 0, opacity: 1, duration: 0.7, ease: "expo.out" }, 0);
-    }
-    if (visual) {
-      tl.to(visual, { y: 0, opacity: 1, duration: 1.2, ease: "expo.out" }, 0.1);
-    }
-    if (logo) {
-      tl.to(logo, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, 0.15);
-    }
-    if (heading) {
-      tl.to(heading, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out" }, 0.25);
-    }
-    if (paragraphs.length) {
+    if (backLink) tl.to(backLink, { y: 0, opacity: 1, duration: 0.7, ease: "expo.out" }, 0);
+    if (railItems.length)
+      tl.to(railItems, { y: 0, opacity: 1, duration: 0.6, ease: "expo.out", stagger: 0.04 }, 0.2);
+    if (logo) tl.to(logo, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, 0.15);
+    if (heading) tl.to(heading, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out" }, 0.25);
+    if (paragraphs.length)
       tl.to(
         paragraphs,
         { y: 0, opacity: 1, duration: 1.0, ease: "expo.out", stagger: 0.08 },
         0.45
       );
-    }
 
     return () => {
       tl.kill();
     };
   }, []);
 
-  // Track which section is at viewport center to drive the visual cross-fade.
+  // Scroll-spy: highlight the section closest to viewport center.
   useEffect(() => {
     const els = sectionRefs.current.filter(Boolean) as HTMLElement[];
     if (!els.length) return;
@@ -100,55 +77,18 @@ export default function CaseStudy({ data }: { data: Case }) {
           if (idx >= 0) setActiveIndex(idx);
         });
       },
-      // 10% zone at viewport center. Whichever section intersects it is active.
       { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, [sections.length]);
 
-  // Per-paragraph scroll reveal for sections marked with revealParagraphsOnScroll.
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const triggers: ScrollTrigger[] = [];
-
-    sections.forEach((section, i) => {
-      if (!section.revealParagraphsOnScroll) return;
-      const sectionEl = sectionRefs.current[i];
-      if (!sectionEl) return;
-
-      const paras = sectionEl.querySelectorAll<HTMLElement>("[data-reveal-paragraph]");
-      if (paras.length < 2) return;
-
-      const subsequent = Array.from(paras).slice(1);
-      gsap.set(subsequent, { opacity: 0, y: 24 });
-
-      const tl = gsap.timeline({
-        defaults: { ease: "power2.out" },
-        scrollTrigger: {
-          trigger: sectionEl,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.4,
-        },
-      });
-
-      const slots = subsequent.length + 1;
-      subsequent.forEach((p, idx) => {
-        const pos = (idx + 1) / slots;
-        tl.to(p, { opacity: 1, y: 0, duration: 0.15 }, pos);
-      });
-      tl.to({}, { duration: 0.1 }, 1);
-
-      const trigger = tl.scrollTrigger;
-      if (trigger) triggers.push(trigger);
-    });
-
-    return () => {
-      triggers.forEach((t) => t.kill());
-    };
-  }, [sections]);
+  const handleJump = (index: number) => {
+    const el = sectionRefs.current[index];
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
 
   if (!sections.length) {
     return (
@@ -160,42 +100,62 @@ export default function CaseStudy({ data }: { data: Case }) {
 
   return (
     <main ref={rootRef} className="relative">
-      <CaseStudyNav sections={sections} activeIndex={activeIndex} />
-
-      {/* Fixed right-side visual viewer — stays in place; content cross-fades on activeIndex */}
-      <div
-        ref={visualRef}
-        data-case-visual
-        aria-hidden
-        className="pointer-events-none fixed bottom-5 right-5 top-5 z-30 hidden md:block"
-        style={{ width: "calc(60% - 20px)" }}
-      >
-        {sections.map((section, i) => (
-          <div
-            key={section.id}
-            className="absolute inset-0 transition-opacity duration-700 ease-out"
-            style={{ opacity: activeIndex === i ? 1 : 0 }}
+      <header className="pointer-events-none fixed left-0 right-0 top-0 z-[55] flex items-start justify-between px-8 pb-4 pt-7 md:px-12">
+        <div className="pointer-events-auto">
+          <Link
+            href="/"
+            scroll={false}
+            data-cursor
+            data-cursor-label="Back"
+            data-case-back
+            className="group inline-flex items-center rounded-full bg-white px-5 py-2.5 text-sm font-medium text-[#161616] transition-colors hover:bg-white/90"
           >
-            <CasePlaceholder section={section} />
-          </div>
-        ))}
-      </div>
-
-      {/* Left text column — flows in normal scroll */}
-      <div className="relative w-full md:w-[40%]">
+            <span
+              aria-hidden
+              className="mr-0 inline-flex w-0 -translate-x-1 items-center overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-out group-hover:mr-1.5 group-hover:w-[14px] group-hover:translate-x-0 group-hover:opacity-100"
+            >
+              ←
+            </span>
+            <span>Back</span>
+          </Link>
+        </div>
+      </header>
+      <article className="w-full px-6 pb-40 pt-7 lg:pt-24">
         {sections.map((section, i) => {
-          const paragraphs = section.body.split("\n\n");
-          const reveal = section.revealParagraphsOnScroll && paragraphs.length > 1;
-
-          const textBlock = (
-            <div className="flex flex-col">
+          const isHero = i === 0;
+          const heroSideBySide = isHero
+            ? section.blocks.filter(
+                (b) => b.heading === "My role" || b.heading === "Team"
+              )
+            : [];
+          const blocksToRender = isHero
+            ? section.blocks.filter(
+                (b) => b.heading !== "My role" && b.heading !== "Team"
+              )
+            : section.blocks;
+          return (
+          <section
+            key={section.id}
+            ref={(el) => {
+              sectionRefs.current[i] = el;
+            }}
+            id={section.id}
+            aria-label={section.chip}
+            className={i === 0 ? "scroll-mt-32" : "scroll-mt-32 mt-20 pt-20"}
+          >
+            {i !== 0 ? (
+              <div className="mx-auto -mt-20 mb-20 max-w-[760px] px-6">
+                <div aria-hidden className="h-px w-full bg-ink/15" />
+              </div>
+            ) : null}
+            <div className="mx-auto max-w-[760px] px-6">
               {i === 0 ? (
                 <>
                   {data.logo ? (
                     <div
                       role="img"
                       aria-label={data.logo.alt}
-                      className="mb-6 text-ink"
+                      className="mb-10 text-ink"
                       style={{
                         height: data.logo.height ?? 28,
                         width: (data.logo.height ?? 28) * data.logo.aspectRatio,
@@ -211,103 +171,111 @@ export default function CaseStudy({ data }: { data: Case }) {
                       }}
                     />
                   ) : null}
-                  {data.headline ? (
-                    <h2 className="font-display text-[clamp(28px,2.8vw,46px)] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
-                      {data.headline}
-                    </h2>
-                  ) : (
-                    <h2 className="font-display text-[clamp(36px,4vw,56px)] font-bold uppercase leading-none tracking-[-0.03em] text-ink">
-                      {data.title}
-                    </h2>
-                  )}
-                  <p className="mt-4 max-w-md text-[15px] leading-[1.55] text-ink">
+                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
+                    {data.headline ?? data.title}
+                  </h2>
+                  <p className="mt-8 text-[16px] leading-[1.65] text-ink/85">
                     {data.description}
                   </p>
+                  {heroSideBySide.length ? (
+                    <div className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2">
+                      {heroSideBySide.map((block, idx) => (
+                        <div key={idx}>
+                          {block.heading ? (
+                            <h3 className="mb-3 font-display text-[14px] font-semibold uppercase tracking-widest text-ink-muted">
+                              {block.heading}
+                            </h3>
+                          ) : null}
+                          {block.paragraphs?.length ? (
+                            <div className="space-y-3">
+                              {block.paragraphs.map((para, j) => (
+                                <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                                  {para}
+                                </p>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
                 </>
               ) : (
                 <>
                   {section.eyebrow ? (
-                    <span className="mb-4 text-[11px] font-medium uppercase tracking-widest text-ink-muted">
+                    <span className="mb-3 block text-[11px] font-medium uppercase tracking-widest text-ink-muted">
                       {section.eyebrow}
                     </span>
                   ) : null}
-                  <h2 className="font-display text-[clamp(28px,2.8vw,46px)] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
+                  <h2 className="font-display text-[36px] font-bold uppercase leading-[1.1] tracking-[-0.02em] text-ink">
                     {section.title}
                   </h2>
-                  <div className="mt-5 space-y-3.5">
-                    {paragraphs.map((para, j) => (
-                      <p
-                        key={j}
-                        {...(reveal ? { "data-reveal-paragraph": "" } : {})}
-                        className="text-[14px] leading-[1.55] text-ink/85"
+                </>
+              )}
+            </div>
+
+            {i === 0 ? (
+              <div className="mt-16">
+                <CasePlaceholder section={section} />
+              </div>
+            ) : null}
+
+            <div className="mt-8 space-y-14">
+              {blocksToRender.map((block, b) => (
+                <div key={b}>
+                  <div className="mx-auto max-w-[760px] px-6">
+                    {block.heading ? (
+                      <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em] text-ink">
+                        {block.heading}
+                      </h3>
+                    ) : null}
+                    {block.paragraphs?.length ? (
+                      <div className="space-y-5">
+                        {block.paragraphs.map((para, j) => (
+                          <p key={j} className="text-[16px] leading-[1.65] text-ink/85">
+                            {para}
+                          </p>
+                        ))}
+                      </div>
+                    ) : null}
+                    {block.bullets ? (
+                      <ul
+                        className={`${
+                          block.paragraphs?.length ? "mt-5" : ""
+                        } space-y-3 text-[16px] leading-[1.65] text-ink/85`}
                       >
-                        {para}
-                      </p>
-                    ))}
-                  </div>
-                  {section.aside ? (
-                    <div className="mt-4">
-                      <p className="text-[14px] leading-[1.55] text-ink/85">
-                        {section.aside.label}
-                      </p>
-                      <ul className="mt-3 space-y-3 text-[14px] leading-[1.55] text-ink/85">
-                        {section.aside.items.map((item, k) => (
+                        {block.bullets.items.map((item, k) => (
                           <li key={k} className="flex gap-3">
                             <span className="shrink-0 text-ink-muted">—</span>
                             <span>{item}</span>
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    ) : null}
+                  </div>
+                  {block.visual ? (
+                    <figure
+                      className="relative mt-10 w-full overflow-hidden rounded-[20px] bg-[#0F1410]"
+                      style={{ aspectRatio: block.visual.aspectRatio ?? "16 / 9" }}
+                    >
+                      <Image
+                        src={block.visual.src}
+                        alt={block.visual.alt}
+                        width={block.visual.width}
+                        height={block.visual.height}
+                        sizes="(min-width: 1280px) 1200px, 100vw"
+                        quality={75}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    </figure>
                   ) : null}
-                </>
-              )}
-            </div>
-          );
-
-          if (reveal) {
-            return (
-              <section
-                key={section.id}
-                ref={(el) => {
-                  sectionRefs.current[i] = el;
-                }}
-                id={section.id}
-                aria-label={section.chip}
-                className="relative"
-                style={{ height: `${paragraphs.length * 100}vh` }}
-              >
-                <div className="sticky top-0 flex h-screen items-start px-8 pb-12 pt-32 md:px-12 md:pt-28">
-                  {textBlock}
                 </div>
-                {/* Snap markers — one per paragraph reveal step. */}
-                {paragraphs.map((_, step) => (
-                  <div
-                    key={step}
-                    aria-hidden
-                    className="pointer-events-none absolute left-0 h-screen w-px snap-start snap-always"
-                    style={{ top: `${step * 100}vh` }}
-                  />
-                ))}
-              </section>
-            );
-          }
-
-          return (
-            <section
-              key={section.id}
-              ref={(el) => {
-                sectionRefs.current[i] = el;
-              }}
-              id={section.id}
-              aria-label={section.chip}
-              className="flex min-h-screen snap-start snap-always flex-col justify-start px-8 pb-12 pt-32 md:px-12 md:pt-28"
-            >
-              {textBlock}
-            </section>
+              ))}
+            </div>
+          </section>
           );
         })}
-      </div>
+      </article>
     </main>
   );
 }

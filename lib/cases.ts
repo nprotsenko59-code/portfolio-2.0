@@ -1,12 +1,17 @@
+export type CaseSectionBlock = {
+  heading?: string;
+  paragraphs?: string[];
+  bullets?: { label?: string; items: string[] };
+  visual?: { src: string; alt: string; width: number; height: number; aspectRatio?: string };
+  layout?: "split";
+};
+
 export type CaseStudySection = {
   id: string;
   chip: string;
   eyebrow?: string;
   title: string;
-  body: string;
-  aside?: { label: string; items: string[] };
-  /** When true, the section pins for N×100vh of scroll and reveals body paragraphs one at a time. */
-  revealParagraphsOnScroll?: boolean;
+  blocks: CaseSectionBlock[];
 };
 
 export type Case = {
@@ -35,61 +40,212 @@ const guestyStudy: { sections: CaseStudySection[] } = {
       chip: "Overview",
       eyebrow: "Guesty · 2025",
       title: "Payment Installments",
-      body: "Designing a new billing paradigm for long-term rental managers.\n\nSenior Product Designer — led research, concept ideation, UI/UX design, and stakeholder alignment end to end. Web app (B2B SaaS) for thousands of property management companies worldwide. Status: in development.",
-    },
-    {
-      id: "background",
-      chip: "Background",
-      title: "Built for short-term, breaking for long-term",
-      body: "Guesty's Payment Automations feature lets property managers attach charges to reservation events — booking, confirmation, check-in, check-out. For a 5-night stay, that works perfectly.\n\nBut a growing segment — large PMCs running corporate housing, serviced apartments, and mid-term rentals — don't operate on those terms. Their guests stay 30, 60, 90+ days. They bill like landlords: monthly installments, security deposits, prorated first months. Connecting a charge to \"check-in\" makes no sense when a guest is already living there.\n\nWithout installment support, Guesty was losing enterprise deals to competitors. Sales calls surfaced the same objection repeatedly. That signal kicked off this project.",
-    },
-    {
-      id: "problem",
-      chip: "Problem",
-      title: "The problem statement",
-      body: "How do we extend Guesty's payment automation system to support long-term billing logic — recurring installments, move-in costs, proration — without breaking the existing short-term experience or creating conflicts that could overcharge guests?",
-    },
-    {
-      id: "research",
-      chip: "Research",
-      title: "Discovery with property managers",
-      body: "I led direct discovery calls with PMCs managing long-term and mid-term portfolios. Two conversations shaped the project's direction.",
-      aside: {
-        label: "Across calls, several patterns emerged clearly:",
-        items: [
-          "We discovered 3 main patterns how users charge their guests: monthly (most popular), weekly and bi-weekly (mainly used for reservations with open check-out date).",
-          "We learned how they think about long stays: everything above 30 calendar days is considered to be a long reservation.",
-          "Two charging paradigms exist. Some PMCs charge every 30 days from check-in (anniversary billing); others charge on a fixed calendar date like the 1st of each month (calendar billing). Both are legitimate and in active use.",
-          "Move-in costs are conceptually separate. Deposits, first month, first-and-last — these are upfront, one-time items that PMCs think about differently from recurring installments.",
-        ],
-      },
+      blocks: [
+        {
+          heading: "What is Guesty?",
+          paragraphs: [
+            "Guesty is a property management platform. It helps teams manage listings, reservations, guest communication, payments, and day-to-day operations across multiple booking channels. One of its core areas is payment workflows, which help property managers collect revenue, automate charges, and reduce manual operational work.",
+          ],
+        },
+        {
+          heading: "The problem",
+          paragraphs: [
+            "Guesty's Payment Automations let property managers attach charges to reservation events like booking, confirmation, check-in, and check-out — which works well for short stays.",
+            "But larger PMCs running corporate housing, serviced apartments, and mid-term rentals operate differently. Their guests stay 30, 60, or 90+ days, and payments often happen through installments that are not connected to reservation lifecycle.",
+            "Without installment support, Guesty was losing enterprise deals to competitors. The same objection kept coming up in sales calls — and that became the starting point for this project.",
+          ],
+          visual: {
+            src: "/images/case-process/current-logic.jpg",
+            alt: "Current Guesty payment automation logic — current state diagram",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          heading: "My role",
+          paragraphs: [
+            "I led all the design process for this project: from briefing with my PM and discovery to hand off to development.",
+          ],
+        },
+        {
+          heading: "Team",
+          paragraphs: [
+            "Me (designer), Product manager, Front-end developer, Back-end developer",
+          ],
+        },
+      ],
     },
     {
       id: "process",
       chip: "Process",
-      title: "Synthesis and prototyping",
-      revealParagraphsOnScroll: true,
-      body: "After discovery, it was clear early on that installments setup should be different from existing automation that is connected to the reservation cycle: in installments logic comes first. User thinks: I want to charge my guest monthly, and collect first and last month payments when they make a reservation.\n\nSo to understand how to solve it better, I needed to understand how similar problems had been solved elsewhere. I researched financial and billing apps to look for comparable patterns. For this I used one of the internal tools I built for the team: Reference Scout, an agent connected to Mobbin via MCP that searches for relevant UI references based on a design brief. What would have taken hours of manual browsing was done in a fraction of the time, and with broader coverage than a manual search typically produces. The key finding: most financial products that handle similar flows break the setup into sequential steps rather than presenting everything at once.\n\nI built a coded prototype in Cursor to explore potential solutions in low fidelity. The goal was to try as many options as possible in a short amount of time, and to align stakeholders on the solution.",
+      title: "Process",
+      blocks: [
+        {
+          heading: "Discovery with property managers",
+          paragraphs: [
+            "I led direct discovery calls with property managers managing long-term reservations. Across calls, several patterns emerged clearly:",
+          ],
+          bullets: {
+            items: [
+              "We discovered 3 main patterns how users charge their guests: monthly (most popular), weekly and bi-weekly (mainly used for reservations with open check-out date).",
+              "We learned how they think about long stays: everything above 30 calendar days is considered to be a long reservation.",
+              "Two charging paradigms exist. Some PMCs charge every 30 days from check-in (anniversary billing); others charge on a fixed calendar date like the 1st of each month (calendar billing). Both are legitimate and in active use.",
+              "They charge part of the reservation total upfront (before guest checks-in). Usually, they take first and last installment. Also, there is a refundable security deposit: an amount on top of reservation total that they charge and refund at the end of the stay if there is no damage done.",
+            ],
+          },
+          visual: {
+            src: "/images/case-process/discovery.jpg",
+            alt: "Discovery research with property managers",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          heading: "Synthesis",
+          paragraphs: [
+            "After discovery, it was clear early on that installments setup should be different from existing automation that is connected to the reservation cycle: in installments logic comes first. User thinks: I want to charge my guest monthly, and collect first and last month payments when they make a reservation, so they don't split the total that guest should pay into payments connected to reservation lifecycle.",
+          ],
+        },
+        {
+          heading: "Patterns research",
+          paragraphs: [
+            "So to understand how to solve it better, I needed to understand how similar problems had been solved in fintech apps. I researched financial and billing apps to look for comparable patterns. For this I used one of the internal tools I built for the team: Reference Scout, a skill connected to Mobbin via MCP that searches for relevant UI references based on a design brief. What would have taken hours of manual browsing was done in a fraction of the time, and with broader coverage than a manual search typically produces. The key finding: most financial products that handle similar flows break the setup into sequential steps rather than presenting everything at once.",
+          ],
+          visual: {
+            src: "/images/case-process/competitors.jpg",
+            alt: "Competitor patterns research — fintech app references",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          heading: "Ideation and prototyping",
+          paragraphs: [
+            "Then I moved to early concepts and ideation. I built coded prototypes in Cursor to explore potential solutions in low fidelity. The goal was to try as many options as possible in a short amount of time, and to align stakeholders on the solution. After a successful review I moved to a detailed design phase.",
+          ],
+          visual: {
+            src: "/images/case-process/prototype.jpg",
+            alt: "Coded prototype explorations in Cursor",
+            width: 2400,
+            height: 1350,
+          },
+        },
+      ],
     },
     {
       id: "decisions",
-      chip: "Decisions",
-      title: "Final design — key decisions",
-      revealParagraphsOnScroll: true,
-      body: "I designed a dedicated, separate setup flow for installment-based automations. Users still enter from the Payment Automations area, but long-term billing has its own guided path with its own mental model. This keeps the short-term experience intact, gives the system clean logic to detect conflicts, and lets both paths evolve independently.\n\nUsers start by defining the conditions under which this automation should be triggered. They can trigger it based on specific channels, properties, or reservation length. However, in this case, the reservation length cannot be less than 30 nights to avoid conflicts with our event-based automation flow. This is also the minimum stay length at which users typically start treating a reservation as a long-term stay.\n\nThen users define the main charge logic: they choose a billing cycle — monthly, weekly, or every two weeks — decide whether the reservation total should be split equally or charged as a custom amount, and choose when the charge should occur.\n\nAnd finally, they decide what to take from that logic: upfront charge and security deposit.",
+      chip: "Key design decisions",
+      title: "Key design decisions",
+      blocks: [
+        {
+          paragraphs: [
+            "I designed a dedicated, separate setup flow for installment-based automations. Users still enter from the Payment Automations area, but long-term billing has its own guided path with its own mental model. This keeps the short-term experience intact, gives the system clean logic to detect conflicts, and lets both paths evolve independently.",
+          ],
+          visual: {
+            src: "/images/case-process/entry-point.jpg",
+            alt: "Entry point — separate setup flow for installment-based automations",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          paragraphs: [
+            "Users start by defining the conditions under which this automation should be triggered. They can trigger it based on specific channels, properties, or reservation length. However, in this case, the reservation length cannot be less than 30 nights to avoid conflicts with our event-based automation flow. This is also the minimum stay length at which users typically start treating a reservation as a long-term stay.",
+          ],
+          visual: {
+            src: "/images/case-process/settings.jpg",
+            alt: "Trigger conditions setup — channels, properties, reservation length",
+            width: 2400,
+            height: 1350,
+            aspectRatio: "16/9",
+          },
+        },
+        {
+          paragraphs: [
+            "Then users define the main charge logic: they choose a billing cycle — monthly, weekly, or every two weeks — decide whether the reservation total should be split equally or charged as a custom amount, and choose when the charge should occur.",
+          ],
+          visual: {
+            src: "/images/case-process/payment-cycle.jpg",
+            alt: "Payment cycle setup — billing cadence and split logic",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          visual: {
+            src: "/images/case-process/payment-cycle-cards.jpg",
+            alt: "Payment cycle option cards",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          paragraphs: [
+            "And finally, they decide what to take from that logic: upfront charge and security deposit.",
+          ],
+          visual: {
+            src: "/images/case-process/move-in-off.jpg",
+            alt: "Move-in costs — all options off",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          visual: {
+            src: "/images/case-process/move-in-on.jpg",
+            alt: "Move-in costs — all options on",
+            width: 2400,
+            height: 1350,
+          },
+        },
+      ],
     },
     {
-      id: "key-improvement",
-      chip: "Main Challenge",
-      title: "Main challenge",
-      revealParagraphsOnScroll: true,
-      body: "I needed the way for users to preview the automation while they are creating it, so that it is easier for them to understand how it works. I added a calendar visualisation with reservation example that was updating based on decisions that user made during the flow.\n\nBy default, users will see the long reservation view — three months. This helps them understand cases that are difficult to explain verbally, such as how partial months are handled or how the guest will be charged if the first and last installments are collected upfront.\n\nPreview changes based on what payment cycle user chooses, and if they turn on upfront charge and security deposit.",
+      id: "challenges",
+      chip: "Challenges",
+      title: "Main challenges",
+      blocks: [
+        {
+          heading: "Challenge 1 — Preview",
+          paragraphs: [
+            "I needed the way for users to preview the automation while they are creating it, so that it is easier for them to understand how it works. I added a calendar visualisation with reservation example that was updating based on decisions that user made during the flow.",
+            "By default, users will see the long reservation view — three months. This helps them understand cases that are difficult to explain verbally, such as how partial months are handled or how the guest will be charged if the first and last installments are collected upfront.",
+            "Preview changes based on what payment cycle user chooses, and if they turn on upfront charge and security deposit.",
+          ],
+          visual: {
+            src: "/images/case-process/preview.jpg",
+            alt: "Preview — calendar visualization of installments",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          heading: "Challenge 2 — Catching conflicts",
+          paragraphs: [
+            "I used one of the AI tools I built for the team — Design Coverage Map — to quickly identify edge cases in my design.",
+            "One issue it surfaced was that many users already had event-based automations set to apply to any length of stay. This meant the new installment-based automation could overlap with an existing one.",
+            "To solve this, we showed users the conflicting automations and suggested adjusting the length-of-stay condition so the rules would not overlap.",
+          ],
+          visual: {
+            src: "/images/case-process/conflict.jpg",
+            alt: "Conflict resolution — suggesting length-of-stay adjustments",
+            width: 2400,
+            height: 1350,
+          },
+        },
+      ],
     },
     {
-      id: "ahead",
-      chip: "What's Ahead",
-      title: "What comes next",
-      body: "Pilot release (limited number of users), gathering user’s feedback.",
+      id: "outcomes",
+      chip: "Outcomes",
+      title: "Outcomes",
+      blocks: [
+        {
+          paragraphs: [
+            "This feature unlocked a new customer segment for Guesty — PMCs specializing in long-term rentals — that previously couldn't be served by the platform. X enterprise accounts were unblocked and new possibilities for revenue emerged.",
+          ],
+        },
+      ],
     },
   ],
 };
