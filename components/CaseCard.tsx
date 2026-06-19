@@ -160,7 +160,8 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
             height={1456}
             sizes="(min-width: 768px) 60vw, 100vw"
             quality={90}
-            className="pointer-events-none absolute left-1/2 top-0 h-full w-auto max-w-none -translate-x-[40%] select-none md:-translate-x-[35%]"
+            className={`pointer-events-none absolute left-1/2 h-full w-auto max-w-none select-none md:-translate-x-[35%] ${data.image.scale ? "top-1/2 -translate-x-[40%] -translate-y-1/2" : "top-0 -translate-x-[40%]"}`}
+            style={data.image.scale ? { scale: String(data.image.scale) } : undefined}
             priority={false}
           />
         </div>

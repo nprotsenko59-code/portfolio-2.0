@@ -24,7 +24,7 @@ export type Case = {
   website?: string;
   accent: string;
   theme?: "light" | "dark";
-  image?: { src: string; alt: string; contain?: boolean };
+  image?: { src: string; alt: string; contain?: boolean; scale?: number };
   /** Optional logo rendered above the headline. Recolored to the card text color. */
   logo?: { src: string; alt: string; aspectRatio: number; height?: number };
   /** When true, the CTA pill uses dark background + white text (for light cards with dark text). */
@@ -274,10 +274,33 @@ export const cases: Case[] = [
     study: guestyStudy,
   },
   {
+    slug: "case-3",
+    title: "Project Three",
+    headline:
+      "Boosting payment processing volume by letting property managers collect ad-hoc payments from guests",
+    dates: "",
+    description:
+      "Property managers had no in-platform way to charge guests for extra services mid-stay — pushing revenue outside Guesty and creating reconciliation headaches. I designed a two-sided payment link flow: a creation tool inside the reservation view and a standalone guest payment page, with live balance guards protecting the existing automated schedule.",
+    website: "#",
+    accent: "#0E0740",
+    theme: "dark",
+    logo: {
+      src: "/images/guesty-logo.svg",
+      alt: "Guesty",
+      aspectRatio: 445 / 117,
+      height: 28,
+    },
+    image: {
+      src: "/images/payment-link-asset.jpg",
+      alt: "Payment link flow",
+      scale: 0.88,
+    },
+  },
+  {
     slug: "case-2",
     title: "Project Two",
     headline: "Boosting quality and speed of designers' work with AI skills",
-    dates: "2023 – 2024",
+    dates: "",
     description:
       "I built two Cursor commands for the design team: one to help anticipate edge cases, and another to quickly find relevant references.",
     website: "#",
@@ -294,14 +317,6 @@ export const cases: Case[] = [
       alt: "AI skills for designers",
       contain: true,
     },
-  },
-  {
-    slug: "case-3",
-    title: "Project Three",
-    dates: "2022 – 2023",
-    description:
-      "Short project description goes here. Two or three lines about the problem, the approach, and what shipped.",
-    accent: "#ECE6E0",
   },
   {
     slug: "case-4",
