@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { CaseStudySection } from "@/lib/cases";
+import type { Case, CaseStudySection } from "@/lib/cases";
 
 function OverviewVisual() {
   return (
@@ -37,10 +37,13 @@ function ProcessVisual() {
 }
 
 export default function CasePlaceholder({
+  data,
   section,
 }: {
+  data: Case;
   section: CaseStudySection;
 }) {
+  if (data.slug !== "guesty-installments") return null;
   switch (section.id) {
     case "overview":
       return <OverviewVisual />;

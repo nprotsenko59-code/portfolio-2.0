@@ -250,6 +250,126 @@ const guestyStudy: { sections: CaseStudySection[] } = {
   ],
 };
 
+const paymentLinksStudy: { sections: CaseStudySection[] } = {
+  sections: [
+    {
+      id: "overview",
+      chip: "Overview",
+      eyebrow: "Guesty · 2025",
+      title: "Payment Links",
+      blocks: [
+        {
+          heading: "What is Guesty?",
+          paragraphs: [
+            "Guesty is a property management platform. It helps teams manage listings, reservations, guest communication, payments, and day-to-day operations across multiple booking channels. One of its core areas is payment workflows, which help property managers collect revenue, automate charges, and reduce manual operational work.",
+          ],
+        },
+        {
+          heading: "The problem",
+          paragraphs: [
+            "Guesty's payment processing worked well for charges defined at booking — confirmed amounts processed automatically through the reservation lifecycle. But property managers regularly encounter situations mid-stay where guests request extra services: a late check-out, a pet fee, a city tour, an extra bed. For these ad-hoc charges, there was no in-platform solution.",
+            "PMCs were left to collect money outside the system — via bank transfer, cash, or third-party tools — creating reconciliation problems, audit gaps, and a poor experience for guests who had no visibility into what they were paying for or why.",
+          ],
+        },
+        {
+          heading: "My role",
+          paragraphs: [
+            "I led all the design process for this project: from briefing with my PM and discovery to hand off to development.",
+          ],
+        },
+        {
+          heading: "Team",
+          paragraphs: [
+            "Me (designer), Product manager, Front-end developer, Back-end developer",
+          ],
+        },
+      ],
+    },
+    {
+      id: "process",
+      chip: "Process",
+      title: "Process",
+      blocks: [
+        {
+          heading: "Discovery",
+          paragraphs: [
+            "My PM and I analyzed the support tickets we were getting. Here's what we found:",
+          ],
+          bullets: {
+            items: [
+              "Ad-hoc charges are a regular part of operations, not an edge case. Nearly every PMC had a recurring list of items they regularly collect outside the system.",
+              "The manual workarounds were costing them trust with guests. Sending a bank transfer request or asking for cash felt informal and was often uncomfortable for both sides — guests are frequently traveling from abroad, which makes bank transfers inconvenient, and cash requires someone to physically collect it, pulling the team away from day-to-day duties.",
+            ],
+          },
+        },
+        {
+          heading: "Why payment link?",
+          paragraphs: [
+            "We decided to add payment link functionality since it can be convenient for both sides:",
+          ],
+          bullets: {
+            items: [
+              "For the property manager, it takes seconds to create and send.",
+              "The guest can enter their card details without needing to find an ATM or hand over cash.",
+            ],
+          },
+        },
+        {
+          heading: "Patterns research",
+          paragraphs: [
+            "To understand what guests expect from a payment link experience, I explored fintech and e-commerce products that handle similar flows. The key finding: the most trusted guest-facing payment pages strip everything down to the minimum — amount, clear purpose, a single action, and a preview of the link to set the right expectations.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "solution",
+      chip: "Solution",
+      title: "Solution",
+      blocks: [
+        {
+          paragraphs: [
+            "The solution covers two levels: the property manager creates a link inside Guesty, and the guest completes payment via a standalone URL.",
+            "The property manager creates the link from the reservation page. Placing it there keeps the action contextual — they can see the state of payments for that reservation.",
+            "They set an amount, add a description of the services, and share the link — either by copying it to the clipboard or sending it directly to the guest's email on file.",
+          ],
+        },
+        {
+          heading: "Challenge",
+          paragraphs: [
+            "The guest must feel secure handing over their payment details. We addressed this two ways:",
+          ],
+          bullets: {
+            items: [
+              "Property managers can upload their company logo — something the guest has already seen, in emails, invoices, and elsewhere.",
+              "The page shows reservation details — property name, address, and check-in and check-out dates — information only the property manager would know.",
+            ],
+          },
+        },
+        {
+          heading: "Guest experience",
+          paragraphs: [
+            "Guests open this page from their phone, so a clean, mobile-friendly design was a priority.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "outcomes",
+      chip: "Outcomes",
+      title: "Outcomes",
+      blocks: [
+        {
+          paragraphs: [
+            "Payment links gave property managers a secure, trackable way to handle ad-hoc revenue that previously lived entirely outside the platform. For guests, it removed the awkwardness of informal payment requests and gave them a transparent, professional experience.",
+            "For Guesty, it expanded the volume of payments processed through the platform, strengthened retention among GPro enterprise clients for whom this was a genuine feature gap, and removed a recurring objection in competitive sales conversations.",
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export const cases: Case[] = [
   {
     slug: "guesty-installments",
@@ -274,14 +394,13 @@ export const cases: Case[] = [
     study: guestyStudy,
   },
   {
-    slug: "case-3",
-    title: "Project Three",
+    slug: "payment-links",
+    title: "Payment Links",
     headline:
-      "Boosting payment processing volume by letting property managers collect ad-hoc payments from guests",
+      "Boosted processed payment volume and closed a competitive gap with ad-hoc payment links",
     dates: "",
     description:
-      "Property managers had no in-platform way to charge guests for extra services mid-stay — pushing revenue outside Guesty and creating reconciliation headaches. I designed a two-sided payment link flow: a creation tool inside the reservation view and a standalone guest payment page, with live balance guards protecting the existing automated schedule.",
-    website: "#",
+      "Property managers had no in-platform way to charge guests for extra services mid-stay — leaving teams to collect cash or bank transfers outside Guesty, creating reconciliation gaps and an inconsistent guest experience. I designed a two-sided payment link flow: a quick creation tool inside the reservation view, and a secure, mobile-friendly payment page for guests.",
     accent: "#0E0740",
     theme: "dark",
     logo: {
@@ -295,6 +414,7 @@ export const cases: Case[] = [
       alt: "Payment link flow",
       scale: 0.88,
     },
+    study: paymentLinksStudy,
   },
   {
     slug: "case-2",

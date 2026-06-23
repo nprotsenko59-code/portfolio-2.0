@@ -216,7 +216,7 @@ export default function CaseStudy({ data }: { data: Case }) {
 
             {i === 0 ? (
               <div className="mt-16">
-                <CasePlaceholder section={section} />
+                <CasePlaceholder data={data} section={section} />
               </div>
             ) : null}
 
