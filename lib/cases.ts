@@ -388,7 +388,7 @@ export const cases: Case[] = [
     accent: "#072C23",
     theme: "dark",
     image: {
-      src: "/images/guesty-installments.png",
+      src: "/images/Installments.png",
       alt: "Guesty Installments setup UI with payment cycle, automation example calendar, and house illustrations",
     },
     study: guestyStudy,
@@ -410,9 +410,8 @@ export const cases: Case[] = [
       height: 28,
     },
     image: {
-      src: "/images/payment-link-asset.jpg",
+      src: "/images/Payment link.png",
       alt: "Payment link flow",
-      scale: 0.88,
     },
     study: paymentLinksStudy,
   },
@@ -433,9 +432,8 @@ export const cases: Case[] = [
       height: 28,
     },
     image: {
-      src: "/images/guesty-ai-2.png",
+      src: "/images/Cursor.png",
       alt: "AI skills for designers",
-      contain: true,
     },
   },
   {

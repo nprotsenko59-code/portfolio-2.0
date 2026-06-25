@@ -7,7 +7,6 @@ import type { Case } from "@/lib/cases";
 import { gsap } from "@/lib/gsap";
 
 export default function CaseCard({ data }: { data: Case; index: number }) {
-  const isDark = data.theme === "dark";
   const articleRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -50,13 +49,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
 
   const ctaPill = ctaHref ? (
     <span
-      className={`inline-flex items-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
-        isDark
-          ? "bg-white text-[#161616] group-hover:bg-white/90"
-          : data.invertButton
-            ? "bg-[#3E3E3E] text-white group-hover:bg-[#2a2a2a]"
-            : "bg-white/70 text-[#3E3E3E] group-hover:bg-white"
-      }`}
+      className="inline-flex items-center rounded-full bg-white px-5 py-2.5 text-sm font-medium text-[#161616] transition-colors group-hover:bg-white/90"
     >
       <span>View</span>
       <span
@@ -74,7 +67,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
         <div
           role="img"
           aria-label={data.logo.alt}
-          className={`mb-6 ${isDark ? "text-white" : "text-[#3E3E3E]"}`}
+          className="mb-6 text-white"
           style={{
             height: data.logo.height ?? 28,
             width: (data.logo.height ?? 28) * data.logo.aspectRatio,
@@ -91,32 +84,18 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
         />
       ) : null}
       {data.headline ? (
-        <h3
-          className={`font-display text-[clamp(28px,2.8vw,46px)] font-bold uppercase leading-[1.1] tracking-[-0.02em] ${
-            isDark ? "text-white" : "text-[#3E3E3E]"
-          }`}
-        >
+        <h3 className="font-display text-[24px] font-bold uppercase leading-[1.2] tracking-[-0.02em] text-white">
           {data.headline}
         </h3>
       ) : (
-        <h3
-          className={`font-display text-[clamp(36px,4vw,56px)] font-bold uppercase leading-none tracking-[-0.03em] ${
-            isDark ? "text-white" : "text-[#3E3E3E]"
-          }`}
-        >
+        <h3 className="font-display text-[24px] font-bold uppercase leading-[1.2] tracking-[-0.02em] text-white">
           {data.title}
         </h3>
       )}
       {data.dates ? (
-        <p className={`mt-3 text-sm ${isDark ? "text-white/55" : "text-[#858585]"}`}>
-          {data.dates}
-        </p>
+        <p className="mt-3 text-sm text-white/55">{data.dates}</p>
       ) : null}
-      <p
-        className={`mt-4 max-w-md text-[15px] leading-[1.55] ${
-          isDark ? "text-white/85" : "text-[#3E3E3E]"
-        }`}
-      >
+      <p className="mt-4 max-w-md text-[15px] leading-[1.55] text-white/85">
         {data.description}
       </p>
       {ctaPill ? <div className="mt-auto pt-10">{ctaPill}</div> : null}
@@ -127,51 +106,32 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
     <article
       ref={articleRef}
       data-case-card
-      className="group relative grid h-full w-full grid-cols-1 overflow-hidden rounded-[40px] border md:h-[82vh] md:grid-cols-2"
+      className="group relative grid h-full w-full grid-cols-1 overflow-hidden rounded-[40px] border md:h-[82vh] md:grid-cols-[30%_70%]"
       style={{
-        backgroundColor: data.accent,
-        borderColor: isDark ? "rgba(255,255,255,0.08)" : "var(--color-card-border)",
+        backgroundColor: "#161616",
+        borderColor: "rgba(255,255,255,0.08)",
         willChange: "transform",
       }}
       aria-label={data.title}
     >
       {textColumn}
 
-      {data.image ? (
-        data.image.contain ? (
-          <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden p-4 md:min-h-0 md:p-6">
-            <Image
-              src={data.image.src}
-              alt={data.image.alt}
-              width={3337}
-              height={2209}
-              sizes="(min-width: 768px) 50vw, 100vw"
-              quality={90}
-              className="pointer-events-none h-full w-full select-none object-contain"
-              priority={false}
-            />
-          </div>
-        ) : (
-        <div className="relative min-h-[280px] md:min-h-0">
+      <div
+        className="relative m-2 min-h-[280px] overflow-hidden rounded-[32px] md:my-2 md:mr-2 md:ml-0 md:min-h-0"
+        style={{ backgroundColor: data.accent }}
+      >
+        {data.image ? (
           <Image
             src={data.image.src}
             alt={data.image.alt}
-            width={2370}
-            height={1456}
-            sizes="(min-width: 768px) 60vw, 100vw"
+            fill
+            sizes="(min-width: 768px) 70vw, 100vw"
             quality={90}
-            className={`pointer-events-none absolute left-1/2 h-full w-auto max-w-none select-none md:-translate-x-[35%] ${data.image.scale ? "top-1/2 -translate-x-[40%] -translate-y-1/2" : "top-0 -translate-x-[40%]"}`}
-            style={data.image.scale ? { scale: String(data.image.scale) } : undefined}
+            className="pointer-events-none select-none object-cover"
             priority={false}
           />
-        </div>
-        )
-      ) : (
-        <div
-          className="relative mx-8 mb-8 min-h-[280px] overflow-hidden rounded-2xl md:my-12 md:mr-12 md:ml-0 md:min-h-0"
-          style={{ backgroundColor: data.accent }}
-        />
-      )}
+        ) : null}
+      </div>
 
       {ctaHref ? (
         isExternal ? (
