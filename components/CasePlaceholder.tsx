@@ -19,6 +19,22 @@ function OverviewVisual() {
   );
 }
 
+function PaymentLinkFirstScreenVisual() {
+  return (
+    <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
+      <Image
+        src="/images/Payment link first screen.jpg"
+        alt="Payment Links — first screen"
+        fill
+        sizes="(min-width: 1024px) 1100px, 100vw"
+        quality={90}
+        className="object-cover"
+        priority
+      />
+    </figure>
+  );
+}
+
 function ProcessVisual() {
   return (
     <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px] bg-[#072C23]">
@@ -43,6 +59,15 @@ export default function CasePlaceholder({
   data: Case;
   section: CaseStudySection;
 }) {
+  if (data.slug === "payment-links") {
+    switch (section.id) {
+      case "overview":
+        return <PaymentLinkFirstScreenVisual />;
+      default:
+        return null;
+    }
+  }
+
   if (data.slug !== "guesty-installments") return null;
   switch (section.id) {
     case "overview":

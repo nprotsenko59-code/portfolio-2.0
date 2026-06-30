@@ -331,8 +331,24 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
           paragraphs: [
             "The solution covers two levels: the property manager creates a link inside Guesty, and the guest completes payment via a standalone URL.",
             "The property manager creates the link from the reservation page. Placing it there keeps the action contextual — they can see the state of payments for that reservation.",
+          ],
+          visual: {
+            src: "/images/Solution 1.jpg",
+            alt: "Creating a payment link from the reservation page",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          paragraphs: [
             "They set an amount, add a description of the services, and share the link — either by copying it to the clipboard or sending it directly to the guest's email on file.",
           ],
+          visual: {
+            src: "/images/Solution 2.jpg",
+            alt: "Setting the amount and description, and sharing the payment link",
+            width: 2400,
+            height: 1350,
+          },
         },
         {
           heading: "Challenge",
@@ -351,6 +367,12 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
           paragraphs: [
             "Guests open this page from their phone, so a clean, mobile-friendly design was a priority.",
           ],
+          visual: {
+            src: "/images/Guest experience.jpg",
+            alt: "Guest-facing payment page, optimized for mobile",
+            width: 2400,
+            height: 1350,
+          },
         },
       ],
     },
