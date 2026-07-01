@@ -392,6 +392,74 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
   ],
 };
 
+const findInspirationStudy: { sections: CaseStudySection[] } = {
+  sections: [
+    {
+      id: "overview",
+      chip: "Overview",
+      eyebrow: "Guesty · 2025",
+      title: "Find Inspiration Skill",
+      blocks: [
+        {
+          heading: "The problem",
+          paragraphs: [
+            "Finding relevant design references used to take a lot of time: designers had to manually search through Mobbin, try different queries, compare multiple flows, and decide what was actually useful.",
+          ],
+        },
+        {
+          heading: "What I built",
+          paragraphs: [
+            "I built an AI skill on top of Mobbin MCP that turns a designer's request into curated reference research. It searches for relevant examples, analyzes patterns across them, filters out noise, and gives designers a focused set of references with clear reasoning for why each one is useful.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "process",
+      chip: "Process",
+      title: "How it works",
+      blocks: [
+        {
+          heading: "1. Setting the context",
+          paragraphs: [
+            "The skill follows a guided workflow. First, the designer initiates the skill, and it explains what context is needed: the product area, user problem, flow, patterns to explore, and any constraints.",
+          ],
+          visual: {
+            src: "/images/Find%20inspiration%201.png",
+            alt: "Find inspiration skill asking for context — product area, user problem, patterns, constraints",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          heading: "2. Confirming the scope",
+          paragraphs: [
+            "Once the designer provides the context, the skill summarizes the search scope and asks for confirmation.",
+          ],
+          visual: {
+            src: "/images/Find%20inspiration%202.png",
+            alt: "Find inspiration skill summarizing search scope for confirmation",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
+          heading: "3. Curated references",
+          paragraphs: [
+            "After the scope is confirmed, it searches Mobbin, analyzes the results, and returns a curated list of references. Each reference includes the app name, link, why this specific example is relevant to the designer's work, and which pattern to pay attention to. The output is grouped by the patterns confirmed by the designer, making it easier to review examples by theme instead of browsing through unrelated screens.",
+          ],
+          visual: {
+            src: "/images/Find%20inspiration%203.png",
+            alt: "Curated design references grouped by pattern, with app name and reasoning for each",
+            width: 2400,
+            height: 1350,
+          },
+        },
+      ],
+    },
+  ],
+};
+
 export const cases: Case[] = [
   {
     slug: "guesty-installments",
@@ -438,13 +506,13 @@ export const cases: Case[] = [
     study: paymentLinksStudy,
   },
   {
-    slug: "case-2",
-    title: "Project Two",
-    headline: "Boosting quality and speed of designers' work with AI skills",
+    slug: "find-inspiration-skill",
+    title: "Find Inspiration Skill",
+    headline:
+      "Cut design reference research from hours to minutes with a Mobbin-powered AI skill",
     dates: "",
     description:
-      "I built two Cursor commands for the design team: one to help anticipate edge cases, and another to quickly find relevant references.",
-    website: "#",
+      "Designers spent hours manually searching Mobbin for relevant references. I built an AI skill on top of Mobbin MCP that turns a design brief into a curated set of references, grouped by pattern, with reasoning for why each one is useful.",
     accent: "#F7F7F4",
     invertButton: true,
     logo: {
@@ -457,6 +525,7 @@ export const cases: Case[] = [
       src: "/images/Cursor.png",
       alt: "AI skills for designers",
     },
+    study: findInspirationStudy,
   },
   {
     slug: "case-4",
