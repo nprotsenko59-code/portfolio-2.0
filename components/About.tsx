@@ -48,14 +48,14 @@ export default function About() {
       <div className="grid grid-cols-1 gap-10 md:grid-cols-[clamp(200px,18vw,300px)_minmax(0,1fr)] md:gap-16">
         <div
           data-about-reveal
-          className="relative aspect-[3/4] w-40 overflow-hidden bg-white/5 md:w-full"
+          className="relative aspect-square w-40 self-start overflow-hidden rounded-full bg-white/5 md:w-full"
         >
           <Image
             src={PORTRAIT_SRC}
             alt="Portrait of Nikita"
             fill
             sizes="(min-width: 768px) 300px, 160px"
-            className="select-none object-cover object-top grayscale"
+            className="select-none object-cover object-top"
             priority={false}
           />
         </div>

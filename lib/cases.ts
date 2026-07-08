@@ -527,14 +527,6 @@ export const cases: Case[] = [
     },
     study: findInspirationStudy,
   },
-  {
-    slug: "case-4",
-    title: "Project Four",
-    dates: "2021 – 2022",
-    description:
-      "Short project description goes here. Two or three lines about the problem, the approach, and what shipped.",
-    accent: "#E5E8E3",
-  },
 ];
 
 export function getCase(slug: string): Case | undefined {
