@@ -324,17 +324,37 @@ export default function Hero() {
           >
             <div className="z-30 h-14 w-10 -mr-2.5 -rotate-[14deg] overflow-hidden rounded-lg border-2 border-white/15 bg-neutral-700/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.6)] md:h-16 md:w-12">
               <Image
-                src="/images/case-overview/first-screen.jpg"
+                src="/images/Installments.png"
                 alt=""
-                width={2636}
-                height={3000}
+                width={2568}
+                height={2008}
                 sizes="48px"
                 quality={75}
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="z-20 h-14 w-10 rounded-lg border-2 border-white/15 bg-neutral-700/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.6)] md:h-16 md:w-12" />
-            <div className="z-10 h-14 w-10 -ml-2.5 rotate-[14deg] rounded-lg border-2 border-white/15 bg-neutral-700/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.6)] md:h-16 md:w-12" />
+            <div className="z-20 h-14 w-10 overflow-hidden rounded-lg border-2 border-white/15 bg-neutral-700/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.6)] md:h-16 md:w-12">
+              <Image
+                src="/images/Payment link.png"
+                alt=""
+                width={2568}
+                height={2008}
+                sizes="48px"
+                quality={75}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="z-10 h-14 w-10 -ml-2.5 rotate-[14deg] overflow-hidden rounded-lg border-2 border-white/15 bg-neutral-700/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.6)] md:h-16 md:w-12">
+              <Image
+                src="/images/Cursor.png"
+                alt=""
+                width={2560}
+                height={2000}
+                sizes="48px"
+                quality={75}
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
           <HoverText className="font-medium">See my work</HoverText>
         </div>

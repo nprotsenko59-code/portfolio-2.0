@@ -55,7 +55,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "Without installment support, Guesty was losing enterprise deals to competitors. The same objection kept coming up in sales calls — and that became the starting point for this project.",
           ],
           visual: {
-            src: "/images/case-process/current-logic.jpg",
+            src: "/images/payment-installments/current-logic.jpg",
             alt: "Current Guesty payment automation logic — current state diagram",
             width: 2400,
             height: 1350,
@@ -94,7 +94,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             ],
           },
           visual: {
-            src: "/images/case-process/discovery.jpg",
+            src: "/images/payment-installments/discovery.jpg",
             alt: "Discovery research with property managers",
             width: 2400,
             height: 1350,
@@ -112,7 +112,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "So to understand how to solve it better, I needed to understand how similar problems had been solved in fintech apps. I researched financial and billing apps to look for comparable patterns. For this I used one of the internal tools I built for the team: Reference Scout, a skill connected to Mobbin via MCP that searches for relevant UI references based on a design brief. What would have taken hours of manual browsing was done in a fraction of the time, and with broader coverage than a manual search typically produces. The key finding: most financial products that handle similar flows break the setup into sequential steps rather than presenting everything at once.",
           ],
           visual: {
-            src: "/images/case-process/competitors.jpg",
+            src: "/images/payment-installments/competitors.jpg",
             alt: "Competitor patterns research — fintech app references",
             width: 2400,
             height: 1350,
@@ -124,7 +124,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "Then I moved to early concepts and ideation. I built coded prototypes in Cursor to explore potential solutions in low fidelity. The goal was to try as many options as possible in a short amount of time, and to align stakeholders on the solution. After a successful review I moved to a detailed design phase.",
           ],
           visual: {
-            src: "/images/case-process/prototype.jpg",
+            src: "/images/payment-installments/prototype.jpg",
             alt: "Coded prototype explorations in Cursor",
             width: 2400,
             height: 1350,
@@ -142,7 +142,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "I designed a dedicated, separate setup flow for installment-based automations. Users still enter from the Payment Automations area, but long-term billing has its own guided path with its own mental model. This keeps the short-term experience intact, gives the system clean logic to detect conflicts, and lets both paths evolve independently.",
           ],
           visual: {
-            src: "/images/case-process/entry-point.jpg",
+            src: "/images/payment-installments/entry-point.jpg",
             alt: "Entry point — separate setup flow for installment-based automations",
             width: 2400,
             height: 1350,
@@ -153,7 +153,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "Users start by defining the conditions under which this automation should be triggered. They can trigger it based on specific channels, properties, or reservation length. However, in this case, the reservation length cannot be less than 30 nights to avoid conflicts with our event-based automation flow. This is also the minimum stay length at which users typically start treating a reservation as a long-term stay.",
           ],
           visual: {
-            src: "/images/case-process/settings.jpg",
+            src: "/images/payment-installments/settings.jpg",
             alt: "Trigger conditions setup — channels, properties, reservation length",
             width: 2400,
             height: 1350,
@@ -165,7 +165,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "Then users define the main charge logic: they choose a billing cycle — monthly, weekly, or every two weeks — decide whether the reservation total should be split equally or charged as a custom amount, and choose when the charge should occur.",
           ],
           visual: {
-            src: "/images/case-process/payment-cycle.jpg",
+            src: "/images/payment-installments/payment-cycle.jpg",
             alt: "Payment cycle setup — billing cadence and split logic",
             width: 2400,
             height: 1350,
@@ -173,7 +173,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
         },
         {
           visual: {
-            src: "/images/case-process/payment-cycle-cards.jpg",
+            src: "/images/payment-installments/payment-cycle-cards.jpg",
             alt: "Payment cycle option cards",
             width: 2400,
             height: 1350,
@@ -184,7 +184,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "And finally, they decide what to take from that logic: upfront charge and security deposit.",
           ],
           visual: {
-            src: "/images/case-process/move-in-off.jpg",
+            src: "/images/payment-installments/move-in-off.jpg",
             alt: "Move-in costs — all options off",
             width: 2400,
             height: 1350,
@@ -192,7 +192,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
         },
         {
           visual: {
-            src: "/images/case-process/move-in-on.jpg",
+            src: "/images/payment-installments/move-in-on.jpg",
             alt: "Move-in costs — all options on",
             width: 2400,
             height: 1350,
@@ -213,7 +213,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "Preview changes based on what payment cycle user chooses, and if they turn on upfront charge and security deposit.",
           ],
           visual: {
-            src: "/images/case-process/preview.jpg",
+            src: "/images/payment-installments/preview.jpg",
             alt: "Preview — calendar visualization of installments",
             width: 2400,
             height: 1350,
@@ -227,7 +227,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "To solve this, we showed users the conflicting automations and suggested adjusting the length-of-stay condition so the rules would not overlap.",
           ],
           visual: {
-            src: "/images/case-process/conflict.jpg",
+            src: "/images/payment-installments/conflict.jpg",
             alt: "Conflict resolution — suggesting length-of-stay adjustments",
             width: 2400,
             height: 1350,
