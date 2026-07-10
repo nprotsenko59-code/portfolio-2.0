@@ -157,7 +157,7 @@ export default function CaseStudy({ data }: { data: Case }) {
           </Link>
         </div>
       </header>
-      <article className="w-full px-6 pb-40 pt-7 lg:pt-24">
+      <article className="w-full px-6 pb-40 pt-20 lg:pt-24">
         {sections.map((section, i) => {
           const isHero = i === 0;
           const heroSideBySide = isHero
@@ -219,7 +219,7 @@ export default function CaseStudy({ data }: { data: Case }) {
                       {heroSideBySide.map((block, idx) => (
                         <div key={idx}>
                           {block.heading ? (
-                            <h3 className="mb-3 font-display text-[14px] font-semibold uppercase tracking-widest text-ink-muted">
+                            <h3 className="mb-4 font-display text-[14px] font-semibold uppercase tracking-widest text-ink-muted">
                               {block.heading}
                             </h3>
                           ) : null}
