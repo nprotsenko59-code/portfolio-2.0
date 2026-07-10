@@ -43,7 +43,7 @@ export default function About() {
     <section
       ref={sectionRef}
       aria-label="About me"
-      className="px-8 py-28 md:px-12 md:py-40"
+      className="px-8 pt-16 pb-20 md:px-12"
     >
       <div className="grid grid-cols-1 gap-10 md:grid-cols-[clamp(200px,18vw,300px)_minmax(0,1fr)] md:gap-16">
         <div

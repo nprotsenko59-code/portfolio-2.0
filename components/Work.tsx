@@ -5,7 +5,7 @@ import { cases } from "@/lib/cases";
 
 export default function Work() {
   return (
-    <section className="px-8 pb-16 md:px-12">
+    <section className="px-8 md:px-12">
       <div className="relative">
         {cases.map((c, i) => (
           <div

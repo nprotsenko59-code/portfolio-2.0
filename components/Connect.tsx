@@ -105,7 +105,7 @@ export default function Connect() {
   const repeats = 6;
 
   return (
-    <section className="relative overflow-hidden py-32 md:py-48">
+    <section className="relative overflow-hidden py-20">
       <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden />
       <div
         ref={iconsRef}
