@@ -478,7 +478,7 @@ export const cases: Case[] = [
     accent: "#072C23",
     theme: "dark",
     image: {
-      src: "/images/Installments.png",
+      src: "/images/cards/installments.png",
       alt: "Guesty Installments setup UI with payment cycle, automation example calendar, and house illustrations",
     },
     study: guestyStudy,
@@ -500,7 +500,7 @@ export const cases: Case[] = [
       height: 28,
     },
     image: {
-      src: "/images/Payment link.png",
+      src: "/images/cards/payment-link.png",
       alt: "Payment link flow",
     },
     study: paymentLinksStudy,
