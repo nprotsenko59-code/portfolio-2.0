@@ -62,7 +62,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
   ) : null;
 
   const textColumn = (
-    <div className="relative z-10 flex flex-col p-8 md:p-12">
+    <div className="relative z-10 flex flex-col p-8 lg:p-12">
       {data.logo ? (
         <div
           role="img"
@@ -106,7 +106,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
     <article
       ref={articleRef}
       data-case-card
-      className="group relative grid h-full w-full grid-cols-1 overflow-hidden rounded-[40px] border md:h-[82vh] md:grid-cols-[30%_70%]"
+      className="group relative grid h-full w-full grid-cols-1 overflow-hidden rounded-[40px] border lg:h-[82vh] lg:grid-cols-[1fr_2fr]"
       style={{
         backgroundColor: "#161616",
         borderColor: "rgba(255,255,255,0.08)",
@@ -117,7 +117,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
       {textColumn}
 
       <div
-        className="relative m-2 min-h-[280px] overflow-hidden rounded-[32px] md:my-2 md:mr-2 md:ml-0 md:min-h-0"
+        className="relative m-2 min-h-[280px] overflow-hidden rounded-[32px] lg:my-2 lg:mr-2 lg:ml-0 lg:min-h-0"
         style={{ backgroundColor: data.accent }}
       >
         {data.image ? (
@@ -125,9 +125,9 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
             src={data.image.src}
             alt={data.image.alt}
             fill
-            sizes="(min-width: 768px) 70vw, 100vw"
+            sizes="(min-width: 1024px) 66vw, 100vw"
             quality={90}
-            className="pointer-events-none select-none object-cover"
+            className="pointer-events-none select-none object-cover object-left"
             priority={false}
           />
         ) : null}

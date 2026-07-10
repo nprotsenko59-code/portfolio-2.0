@@ -10,7 +10,7 @@ export default function Work() {
         {cases.map((c, i) => (
           <div
             key={c.slug}
-            className="md:sticky md:top-0 md:flex md:h-screen md:items-center"
+            className="mb-6 lg:mb-0 lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center"
             style={{ zIndex: i + 1 }}
           >
             <CaseCard data={c} index={i} />

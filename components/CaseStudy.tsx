@@ -11,7 +11,34 @@ export default function CaseStudy({ data }: { data: Case }) {
   const sections = data.study?.sections ?? [];
   const sectionRefs = useRef<Array<HTMLElement | null>>([]);
   const rootRef = useRef<HTMLElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  // Scroll progress bar — tracks how much of the page is left to scroll.
+  useEffect(() => {
+    const bar = progressRef.current;
+    if (!bar) return;
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? window.scrollY / max : 0;
+      bar.style.transform = `scaleX(${Math.min(1, Math.max(0, progress))})`;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
 
   // Land at top on mount (matches the prior history.scrollRestoration override).
   useEffect(() => {
@@ -100,6 +127,16 @@ export default function CaseStudy({ data }: { data: Case }) {
 
   return (
     <main ref={rootRef} className="relative">
+      <div
+        aria-hidden
+        className="pointer-events-none fixed left-0 right-0 top-0 z-[60] h-[3px] bg-ink/10"
+      >
+        <div
+          ref={progressRef}
+          className="h-full origin-left bg-white"
+          style={{ transform: "scaleX(0)" }}
+        />
+      </div>
       <header className="pointer-events-none fixed left-0 right-0 top-0 z-[55] flex items-start justify-between px-8 pb-4 pt-7 md:px-12">
         <div className="pointer-events-auto">
           <Link
