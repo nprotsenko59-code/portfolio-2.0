@@ -19,6 +19,15 @@ html {
   font-family: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Keep case studies scrollable while hiding the browser's native scrollbar. */
+html:has(.case-study-page) {
+  scrollbar-width: none;
+}
+
+html:has(.case-study-page)::-webkit-scrollbar {
+  display: none;
+}
+
 /* Dion Pieters-style hover underline: 1px line, scaleX 0→1 from center,
    symmetric 0.45s cubic-bezier(.215,.61,.355,1) on enter and leave. */
 .hover-text__line {
