@@ -7,6 +7,8 @@ import type { Case } from "@/lib/cases";
 import CasePlaceholder from "./CasePlaceholder";
 import { gsap } from "@/lib/gsap";
 
+const CASE_VISUAL_WIDTH = "w-[94%] max-w-[1200px] md:w-[86%]";
+
 export default function CaseStudy({ data }: { data: Case }) {
   const sections = data.study?.sections ?? [];
   const sectionRefs = useRef<Array<HTMLElement | null>>([]);
@@ -252,12 +254,12 @@ export default function CaseStudy({ data }: { data: Case }) {
             </div>
 
             {i === 0 ? (
-              <div className="mt-16">
+              <div className={`mx-auto mt-16 ${CASE_VISUAL_WIDTH}`}>
                 <CasePlaceholder data={data} section={section} />
               </div>
             ) : null}
 
-            <div className="mt-8 space-y-14">
+            <div className="mt-14 space-y-14">
               {blocksToRender.map((block, b) => (
                 <div key={b}>
                   <div className="mx-auto max-w-[760px] px-6">
@@ -292,7 +294,7 @@ export default function CaseStudy({ data }: { data: Case }) {
                   </div>
                   {block.visual ? (
                     <figure
-                      className="relative mt-10 w-full overflow-hidden rounded-[20px] bg-[#0F1410]"
+                      className={`relative mx-auto mt-10 overflow-hidden rounded-[20px] bg-[#0F1410] ${CASE_VISUAL_WIDTH}`}
                       style={{ aspectRatio: block.visual.aspectRatio ?? "16 / 9" }}
                     >
                       <Image
