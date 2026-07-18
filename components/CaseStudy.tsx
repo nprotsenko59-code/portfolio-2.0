@@ -219,7 +219,7 @@ export default function CaseStudy({ data }: { data: Case }) {
                       {heroSideBySide.map((block, idx) => (
                         <div key={idx}>
                           {block.heading ? (
-                            <h3 className="mb-4 font-display text-[14px] font-semibold uppercase tracking-widest text-ink-muted">
+                            <h3 className="mb-4 font-display text-[14px] font-semibold uppercase tracking-widest text-white">
                               {block.heading}
                             </h3>
                           ) : null}
@@ -252,7 +252,7 @@ export default function CaseStudy({ data }: { data: Case }) {
             </div>
 
             {i === 0 ? (
-              <div className="mt-16">
+              <div className="mx-auto mt-16 w-full md:w-[90%]">
                 <CasePlaceholder data={data} section={section} />
               </div>
             ) : null}
@@ -292,7 +292,7 @@ export default function CaseStudy({ data }: { data: Case }) {
                   </div>
                   {block.visual ? (
                     <figure
-                      className="relative mt-10 w-full overflow-hidden rounded-[20px] bg-[#0F1410]"
+                      className="relative mx-auto mt-10 w-full overflow-hidden rounded-[20px] bg-[#0F1410] md:w-[90%]"
                       style={{ aspectRatio: block.visual.aspectRatio ?? "16 / 9" }}
                     >
                       <Image
