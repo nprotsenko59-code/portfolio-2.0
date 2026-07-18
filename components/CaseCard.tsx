@@ -95,7 +95,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
       {data.dates ? (
         <p className="mt-3 text-sm text-white/55">{data.dates}</p>
       ) : null}
-      <p className="mt-4 max-w-md text-[15px] leading-[1.55] text-white/85">
+      <p className="mt-4 w-full text-[15px] leading-[1.55] text-white/85 min-[1200px]:max-w-md">
         {data.description}
       </p>
       {ctaPill ? <div className="mt-auto hidden pt-10 min-[1200px]:block">{ctaPill}</div> : null}
