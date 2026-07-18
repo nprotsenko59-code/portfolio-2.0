@@ -221,7 +221,7 @@ export default function CaseStudy({ data }: { data: Case }) {
                       {heroSideBySide.map((block, idx) => (
                         <div key={idx}>
                           {block.heading ? (
-                            <h3 className="mb-4 font-display text-[14px] font-semibold uppercase tracking-widest text-ink-muted">
+                            <h3 className="mb-4 font-display text-[14px] font-semibold uppercase tracking-widest text-white">
                               {block.heading}
                             </h3>
                           ) : null}
