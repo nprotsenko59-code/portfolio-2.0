@@ -238,7 +238,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-screen flex-col justify-between px-8 pt-10 pb-8 md:px-12 md:pt-12 md:pb-10"
+      className="relative flex min-h-screen flex-col justify-between px-8 pt-10 pb-[100px] md:px-12 md:pt-12"
     >
       <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 z-0" />
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center pt-32 md:pt-40">

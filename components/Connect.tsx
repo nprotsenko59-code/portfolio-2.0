@@ -74,6 +74,9 @@ function CheckIcon() {
 
 export default function Connect() {
   const sectionRef = useRef<HTMLElement>(null);
+  const headingPerspectiveRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const controlsRef = useRef<HTMLDivElement>(null);
   const resetTimerRef = useRef<number | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -118,7 +121,10 @@ export default function Connect() {
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section) return;
+    const headingPerspective = headingPerspectiveRef.current;
+    const heading = headingRef.current;
+    const controls = controlsRef.current;
+    if (!section || !headingPerspective || !heading || !controls) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const items = section.querySelectorAll<HTMLElement>("[data-connect-reveal]");
@@ -137,8 +143,75 @@ export default function Connect() {
       },
     });
 
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    if (coarsePointer) {
+      return () => tween.kill();
+    }
+
+    gsap.set(headingPerspective, { perspective: 1000 });
+
+    const setHeadingRotY = gsap.quickTo(heading, "rotationY", {
+      duration: 0.6,
+      ease: "power3.out",
+    });
+    const setHeadingRotX = gsap.quickTo(heading, "rotationX", {
+      duration: 0.6,
+      ease: "power3.out",
+    });
+    const setHeadingX = gsap.quickTo(heading, "x", {
+      duration: 0.7,
+      ease: "power3.out",
+    });
+    const setHeadingY = gsap.quickTo(heading, "y", {
+      duration: 0.7,
+      ease: "power3.out",
+    });
+    const setControlsX = gsap.quickTo(controls, "x", {
+      duration: 0.7,
+      ease: "power3.out",
+    });
+    const setControlsY = gsap.quickTo(controls, "y", {
+      duration: 0.7,
+      ease: "power3.out",
+    });
+
+    const onMove = (event: MouseEvent) => {
+      const rect = section.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const normalizedX = Math.max(
+        -1,
+        Math.min(1, (event.clientX - centerX) / (rect.width / 2)),
+      );
+      const normalizedY = Math.max(
+        -1,
+        Math.min(1, (event.clientY - centerY) / (rect.height / 2)),
+      );
+
+      setHeadingRotY(normalizedX * 3);
+      setHeadingRotX(-normalizedY * 3);
+      setHeadingX(normalizedX * 10);
+      setHeadingY(normalizedY * 6);
+      setControlsX(normalizedX * 16);
+      setControlsY(normalizedY * 10);
+    };
+
+    const onLeave = () => {
+      setHeadingRotY(0);
+      setHeadingRotX(0);
+      setHeadingX(0);
+      setHeadingY(0);
+      setControlsX(0);
+      setControlsY(0);
+    };
+
+    section.addEventListener("mousemove", onMove);
+    section.addEventListener("mouseleave", onLeave);
+
     return () => {
       tween.kill();
+      section.removeEventListener("mousemove", onMove);
+      section.removeEventListener("mouseleave", onLeave);
     };
   }, []);
 
@@ -146,13 +219,14 @@ export default function Connect() {
     <section
       ref={sectionRef}
       aria-labelledby="connect-title"
-      className="relative flex min-h-[max(760px,100svh)] overflow-hidden px-6 py-14 sm:px-8 sm:py-16 md:px-12 md:py-20"
+      className="relative flex min-h-[max(532px,70svh)] overflow-hidden px-6 py-14 sm:px-8 sm:py-16 md:px-12 md:py-20"
     >
       <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col items-center justify-center gap-[30px] text-center">
-        <div className="flex flex-col items-center">
+        <div ref={headingPerspectiveRef} className="flex flex-col items-center">
           <h2
+            ref={headingRef}
             id="connect-title"
             data-connect-reveal
             className="font-[family-name:var(--font-neue-machina)] text-[96px] font-black uppercase leading-[0.85] tracking-[-0.04em] text-white"
@@ -165,6 +239,7 @@ export default function Connect() {
         </div>
 
         <div
+          ref={controlsRef}
           data-connect-reveal
           aria-label="Contact links"
           className="flex w-full max-w-[1060px] flex-col items-stretch justify-center gap-3 sm:gap-4 lg:flex-row"
