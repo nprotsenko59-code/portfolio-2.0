@@ -303,7 +303,7 @@ export default function CaseStudy({ data }: { data: Case }) {
                         width={block.visual.width}
                         height={block.visual.height}
                         sizes="(min-width: 1280px) 1200px, 100vw"
-                        quality={75}
+                        quality={90}
                         className="absolute inset-0 h-full w-full object-cover"
                       />
                     </figure>
