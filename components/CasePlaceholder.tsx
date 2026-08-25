@@ -7,7 +7,7 @@ function OverviewVisual() {
   return (
     <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
       <Image
-        src="/images/payment-installments/first-screen.jpg"
+        src="/images/payment-installments/2026-08-25/first-screen.jpg"
         alt="Payment Installments — first screen"
         fill
         sizes="(min-width: 1024px) 1100px, 100vw"
