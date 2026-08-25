@@ -242,7 +242,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
       blocks: [
         {
           paragraphs: [
-            "This feature unlocked a new customer segment for Guesty — PMCs specializing in long-term rentals — that previously couldn't be served by the platform. X enterprise accounts were unblocked and new possibilities for revenue emerged.",
+            "This feature unlocked a new customer segment for Guesty — PMCs specializing in long-term rentals — that previously couldn't be served by the platform. 7 enterprise accounts were unblocked and new possibilities for revenue emerged.",
           ],
         },
       ],
@@ -465,7 +465,7 @@ export const cases: Case[] = [
     slug: "guesty-installments",
     title: "Guesty Installments",
     headline:
-      "Unblocked [X] enterprise accounts by adapting payment automations for long-term rentals",
+      "Unblocked [7] enterprise accounts by adapting payment automations for long-term rentals",
     dates: "",
     logo: {
       src: "/images/guesty-logo.svg",
