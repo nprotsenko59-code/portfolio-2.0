@@ -229,7 +229,7 @@ export default function Connect() {
             ref={headingRef}
             id="connect-title"
             data-connect-reveal
-            className="font-[family-name:var(--font-neue-machina)] text-[96px] font-black uppercase leading-[0.85] tracking-[-0.04em] text-white"
+            className="font-[family-name:var(--font-neue-machina)] text-[clamp(36px,14vw,96px)] font-black uppercase leading-[0.85] tracking-[-0.04em] text-white md:text-[96px]"
           >
             <span className="hero-title-gradient block whitespace-nowrap">
               Let&apos;s build
