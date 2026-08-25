@@ -465,7 +465,7 @@ export const cases: Case[] = [
     slug: "guesty-installments",
     title: "Guesty Installments",
     headline:
-      "Unblocked [7] enterprise accounts by adapting payment automations for long-term rentals",
+      "Unblocked 7 enterprise accounts by adapting payment automations for long-term rentals",
     dates: "",
     logo: {
       src: "/images/guesty-logo.svg",
