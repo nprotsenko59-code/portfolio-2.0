@@ -346,7 +346,7 @@ export default function Hero() {
             </div>
             <div className="z-10 h-14 w-10 -ml-2.5 rotate-[14deg] overflow-hidden rounded-lg border-2 border-white/15 bg-neutral-700/80 shadow-[0_6px_16px_-10px_rgba(0,0,0,0.6)] md:h-16 md:w-12">
               <Image
-                src="/images/find-inspiration/2026-08-25/cursor.png"
+                src="/images/find-inspiration/2026-08-25-v2/cursor.jpg"
                 alt=""
                 width={2560}
                 height={2000}
