@@ -433,7 +433,7 @@ const findInspirationStudy: { sections: CaseStudySection[] } = {
             "The skill follows a guided workflow. First, the designer initiates the skill, and it explains what context is needed: the product area, user problem, flow, patterns to explore, and any constraints.",
           ],
           visual: {
-            src: "/images/Find%20inspiration%201.png",
+            src: "/images/find-inspiration/2026-08-25/context.png",
             alt: "Find inspiration skill asking for context — product area, user problem, patterns, constraints",
             width: 2400,
             height: 1350,
@@ -445,7 +445,7 @@ const findInspirationStudy: { sections: CaseStudySection[] } = {
             "Once the designer provides the context, the skill summarizes the search scope and asks for confirmation.",
           ],
           visual: {
-            src: "/images/Find%20inspiration%202.png",
+            src: "/images/find-inspiration/2026-08-25/scope.png",
             alt: "Find inspiration skill summarizing search scope for confirmation",
             width: 2400,
             height: 1350,
@@ -457,7 +457,7 @@ const findInspirationStudy: { sections: CaseStudySection[] } = {
             "After the scope is confirmed, it searches Mobbin, analyzes the results, and returns a curated list of references. Each reference includes the app name, link, why this specific example is relevant to the designer's work, and which pattern to pay attention to. The output is grouped by the patterns confirmed by the designer, making it easier to review examples by theme instead of browsing through unrelated screens.",
           ],
           visual: {
-            src: "/images/Find%20inspiration%203.png",
+            src: "/images/find-inspiration/2026-08-25/references.png",
             alt: "Curated design references grouped by pattern, with app name and reasoning for each",
             width: 2400,
             height: 1350,
@@ -530,7 +530,7 @@ export const cases: Case[] = [
       height: 28,
     },
     image: {
-      src: "/images/Cursor.png",
+      src: "/images/find-inspiration/2026-08-25/cursor.png",
       alt: "AI skills for designers",
     },
     study: findInspirationStudy,
