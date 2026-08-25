@@ -267,7 +267,7 @@ export default function Hero() {
           <div ref={headlineScrollRef} className="relative z-10 will-change-transform">
             <h1
               ref={headlineRef}
-              className="hero-headline text-center font-[family-name:var(--font-neue-machina)] text-[96px] font-black uppercase leading-[0.85] tracking-[-0.04em]"
+              className="hero-headline text-center font-[family-name:var(--font-neue-machina)] text-[clamp(32px,10.5vw,96px)] font-black uppercase leading-[0.85] tracking-[-0.04em] md:text-[96px]"
             >
               <span className="hero-title-gradient block">I craft</span>
               <span className="block text-accent">
@@ -278,18 +278,18 @@ export default function Hero() {
             </h1>
           </div>
 
-          <div className="pointer-events-none absolute left-1/2 top-0 z-30 -translate-x-[210px] -translate-y-[120px]">
+          <div className="pointer-events-none absolute left-1/2 top-0 z-30 w-max -translate-x-1/2 -translate-y-[96px] sm:-translate-x-[210px] sm:-translate-y-[120px]">
             <div
               ref={chipRef}
               className="relative whitespace-nowrap"
               style={{ willChange: "transform" }}
             >
-              <span className="block font-[family-name:var(--font-patrick-hand)] text-[32px] uppercase leading-none text-ink">
+              <span className="block font-[family-name:var(--font-patrick-hand)] text-[20px] uppercase leading-none text-ink sm:text-[32px]">
                 Hi, I&rsquo;m Nikita, product designer
               </span>
               <svg
                 aria-hidden
-                className="absolute left-[40px] top-full mt-1"
+                className="absolute left-[28px] top-full mt-1 h-[54px] w-[78px] sm:left-[40px] sm:h-[68px] sm:w-[98px]"
                 width="98"
                 height="68"
                 viewBox="0 0 130 90"
