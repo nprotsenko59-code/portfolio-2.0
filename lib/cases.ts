@@ -351,6 +351,14 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
           },
         },
         {
+          visual: {
+            src: "/images/payment-links/2026-08-25/solution-3.jpg",
+            alt: "Completed payment link setup with guest-facing preview",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
           heading: "Challenge",
           paragraphs: [
             "The guest must feel secure handing over their payment details. We addressed this two ways:",
@@ -368,16 +376,8 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
             "Guests open this page from their phone, so a clean, mobile-friendly design was a priority.",
           ],
           visual: {
-            src: "/images/payment-links/2026-08-25/solution-3.jpg",
-            alt: "Guest-facing payment page, optimized for mobile",
-            width: 2400,
-            height: 1350,
-          },
-        },
-        {
-          visual: {
             src: "/images/payment-links/2026-08-25/solution-4.jpg",
-            alt: "Guest payment flow and successful payment confirmation",
+            alt: "Guest-facing payment page, optimized for mobile",
             width: 2400,
             height: 1350,
           },
