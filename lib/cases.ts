@@ -333,7 +333,7 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
             "The property manager creates the link from the reservation page. Placing it there keeps the action contextual — they can see the state of payments for that reservation.",
           ],
           visual: {
-            src: "/images/Solution 1.jpg",
+            src: "/images/payment-links/solution-1.jpg",
             alt: "Creating a payment link from the reservation page",
             width: 2400,
             height: 1350,
@@ -344,7 +344,7 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
             "They set an amount, add a description of the services, and share the link — either by copying it to the clipboard or sending it directly to the guest's email on file.",
           ],
           visual: {
-            src: "/images/Solution 2.jpg",
+            src: "/images/payment-links/solution-2.jpg",
             alt: "Setting the amount and description, and sharing the payment link",
             width: 2400,
             height: 1350,
@@ -368,7 +368,7 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
             "Guests open this page from their phone, so a clean, mobile-friendly design was a priority.",
           ],
           visual: {
-            src: "/images/Guest experience.jpg",
+            src: "/images/payment-links/guest-experience.jpg",
             alt: "Guest-facing payment page, optimized for mobile",
             width: 2400,
             height: 1350,

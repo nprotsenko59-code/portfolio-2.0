@@ -23,7 +23,7 @@ function PaymentLinkFirstScreenVisual() {
   return (
     <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px] bg-[#0F1410]">
       <Image
-        src="/images/Payment link first screen.jpg"
+        src="/images/payment-links/first-screen.jpg"
         alt="Payment Links — first screen"
         fill
         sizes="(min-width: 1024px) 1100px, 100vw"
