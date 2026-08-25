@@ -149,6 +149,14 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           },
         },
         {
+          visual: {
+            src: "/images/payment-installments/entry-point-open.jpg",
+            alt: "Entry point — create menu showing the installments option",
+            width: 2400,
+            height: 1350,
+          },
+        },
+        {
           paragraphs: [
             "Users start by defining the conditions under which this automation should be triggered. They can trigger it based on specific channels, properties, or reservation length. However, in this case, the reservation length cannot be less than 30 nights to avoid conflicts with our event-based automation flow. This is also the minimum stay length at which users typically start treating a reservation as a long-term stay.",
           ],
@@ -165,16 +173,8 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "Then users define the main charge logic: they choose a billing cycle — monthly, weekly, or every two weeks — decide whether the reservation total should be split equally or charged as a custom amount, and choose when the charge should occur.",
           ],
           visual: {
-            src: "/images/payment-installments/payment-cycle.jpg",
-            alt: "Payment cycle setup — billing cadence and split logic",
-            width: 2400,
-            height: 1350,
-          },
-        },
-        {
-          visual: {
             src: "/images/payment-installments/payment-cycle-cards.jpg",
-            alt: "Payment cycle option cards",
+            alt: "Payment cycle setup — billing cadence and split logic",
             width: 2400,
             height: 1350,
           },
