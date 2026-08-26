@@ -173,6 +173,14 @@ const guestyStudy: { sections: CaseStudySection[] } = {
             "Then users define the main charge logic: they choose a billing cycle — monthly, weekly, or every two weeks — decide whether the reservation total should be split equally or charged as a custom amount, and choose when the charge should occur.",
           ],
           visual: {
+            src: "/images/payment-installments/2026-08-25/payment-cycle.jpg",
+            alt: "Payment cycle setup — monthly installments, charge timing, and automation calendar preview",
+            width: 9600,
+            height: 5400,
+          },
+        },
+        {
+          visual: {
             src: "/images/payment-installments/2026-08-25/payment-cycle-cards.jpg",
             alt: "Payment cycle setup — billing cadence and split logic",
             width: 2400,
