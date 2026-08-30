@@ -57,8 +57,8 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           visual: {
             src: "/images/payment-installments/2026-08-25/current-logic.jpg",
             alt: "Current Guesty payment automation logic — current state diagram",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
         {
@@ -96,8 +96,8 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           visual: {
             src: "/images/payment-installments/2026-08-25/discovery.jpg",
             alt: "Discovery research with property managers",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
         {
@@ -114,8 +114,8 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           visual: {
             src: "/images/payment-installments/2026-08-25/competitors.jpg",
             alt: "Competitor patterns research — fintech app references",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
         {
@@ -126,8 +126,8 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           visual: {
             src: "/images/payment-installments/2026-08-25/prototype.jpg",
             alt: "Coded prototype explorations in Cursor",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
       ],
@@ -144,16 +144,16 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           visual: {
             src: "/images/payment-installments/2026-08-25/entry-point.jpg",
             alt: "Entry point — separate setup flow for installment-based automations",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
         {
           visual: {
             src: "/images/payment-installments/2026-08-25/entry-point-open.jpg",
             alt: "Entry point — create menu showing the installments option",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
         {
@@ -163,8 +163,8 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           visual: {
             src: "/images/payment-installments/2026-08-25/settings.jpg",
             alt: "Trigger conditions setup — channels, properties, reservation length",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
             aspectRatio: "16/9",
           },
         },
@@ -182,9 +182,9 @@ const guestyStudy: { sections: CaseStudySection[] } = {
         {
           visual: {
             src: "/images/payment-installments/2026-08-25/payment-cycle-cards.jpg",
-            alt: "Payment cycle setup — billing cadence and split logic",
-            width: 2400,
-            height: 1350,
+            alt: "Payment cycle setup — billing cadence, installment amount, and charge timing",
+            width: 9600,
+            height: 5400,
           },
         },
         {
@@ -194,16 +194,16 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           visual: {
             src: "/images/payment-installments/2026-08-25/move-in-off.jpg",
             alt: "Move-in costs — all options off",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
         {
           visual: {
             src: "/images/payment-installments/2026-08-25/move-in-on.jpg",
             alt: "Move-in costs — all options on",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
       ],
@@ -223,8 +223,8 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           visual: {
             src: "/images/payment-installments/2026-08-25/preview.jpg",
             alt: "Preview — calendar visualization of installments",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
         {
@@ -237,8 +237,8 @@ const guestyStudy: { sections: CaseStudySection[] } = {
           visual: {
             src: "/images/payment-installments/2026-08-25/conflict.jpg",
             alt: "Conflict resolution — suggesting length-of-stay adjustments",
-            width: 2400,
-            height: 1350,
+            width: 9600,
+            height: 5400,
           },
         },
       ],
