@@ -492,8 +492,8 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
               data-sheet-close
               type="button"
               aria-label="Close considered direction"
-              onClick={closeSheet}
-              className="absolute right-4 top-4 z-10 grid size-10 place-items-center rounded-full text-2xl leading-none transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-6 sm:top-6"
+              onClick={finishSheetClose}
+              className="absolute right-4 top-4 z-10 grid size-10 cursor-pointer place-items-center rounded-full text-2xl leading-none transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-6 sm:top-6"
             >
               <span aria-hidden>×</span>
             </button>
