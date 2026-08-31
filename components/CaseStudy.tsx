@@ -5,11 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Case } from "@/lib/cases";
 import CasePlaceholder from "./CasePlaceholder";
+import GuestyInstallmentsCaseStudy from "./GuestyInstallmentsCaseStudy";
 import { gsap } from "@/lib/gsap";
 
 const CASE_VISUAL_WIDTH = "w-[94%] max-w-[1200px] md:w-[86%]";
 
 export default function CaseStudy({ data }: { data: Case }) {
+  if (data.slug === "guesty-installments") {
+    return <GuestyInstallmentsCaseStudy data={data} />;
+  }
+
   const sections = data.study?.sections ?? [];
   const sectionRefs = useRef<Array<HTMLElement | null>>([]);
   const rootRef = useRef<HTMLElement>(null);
