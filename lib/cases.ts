@@ -490,7 +490,7 @@ export const cases: Case[] = [
       height: 28,
     },
     description:
-      "Guesty's payment engine was built for short-term rentals. Long-term operators — managing monthly billing, proration, move-in costs — had no way to automate their collections. I led research and end-to-end design of a dedicated flow to allow users to automate their long-term reservations billing and unblock sales.",
+      "Guesty’s payment engine was built for short-term rentals. Property managers handling longer stays — with monthly billing, proration, and move-in costs — had no way to automate their collections. I led the research and end-to-end design of a dedicated flow that enabled long-term billing and helped unblock sales.",
     accent: "#072C23",
     theme: "dark",
     image: {

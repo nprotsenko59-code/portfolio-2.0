@@ -319,7 +319,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
           </div>
         </section>
         <div className={`mx-auto mt-10 space-y-10 ${VISUAL_WIDTH}`}>
-          <Visual src="/images/payment-installments/2026-08-25/entry-point.jpg?v=20260830" alt="Payment Automations entry point" unoptimized />
+          <Visual src="/images/payment-installments/2026-08-25/entry-point.jpg?v=1788184340" alt="Payment Automations entry point" unoptimized />
           <Visual src="/images/payment-installments/2026-08-25/entry-point-open.jpg" alt="Create menu with the Installments option" />
         </div>
 
