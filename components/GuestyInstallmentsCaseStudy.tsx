@@ -491,7 +491,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
             <div className="mx-auto max-w-[900px] px-6 py-12 sm:px-12 sm:py-16">
               {activeSheet === "preview" ? (
                 <>
-                  <h2 id="preview-alternative-title" className="font-display text-[30px] font-bold uppercase leading-[1.1] tracking-[-0.02em] sm:text-[38px]">Preview — initial idea</h2>
+                  <h2 id="preview-alternative-title" className="font-display text-[28px] font-bold uppercase leading-[1.1] tracking-[-0.02em]">Preview — initial idea</h2>
                   <div className="mt-10 space-y-10">
                     <div>
                       <h3 className="mb-4 font-display text-[18px] font-semibold uppercase tracking-[0.02em]">Hypothesis</h3>
@@ -513,7 +513,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
                 </>
               ) : (
                 <>
-                  <h2 id="steps-debate-title" className="font-display text-[30px] font-bold uppercase leading-[1.1] tracking-[-0.02em] sm:text-[38px]">What should be the order of steps?</h2>
+                  <h2 id="steps-debate-title" className="font-display text-[28px] font-bold uppercase leading-[1.1] tracking-[-0.02em]">What should be the order of steps?</h2>
                   <div className="mt-10 space-y-8">
                     <BodyCopy>We explored two possible orders for the setup flow: payment cycle first or move-in costs first. There was a good reason to start with move-in costs: many property managers collect something upfront, so defining that first could feel like a natural starting point before configuring the remaining payments.</BodyCopy>
                     <div>
@@ -526,7 +526,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
                     </div>
                   </div>
                   <div className="mt-12">
-                    <AssetPlaceholder label="Payment-cycle-first and move-in-cost-first step-order comparison" aspectRatio="16 / 9" />
+                    <Visual src="/images/payment-installments/2026-08-25/Order of steps.jpg" alt="Payment-cycle-first and move-in-cost-first step-order comparison" />
                   </div>
                 </>
               )}
