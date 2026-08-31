@@ -78,13 +78,18 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
   const debateTriggerRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
 
+  const finishSheetClose = useCallback(() => {
+    setActiveSheet(null);
+    setIsSheetClosing(false);
+  }, []);
+
   const closeSheet = useCallback(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setActiveSheet(null);
+      finishSheetClose();
       return;
     }
     setIsSheetClosing(true);
-  }, []);
+  }, [finishSheetClose]);
 
   useEffect(() => {
     let raf = 0;
@@ -120,6 +125,13 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
       history.scrollRestoration = previousScrollRestoration;
     };
   }, []);
+
+  useEffect(() => {
+    if (!isSheetClosing) return;
+
+    const fallback = window.setTimeout(finishSheetClose, 400);
+    return () => window.clearTimeout(fallback);
+  }, [finishSheetClose, isSheetClosing]);
 
   useEffect(() => {
     if (!activeSheet) return;
@@ -226,9 +238,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
         </div>
 
         <section className="mx-auto mt-20 max-w-[760px]">
-          <h2 className="mb-8 font-display text-sm font-semibold uppercase tracking-widest text-white/65">Overview</h2>
-          <SectionTitle>Payment Installments</SectionTitle>
-          <div className="mt-10 space-y-10">
+          <div className="space-y-10">
             <div>
               <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em]">What is Guesty?</h3>
               <BodyCopy>Guesty is a property management platform. It helps teams manage listings, reservations, guest communication, payments, and day-to-day operations across multiple booking channels. One of its core areas is payment workflows, which help property managers collect revenue, automate charges, and reduce manual operational work.</BodyCopy>
@@ -473,8 +483,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
             aria-labelledby={activeSheet === "preview" ? "preview-alternative-title" : "steps-debate-title"}
             onAnimationEnd={(event) => {
               if (event.target === event.currentTarget && isSheetClosing) {
-                setActiveSheet(null);
-                setIsSheetClosing(false);
+                finishSheetClose();
               }
             }}
             className={`installments-bottom-sheet relative max-h-[86vh] w-full overflow-y-auto rounded-t-[28px] bg-[#161616] shadow-2xl${isSheetClosing ? " installments-bottom-sheet--closing" : ""}`}
