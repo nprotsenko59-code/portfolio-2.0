@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Case } from "@/lib/cases";
 
 const VISUAL_WIDTH = "w-[94%] max-w-[1200px] md:w-[86%]";
+type AlternativeSheet = "preview" | "steps-debate";
 
 type VisualProps = {
   src?: string;
@@ -70,18 +71,19 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
-  const [isAlternativeOpen, setIsAlternativeOpen] = useState(false);
-  const [isAlternativeClosing, setIsAlternativeClosing] = useState(false);
+  const [activeSheet, setActiveSheet] = useState<AlternativeSheet | null>(null);
+  const [isSheetClosing, setIsSheetClosing] = useState(false);
   const progressRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const previewTriggerRef = useRef<HTMLButtonElement>(null);
+  const debateTriggerRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  const closeAlternative = useCallback(() => {
+  const closeSheet = useCallback(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setIsAlternativeOpen(false);
+      setActiveSheet(null);
       return;
     }
-    setIsAlternativeClosing(true);
+    setIsSheetClosing(true);
   }, []);
 
   useEffect(() => {
@@ -120,7 +122,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
   }, []);
 
   useEffect(() => {
-    if (!isAlternativeOpen) return;
+    if (!activeSheet) return;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -129,7 +131,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        closeAlternative();
+        closeSheet();
         return;
       }
       if (event.key !== "Tab" || !dialogRef.current) return;
@@ -155,9 +157,9 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
-      triggerRef.current?.focus();
+      (activeSheet === "preview" ? previewTriggerRef : debateTriggerRef).current?.focus();
     };
-  }, [closeAlternative, isAlternativeOpen]);
+  }, [activeSheet, closeSheet]);
 
   return (
     <main className="case-study-page relative">
@@ -332,8 +334,45 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
         </section>
         <div className={`mx-auto mt-10 space-y-10 ${VISUAL_WIDTH}`}>
           <Visual src="/images/payment-installments/2026-08-25/move-in-off.jpg" alt="Move-in cost options turned off" />
-          <Visual src="/images/payment-installments/2026-08-25/move-in-on.jpg" alt="Move-in cost options configured" />
+          <Visual src="/images/payment-installments/2026-08-25/move-in-on.jpg?v=20260831" alt="Move-in cost options configured" unoptimized />
         </div>
+
+        <section className="mx-auto mt-16 max-w-[760px]">
+          <div className="rounded-2xl bg-[#242424] p-5">
+            <svg
+              aria-hidden
+              className="mb-5 h-6 w-6"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M16 3h5v5" />
+              <path d="M8 3H3v5" />
+              <path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3" />
+              <path d="m15 9 6-6" />
+            </svg>
+            <BodyCopy>Here we had a debate inside our team regarding order of the steps. The question was what should come first: move-in costs or payment cycle.</BodyCopy>
+            <button
+              ref={debateTriggerRef}
+              type="button"
+              onClick={() => {
+                setIsSheetClosing(false);
+                setActiveSheet("steps-debate");
+              }}
+              className="group mt-7 flex w-full cursor-pointer items-center justify-between rounded-xl border border-white/10 px-4 py-4 text-left text-sm text-white transition-colors hover:bg-white hover:text-[#161616] focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              aria-haspopup="dialog"
+              aria-expanded={activeSheet === "steps-debate"}
+            >
+              <span>See another considered direction</span>
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </button>
+          </div>
+        </section>
 
         <Divider />
 
@@ -364,15 +403,15 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
                 <BodyCopy>Because users are creating a rule that will apply to future reservations, we don’t know the actual stay dates at this stage. I explored different ways of visualizing the payment schedule and chose the calendar because, even without knowing the actual reservation dates, it gave users a familiar way to visualize how the payment logic would play out over time, that was shown during usability testing.</BodyCopy>
               </div>
               <button
-                ref={triggerRef}
+                ref={previewTriggerRef}
                 type="button"
                 onClick={() => {
-                  setIsAlternativeClosing(false);
-                  setIsAlternativeOpen(true);
+                  setIsSheetClosing(false);
+                  setActiveSheet("preview");
                 }}
                 className="group mt-7 flex w-full cursor-pointer items-center justify-between rounded-xl border border-white/10 px-4 py-4 text-left text-sm text-white transition-colors hover:bg-white hover:text-[#161616] focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 aria-haspopup="dialog"
-                aria-expanded={isAlternativeOpen}
+                aria-expanded={activeSheet === "preview"}
               >
                 <span>See another considered direction</span>
                 <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -420,55 +459,77 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
         </section>
       </article>
 
-      {isAlternativeOpen ? (
+      {activeSheet ? (
         <div
           className="fixed inset-0 z-[80] flex items-end bg-black/65 p-0 sm:pt-5"
           onMouseDown={(event) => {
-            if (event.target === event.currentTarget) closeAlternative();
+            if (event.target === event.currentTarget) closeSheet();
           }}
         >
           <div
             ref={dialogRef}
             role="dialog"
             aria-modal="true"
-            aria-labelledby="preview-alternative-title"
+            aria-labelledby={activeSheet === "preview" ? "preview-alternative-title" : "steps-debate-title"}
             onAnimationEnd={(event) => {
-              if (event.target === event.currentTarget && isAlternativeClosing) {
-                setIsAlternativeOpen(false);
-                setIsAlternativeClosing(false);
+              if (event.target === event.currentTarget && isSheetClosing) {
+                setActiveSheet(null);
+                setIsSheetClosing(false);
               }
             }}
-            className={`installments-bottom-sheet relative max-h-[86vh] w-full overflow-y-auto rounded-t-[28px] bg-[#161616] shadow-2xl${isAlternativeClosing ? " installments-bottom-sheet--closing" : ""}`}
+            className={`installments-bottom-sheet relative max-h-[86vh] w-full overflow-y-auto rounded-t-[28px] bg-[#161616] shadow-2xl${isSheetClosing ? " installments-bottom-sheet--closing" : ""}`}
           >
             <button
               data-sheet-close
               type="button"
               aria-label="Close considered direction"
-              onClick={closeAlternative}
+              onClick={closeSheet}
               className="absolute right-4 top-4 z-10 grid size-10 place-items-center rounded-full text-2xl leading-none transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-6 sm:top-6"
             >
               <span aria-hidden>×</span>
             </button>
             <div className="mx-auto max-w-[900px] px-6 py-12 sm:px-12 sm:py-16">
-              <h2 id="preview-alternative-title" className="font-display text-[30px] font-bold uppercase leading-[1.1] tracking-[-0.02em] sm:text-[38px]">Preview — initial idea</h2>
-              <div className="mt-10 space-y-10">
-                <div>
-                  <h3 className="mb-4 font-display text-[18px] font-semibold uppercase tracking-[0.02em]">Hypothesis</h3>
-                  <BodyCopy>My first direction was a reservation timeline: a simple visual representation of how payments would be distributed across a stay.</BodyCopy>
-                </div>
-                <div>
-                  <h3 className="mb-4 font-display text-[18px] font-semibold uppercase tracking-[0.02em]">What I tested</h3>
-                  <BodyCopy>During usability testing, I asked property managers to create a payment automation for a long-term reservation. I looked for two things: whether they could configure the rule correctly, and whether the preview resolved questions without additional explanation.</BodyCopy>
-                </div>
-              </div>
-              <div className="mt-10 space-y-8">
-                <Visual src="/images/payment-installments/2026-08-25/initial preview.jpg" alt="Initial timeline preview — basic payment schedule" />
-                <Visual src="/images/payment-installments/2026-08-25/initial preview - detailed.jpg" alt="Initial timeline preview — upfront-charge scenario" />
-              </div>
-              <div className="mt-12">
-                <h3 className="font-display text-[18px] font-semibold uppercase tracking-[0.02em]">The timeline helped with the overall sequence, but not with the details users cared about</h3>
-                <p className="mt-5 text-[16px] leading-[1.65] text-white/85">The main uncertainty was around partial months, upfront charges, and different reservation lengths. Users wanted to understand how the schedule adapts when a stay lasts one month versus several months, or when part of the total is collected upfront.</p>
-              </div>
+              {activeSheet === "preview" ? (
+                <>
+                  <h2 id="preview-alternative-title" className="font-display text-[30px] font-bold uppercase leading-[1.1] tracking-[-0.02em] sm:text-[38px]">Preview — initial idea</h2>
+                  <div className="mt-10 space-y-10">
+                    <div>
+                      <h3 className="mb-4 font-display text-[18px] font-semibold uppercase tracking-[0.02em]">Hypothesis</h3>
+                      <BodyCopy>My first direction was a reservation timeline: a simple visual representation of how payments would be distributed across a stay.</BodyCopy>
+                    </div>
+                    <div>
+                      <h3 className="mb-4 font-display text-[18px] font-semibold uppercase tracking-[0.02em]">What I tested</h3>
+                      <BodyCopy>During usability testing, I asked property managers to create a payment automation for a long-term reservation. I looked for two things: whether they could configure the rule correctly, and whether the preview resolved questions without additional explanation.</BodyCopy>
+                    </div>
+                  </div>
+                  <div className="mt-10 space-y-8">
+                    <Visual src="/images/payment-installments/2026-08-25/initial preview.jpg" alt="Initial timeline preview — basic payment schedule" />
+                    <Visual src="/images/payment-installments/2026-08-25/initial preview - detailed.jpg" alt="Initial timeline preview — upfront-charge scenario" />
+                  </div>
+                  <div className="mt-12">
+                    <h3 className="font-display text-[18px] font-semibold uppercase tracking-[0.02em]">The timeline helped with the overall sequence, but not with the details users cared about</h3>
+                    <p className="mt-5 text-[16px] leading-[1.65] text-white/85">The main uncertainty was around partial months, upfront charges, and different reservation lengths. Users wanted to understand how the schedule adapts when a stay lasts one month versus several months, or when part of the total is collected upfront.</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h2 id="steps-debate-title" className="font-display text-[30px] font-bold uppercase leading-[1.1] tracking-[-0.02em] sm:text-[38px]">What should be the order of steps?</h2>
+                  <div className="mt-10 space-y-8">
+                    <BodyCopy>We explored two possible orders for the setup flow: payment cycle first or move-in costs first. There was a good reason to start with move-in costs: many property managers collect something upfront, so defining that first could feel like a natural starting point before configuring the remaining payments.</BodyCopy>
+                    <div>
+                      <h3 className="mb-4 font-display text-[18px] font-semibold uppercase tracking-[0.02em]">Why we chose payment cycle first</h3>
+                      <ol className="list-decimal space-y-1 pl-5 text-[16px] leading-[1.65] text-white/85">
+                        <li>It defines the core behavior of the automation. Every user needs to decide how the reservation will be charged — monthly, weekly, or bi-weekly — while move-in costs are optional (even though relevant for the majority of users).</li>
+                        <li>It matched how users thought about the setup. Users first thought about how they wanted to split the reservation total over time, and then about what, if anything, should be collected upfront.</li>
+                        <li>It created a clearer hierarchy. The payment cycle establishes the base rule; move-in costs then modify that rule. So users define main logic first, and then extra scenarios.</li>
+                      </ol>
+                    </div>
+                  </div>
+                  <div className="mt-12">
+                    <AssetPlaceholder label="Payment-cycle-first and move-in-cost-first step-order comparison" aspectRatio="16 / 9" />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
