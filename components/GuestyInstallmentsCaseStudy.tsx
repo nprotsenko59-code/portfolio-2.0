@@ -268,7 +268,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
               <BodyCopy>I led direct discovery calls with property managers managing long-term reservations. Across calls, several patterns emerged clearly:</BodyCopy>
               <ul className="space-y-3 text-[16px] leading-[1.65] text-white/85">
                 <li className="flex gap-3"><span aria-hidden>—</span><span>We discovered 3 main patterns how users charge their guests: monthly (most popular), weekly and bi-weekly (mainly used for reservations with open check-out date).</span></li>
-                <li className="flex gap-3"><span aria-hidden>—</span><span>We learned how they think about long stays: everything above 30 calendar days is considered to be a long reservation.</span></li>
+                <li className="flex gap-3"><span aria-hidden>—</span><span>We learned how they think about long stays: everything above 30 nights is considered to be a long reservation.</span></li>
                 <li className="flex gap-3"><span aria-hidden>—</span><span>Two charging paradigms exist. Some PMCs charge every 30 days from check-in (anniversary billing); others charge on a fixed calendar date like the 1st of each month (calendar billing). Both are legitimate and in active use.</span></li>
                 <li className="flex gap-3"><span aria-hidden>—</span><span>They charge part of the reservation total upfront (before guest checks-in). Usually, they take first and last installment. Also, there is a refundable security deposit: an amount on top of reservation total that they charge and refund at the end of the stay if there is no damage done.</span></li>
               </ul>
