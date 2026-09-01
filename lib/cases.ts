@@ -3,6 +3,7 @@ export type CaseSectionBlock = {
   paragraphs?: string[];
   bullets?: { label?: string; items: string[] };
   visual?: { src: string; alt: string; width: number; height: number; aspectRatio?: string };
+  placeholder?: { label: string; aspectRatio?: string };
   layout?: "split";
 };
 
@@ -301,12 +302,12 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
         {
           heading: "Discovery",
           paragraphs: [
-            "My PM and I analyzed the support tickets we were getting. Here's what we found:",
+            "We knew from support that customers sometimes needed to collect payments outside the normal reservation flow. We wanted to understand whether this was an occasional edge case or a meaningful gap in the product.",
           ],
           bullets: {
             items: [
-              "Ad-hoc charges are a regular part of operations, not an edge case. Nearly every PMC had a recurring list of items they regularly collect outside the system.",
-              "The manual workarounds were costing them trust with guests. Sending a bank transfer request or asking for cash felt informal and was often uncomfortable for both sides — guests are frequently traveling from abroad, which makes bank transfers inconvenient, and cash requires someone to physically collect it, pulling the team away from day-to-day duties.",
+              "It wasn’t an edge case. Even on reservations covered by payment automation rules, around 10% of transactions were recorded manually. This showed that a meaningful share of payment activity was happening outside the automated flow.",
+              "User's feedback shown that the manual workarounds were costing them trust with guests. Sending a bank transfer request or asking for cash felt informal and was often uncomfortable for both sides — guests are frequently traveling from abroad, which makes bank transfers inconvenient, and cash requires someone to physically collect it, pulling the team away from day-to-day duties.",
             ],
           },
         },
@@ -367,6 +368,14 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
           },
         },
         {
+          visual: {
+            src: "/images/payment-links/2026-08-25/Solution-share.jpg",
+            alt: "Sharing a payment link with a guest",
+            width: 7200,
+            height: 4050,
+          },
+        },
+        {
           heading: "Challenge",
           paragraphs: [
             "The guest must feel secure handing over their payment details. We addressed this two ways:",
@@ -388,6 +397,18 @@ const paymentLinksStudy: { sections: CaseStudySection[] } = {
             alt: "Guest-facing payment page, optimized for mobile",
             width: 2400,
             height: 1350,
+          },
+        },
+        {
+          heading: "Trade-off: payment convenience vs. time to launch",
+          paragraphs: [
+            "Apple Pay was part of the original experience, but technical constraints pushed it out of the first release. We prioritized delivering the core payment-link flow with card payments rather than delaying the entire feature, while keeping wallet payments in the planned next phase.",
+          ],
+          visual: {
+            src: "/images/payment-links/2026-08-25/Apple pay.jpg",
+            alt: "Apple Pay payment-link experience",
+            width: 7200,
+            height: 4050,
           },
         },
       ],

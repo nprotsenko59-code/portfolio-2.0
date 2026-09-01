@@ -312,6 +312,17 @@ export default function CaseStudy({ data }: { data: Case }) {
                         className="absolute inset-0 h-full w-full object-cover"
                       />
                     </figure>
+                  ) : block.placeholder ? (
+                    <div
+                      role="img"
+                      aria-label={`${block.placeholder.label} placeholder`}
+                      className={`mx-auto mt-10 flex min-h-[220px] items-center justify-center bg-[#777] p-8 text-center ${CASE_VISUAL_WIDTH}`}
+                      style={{ aspectRatio: block.placeholder.aspectRatio ?? "16 / 9" }}
+                    >
+                      <span className="rounded-full border border-white/35 bg-black/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-white/90">
+                        Asset placeholder · {block.placeholder.label}
+                      </span>
+                    </div>
                   ) : null}
                 </div>
               ))}
