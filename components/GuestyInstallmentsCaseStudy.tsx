@@ -247,7 +247,7 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
             <div>
               <h3 className="mb-4 font-display text-[20px] font-semibold uppercase tracking-[0.02em]">The problem</h3>
               <div className="space-y-5">
-                <BodyCopy>Guesty&apos;s Payment Automations let property managers attach charges to reservation events like booking, confirmation, check-in, and check-out — which works well for short stays.</BodyCopy>
+                <BodyCopy>Guesty&apos;s Payment Automations let property managers attach charges to reservation events like booking confirmation, check-in, and check-out — which works well for short stays.</BodyCopy>
                 <BodyCopy>But larger PMCs running corporate housing, serviced apartments, and mid-term rentals operate differently. Their guests stay 30, 60, or 90+ days, and payments often happen through installments that are not connected to reservation lifecycle.</BodyCopy>
                 <BodyCopy>Without installment support, Guesty was losing enterprise deals to competitors. The same objection kept coming up in sales calls — and that became the starting point for this project.</BodyCopy>
               </div>

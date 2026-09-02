@@ -51,7 +51,7 @@ const guestyStudy: { sections: CaseStudySection[] } = {
         {
           heading: "The problem",
           paragraphs: [
-            "Guesty's Payment Automations let property managers attach charges to reservation events like booking, confirmation, check-in, and check-out — which works well for short stays.",
+            "Guesty's Payment Automations let property managers attach charges to reservation events like booking confirmation, check-in, and check-out — which works well for short stays.",
             "But larger PMCs running corporate housing, serviced apartments, and mid-term rentals operate differently. Their guests stay 30, 60, or 90+ days, and payments often happen through installments that are not connected to reservation lifecycle.",
             "Without installment support, Guesty was losing enterprise deals to competitors. The same objection kept coming up in sales calls — and that became the starting point for this project.",
           ],
