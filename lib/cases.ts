@@ -515,7 +515,7 @@ export const cases: Case[] = [
     accent: "#072C23",
     theme: "dark",
     image: {
-      src: "/images/Cards/installments.png",
+      src: "/images/Installments.png?v=1788326896",
       alt: "Guesty Installments setup UI with payment cycle, automation example calendar, and house illustrations",
     },
     study: guestyStudy,

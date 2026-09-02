@@ -231,9 +231,10 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
 
         <div className={`mx-auto mt-16 ${VISUAL_WIDTH}`}>
           <Visual
-            src="/images/payment-installments/2026-08-25/first-screen.jpg"
+            src="/images/payment-installments/2026-08-25/first-screen.jpg?v=1788326896"
             alt="Payment Installments interface and automation example"
             preload
+            unoptimized
           />
         </div>
 

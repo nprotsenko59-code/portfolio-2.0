@@ -129,6 +129,7 @@ export default function CaseCard({ data }: { data: Case; index: number }) {
             quality={90}
             className="pointer-events-none select-none object-cover object-left"
             priority={false}
+            unoptimized
           />
         ) : null}
       </div>
