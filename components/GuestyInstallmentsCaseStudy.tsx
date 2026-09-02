@@ -435,8 +435,8 @@ export default function GuestyInstallmentsCaseStudy({ data }: { data: Case }) {
           </div>
         </section>
         <div className={`mx-auto mt-10 space-y-10 ${VISUAL_WIDTH}`}>
-          <Visual src="/images/payment-installments/2026-08-25/preview.jpg?v=20260831" alt="Calendar-based automation preview" unoptimized />
-          <Visual src="/images/payment-installments/2026-08-25/preview - hover interaction.jpg" alt="Automation preview hover interaction" />
+          <Visual src="/images/payment-installments/2026-08-25/preview.jpg?v=1788328430" alt="Calendar-based automation preview" unoptimized />
+          <Visual src="/images/payment-installments/2026-08-25/preview - hover interaction.jpg?v=1788328430" alt="Automation preview hover interaction" unoptimized />
         </div>
 
         <section className="mx-auto mt-20 max-w-[760px]">
