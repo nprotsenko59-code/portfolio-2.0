@@ -356,7 +356,7 @@ export default function Hero() {
               />
             </div>
           </div>
-          <HoverText className="font-medium">See my work</HoverText>
+          <HoverText className="font-medium">Scroll to see my work</HoverText>
         </div>
         <div data-meta-item className="flex flex-col gap-1 text-right">
           <span className="text-ink-muted">Based in</span>
